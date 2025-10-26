@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import androidx.core.content.ContextCompat;
 
 import com.mobdeve.s17.group11.smartspend.analytics.AnalyticsActivity;
+import com.mobdeve.s17.group11.smartspend.budgets.BudgetsActivity;
 import com.mobdeve.s17.group11.smartspend.expenses.ExpensesActivity;
 import com.mobdeve.s17.group11.smartspend.map.MapActivity;
 
@@ -15,12 +16,21 @@ public class NavigationBar {
 
     public static void init(Activity activity) {
         ImageButton btnAnalytics = activity.findViewById(R.id.btn_navigation_analytics);
+        ImageButton btnBudgets = activity.findViewById(R.id.btn_navigation_budgets);
         ImageButton btnExpenses = activity.findViewById(R.id.btn_navigation_expenses);
         ImageButton btnMap = activity.findViewById(R.id.btn_navigation_map);
 
         if(!(activity instanceof AnalyticsActivity)) {
             btnAnalytics.setOnClickListener(view -> {
                 Intent intent = new Intent(activity.getBaseContext(), AnalyticsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                activity.startActivity(intent);
+            });
+        }
+
+        if(!(activity instanceof BudgetsActivity)) {
+            btnBudgets.setOnClickListener(view -> {
+                Intent intent = new Intent(activity.getBaseContext(), BudgetsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 activity.startActivity(intent);
             });
@@ -47,14 +57,22 @@ public class NavigationBar {
 
         if(activity instanceof AnalyticsActivity) {
             btnAnalytics.setImageTintList(selectedColor);
+            btnBudgets.setImageTintList(defaultColor);
+            btnExpenses.setImageTintList(defaultColor);
+            btnMap.setImageTintList(defaultColor);
+        } else if(activity instanceof BudgetsActivity) {
+            btnAnalytics.setImageTintList(defaultColor);
+            btnBudgets.setImageTintList(selectedColor);
             btnExpenses.setImageTintList(defaultColor);
             btnMap.setImageTintList(defaultColor);
         } else if(activity instanceof ExpensesActivity) {
             btnAnalytics.setImageTintList(defaultColor);
+            btnBudgets.setImageTintList(defaultColor);
             btnExpenses.setImageTintList(selectedColor);
             btnMap.setImageTintList(defaultColor);
         } else if(activity instanceof MapActivity) {
             btnAnalytics.setImageTintList(defaultColor);
+            btnBudgets.setImageTintList(defaultColor);
             btnExpenses.setImageTintList(defaultColor);
             btnMap.setImageTintList(selectedColor);
         }

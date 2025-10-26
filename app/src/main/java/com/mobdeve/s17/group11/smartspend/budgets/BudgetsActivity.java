@@ -1,4 +1,4 @@
-package com.mobdeve.s17.group11.smartspend.expenses;
+package com.mobdeve.s17.group11.smartspend.budgets;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,13 +17,13 @@ import com.mobdeve.s17.group11.smartspend.NavigationBar;
 import com.mobdeve.s17.group11.smartspend.R;
 import com.mobdeve.s17.group11.smartspend.util.DataGenerator;
 
-public class ExpensesActivity extends AppCompatActivity {
+public class BudgetsActivity extends AppCompatActivity {
 
-    public ExpensesPopupSort expensesPopupSort;
-    public ExpensesListAdapter expensesListAdapter;
+    public BudgetsPopupSort budgetsPopupSort;
+    public BudgetsListAdapter budgetsListAdapter;
     public ImageButton btnAdd;
     public ImageButton btnSort;
-    public RecyclerView expensesListRecyclerView;
+    public RecyclerView budgetsListRecyclerView;
 
     public TextView tvPromptEmptyList;
 
@@ -31,7 +31,7 @@ public class ExpensesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_expenses);
+        setContentView(R.layout.activity_budgets);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.ll_root), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -40,7 +40,7 @@ public class ExpensesActivity extends AppCompatActivity {
         });
 
         NavigationBar.init(this);
-        expensesPopupSort = new ExpensesPopupSort(this);
+        budgetsPopupSort = new BudgetsPopupSort(this);
 
         initViews();
         initListeners();
@@ -50,44 +50,44 @@ public class ExpensesActivity extends AppCompatActivity {
     private void initViews() {
         btnAdd = findViewById(R.id.btn_add);
         btnSort = findViewById(R.id.btn_header_sort);
-        expensesListRecyclerView = findViewById(R.id.rv_budgets);
+        budgetsListRecyclerView = findViewById(R.id.rv_budgets);
         tvPromptEmptyList = findViewById(R.id.tv_empty_list);
     }
 
     private void initListeners() {
         btnAdd.setOnClickListener(view -> {
-            Intent intent = new Intent(this, ExpensesNewActivity.class);
+            Intent intent = new Intent(this, BudgetsNewActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
         });
 
         btnSort.setOnClickListener(view -> {
-            if(!expensesPopupSort.popupWindow.isShowing()) {
-                expensesPopupSort.popupWindow.showAsDropDown(view);
+            if(!budgetsPopupSort.popupWindow.isShowing()) {
+                budgetsPopupSort.popupWindow.showAsDropDown(view);
             } else {
-                expensesPopupSort.popupWindow.dismiss();
+                budgetsPopupSort.popupWindow.dismiss();
             }
         });
     }
 
     private void initRecyclerViews() {
-        expensesListAdapter = new ExpensesListAdapter(this);
+        budgetsListAdapter = new BudgetsListAdapter(this);
 
-        expensesListAdapter.items = DataGenerator.getExpenseDataList();
+        budgetsListAdapter.items = DataGenerator.getBudgetDataList();
 
-        if(!expensesListAdapter.items.isEmpty()) {
-            expensesListRecyclerView.setVisibility(View.VISIBLE);
+        if(!budgetsListAdapter.items.isEmpty()) {
+            budgetsListRecyclerView.setVisibility(View.VISIBLE);
             tvPromptEmptyList.setVisibility(View.GONE);
         } else {
-            expensesListRecyclerView.setVisibility(View.GONE);
+            budgetsListRecyclerView.setVisibility(View.GONE);
             tvPromptEmptyList.setVisibility(View.VISIBLE);
         }
 
-        expensesListRecyclerView.setLayoutManager(new LinearLayoutManager(this,
+        budgetsListRecyclerView.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL,
                 false));
 
-        expensesListRecyclerView.setAdapter(expensesListAdapter);
+        budgetsListRecyclerView.setAdapter(budgetsListAdapter);
     }
 
 }

@@ -11,7 +11,7 @@
     android:padding="6dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_amount"
+        android:id="@+id/ll_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_rv"
@@ -140,7 +140,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_category"
+        android:id="@+id/ll_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"

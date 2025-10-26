@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:fontFamily="@font/roboto_bold"
-            android:text="Edit Expense Entry"
+            android:text="Edit Budget Entry"
             android:textColor="@color/atv_header_foreground"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -53,7 +53,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/dm_sans_bold"
-        android:text="Expense Details"
+        android:text="Budget Details"
         android:textColor="@color/tv_label0"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -144,7 +144,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_date"
+            android:id="@+id/ll_date_start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
@@ -154,23 +154,59 @@
             app:layout_constraintTop_toBottomOf="@+id/ll_amount">
 
             <TextView
-                android:id="@+id/tv_date"
+                android:id="@+id/tv_date_start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/dm_sans_bold"
-                android:text="Date"
+                android:text="Start Date"
                 android:textColor="@color/tv_label1"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/tf_date"
+                android:id="@+id/tf_date_start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_tf"
                 android:ellipsize="end"
                 android:fontFamily="@font/dm_sans"
-                android:hint="Enter Date"
+                android:hint="Enter Start Date"
+                android:padding="12dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/tf_text"
+                android:textColorHint="@color/tf_hint"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_date_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_date_start">
+
+            <TextView
+                android:id="@+id/tv_date_end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/dm_sans_bold"
+                android:text="End Date"
+                android:textColor="@color/tv_label1"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/tf_date_end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tf"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans"
+                android:hint="Enter End Date"
                 android:padding="12dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
@@ -187,7 +223,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_date">
+            app:layout_constraintTop_toBottomOf="@+id/ll_date_end">
 
             <TextView
                 android:id="@+id/tv_notes"
@@ -215,76 +251,6 @@
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_notes">
-
-            <TextView
-                android:id="@+id/tv_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/dm_sans_bold"
-                android:text="Location"
-                android:textColor="@color/tv_label1"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/tf_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_tf"
-                android:ellipsize="end"
-                android:fontFamily="@font/dm_sans"
-                android:hint="Enter Location"
-                android:padding="12dp"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
-                android:textColor="@color/tf_text"
-                android:textColorHint="@color/tf_hint"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_useloc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_location">
-
-            <ImageView
-                android:id="@+id/iv_useloc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:tint="@color/tv_highlight0"
-                app:srcCompat="@drawable/ic_pin" />
-
-            <TextView
-                android:id="@+id/tv_useloc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/dm_sans"
-                android:text="Use Current Location"
-                android:textColor="@color/tv_highlight0"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_save" />
-        </LinearLayout>
-
         <Button
             android:id="@+id/btn_save"
             android:layout_width="0dp"
@@ -298,7 +264,7 @@
             android:textColor="@color/btn_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_useloc" />
+            app:layout_constraintTop_toBottomOf="@+id/ll_notes" />
 
         <TextView
             android:id="@+id/tv_delete"

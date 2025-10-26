@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:text="Expenses"
+            android:text="Budgets"
             android:textColor="@color/atv_header_foreground"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -86,7 +86,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/dm_sans"
             android:gravity="center"
-            android:text="No Expenes Found\nClick &quot;+&quot; to get started"
+            android:text="No Budgets Found\nClick &quot;+&quot; to get started"
             android:textColor="@color/tv_label2"
             android:textSize="16dp"
             android:visibility="gone" />
