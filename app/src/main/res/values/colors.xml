@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="atv_background">#E4E1EC</color>
+    <color name="atv_header_background">#7295CA</color>
+    <color name="atv_header_foreground">#110450</color>
+
+    <color name="atv_navigation_background">#041941</color>
+    <color name="atv_navigation_foreground">#FFFFFF</color>
+    <color name="atv_navigation_foreground_selected">#62B1FF</color>
+
+    <color name="btn_background">#041941</color>
+    <color name="btn_text">#FFFFFF</color>
+
+    <color name="cb_border">#073269</color>
+    <color name="cb_checked_background">#041941</color>
+    <color name="cb_unchecked_background">#00000000</color>
+
+    <color name="crd_background">#FFFFFF</color>
+
+    <color name="dlg_background">#E4E1EC</color>
+    <color name="dlg_border">#19000000</color>
+
+    <color name="pop_background">#E4E1EC</color>
+    <color name="pop_border">#19000000</color>
+
+    <color name="tf_background">#FFFFFF</color>
+    <color name="tf_border">#19000000</color>
+    <color name="tf_hint">#817E7E</color>
+    <color name="tf_text">#555555</color>
+
+    <color name="tv_highlight0">#0057D4</color>
+    <color name="tv_label0">#073269</color>
+    <color name="tv_label1">#000000</color>
+    <color name="tv_label2">#80000000</color>
+
+    <color name="rv_background">#FFFFFF</color>
+    <color name="rv_border">#19000000</color>
+</resources>
