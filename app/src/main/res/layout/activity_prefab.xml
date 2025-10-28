@@ -51,7 +51,7 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            android:tint="@color/atv_navigation_foreground"
+            app:tint="@color/atv_navigation_foreground"
             app:srcCompat="@drawable/ic_navigationbar_moneybag" />
 
         <ImageButton
@@ -63,7 +63,7 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            android:tint="@color/atv_navigation_foreground"
+            app:tint="@color/atv_navigation_foreground"
             app:srcCompat="@drawable/ic_navigationbar_meter" />
 
         <ImageButton
@@ -75,7 +75,7 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            android:tint="@color/atv_navigation_foreground"
+            app:tint="@color/atv_navigation_foreground"
             app:srcCompat="@drawable/ic_navigationbar_map" />
 
         <ImageButton
@@ -87,7 +87,7 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            android:tint="@color/atv_navigation_foreground"
+            app:tint="@color/atv_navigation_foreground"
             app:srcCompat="@drawable/ic_navigationbar_barchart" />
     </LinearLayout>
 
