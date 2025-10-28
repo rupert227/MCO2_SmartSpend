@@ -34,7 +34,7 @@ public class ExpensesNewActivity extends AppCompatActivity {
         Button btnSave = findViewById(R.id.btn_save);
         TextView tvDelete = findViewById(R.id.tv_delete);
 
-        tvHeaderTitle.setText("Create Expenses Entry");
+        tvHeaderTitle.setText("Create Expense Entry");
         tvDelete.setVisibility(TextView.GONE);
         btnSave.setText("Create Entry");
 

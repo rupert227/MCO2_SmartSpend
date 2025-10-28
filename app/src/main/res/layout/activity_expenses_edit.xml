@@ -5,7 +5,7 @@
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/atv_background">
+    android:background="@color/sys_bars">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_header"
@@ -46,24 +46,36 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/tv_subheader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/dm_sans_bold"
-        android:text="Expense Details"
-        android:textColor="@color/tv_label0"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_header" />
+    <FrameLayout
+        android:id="@+id/fl_subheader"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/atv_background"
+        app:layout_constraintBottom_toTopOf="@+id/cl_details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/cl_header"
+        app:layout_constraintTop_toBottomOf="@+id/cl_header">
+
+        <TextView
+            android:id="@+id/tv_subheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/dm_sans_bold"
+            android:text="Expense Details"
+            android:textColor="@color/tv_label0"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_header" />
+    </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_details"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="72dp"
+        android:background="@color/atv_background"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
         app:layout_constraintBottom_toTopOf="@+id/ll_navigation"

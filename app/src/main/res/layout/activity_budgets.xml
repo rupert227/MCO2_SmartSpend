@@ -5,7 +5,7 @@
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/atv_background">
+    android:background="@color/sys_bars">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_header"
@@ -71,6 +71,7 @@
             android:id="@+id/rv_budgets"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/atv_background"
             android:fadeScrollbars="false"
             android:scrollbarStyle="insideOverlay"
             android:scrollbars="vertical"

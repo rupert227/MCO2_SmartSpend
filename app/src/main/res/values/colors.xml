@@ -23,6 +23,8 @@
     <color name="pop_background">#E4E1EC</color>
     <color name="pop_border">#19000000</color>
 
+    <color name="sys_bars">#000000</color>
+
     <color name="tf_background">#FFFFFF</color>
     <color name="tf_border">#19000000</color>
     <color name="tf_hint">#817E7E</color>
