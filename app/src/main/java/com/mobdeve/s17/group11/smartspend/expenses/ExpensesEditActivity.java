@@ -10,7 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.mobdeve.s17.group11.smartspend.NavigationBar;
+import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
 import com.mobdeve.s17.group11.smartspend.R;
 
 public class ExpensesEditActivity extends AppCompatActivity {

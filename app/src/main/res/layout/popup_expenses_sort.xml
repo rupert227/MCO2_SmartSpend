@@ -11,7 +11,7 @@
     android:padding="6dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ll_date"
+        android:id="@+id/cl_date"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_rv"

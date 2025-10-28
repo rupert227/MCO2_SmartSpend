@@ -105,6 +105,7 @@
             android:text="Category Prompt"
             android:textColor="@color/pro_text"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/tv_header"
             app:layout_constraintStart_toEndOf="@+id/tv_header"
             app:layout_constraintTop_toTopOf="@+id/tv_header" />
@@ -148,6 +149,7 @@
             android:text="Amount Prompt"
             android:textColor="@color/pro_text"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/tv_amount"
             app:layout_constraintStart_toEndOf="@+id/tv_amount"
             app:layout_constraintTop_toTopOf="@+id/tv_amount" />
@@ -161,6 +163,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/dm_sans"
             android:hint="Enter Amount"
+            android:numeric="decimal"
             android:padding="12dp"
             android:scrollHorizontally="true"
             android:singleLine="true"
@@ -191,27 +194,101 @@
             android:text="Start Date Prompt"
             android:textColor="@color/pro_text"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/tv_date_start"
             app:layout_constraintStart_toEndOf="@+id/tv_date_start"
             app:layout_constraintTop_toTopOf="@+id/tv_date_start" />
 
-        <EditText
-            android:id="@+id/tf_date_start"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_date_start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/bg_tf"
-            android:ellipsize="end"
-            android:fontFamily="@font/dm_sans"
-            android:hint="Enter Start Date"
-            android:padding="12dp"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textColor="@color/tf_text"
-            android:textColorHint="@color/tf_hint"
-            android:textSize="14sp"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date_start" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_date_start">
+
+            <EditText
+                android:id="@+id/tf_date_start_month"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tf"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans"
+                android:hint="Month"
+                android:numeric="integer"
+                android:padding="12dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/tf_text"
+                android:textColorHint="@color/tf_hint"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tf_date_start_day"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/tf_date_start_day"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tf"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans"
+                android:hint="Day"
+                android:numeric="integer"
+                android:padding="12dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/tf_text"
+                android:textColorHint="@color/tf_hint"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tf_date_start_year"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/tf_date_start_month"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/tf_date_start_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tf"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans"
+                android:hint="Year"
+                android:numeric="integer"
+                android:padding="12dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/tf_text"
+                android:textColorHint="@color/tf_hint"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_date_start_calendar"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/tf_date_start_day"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_date_start_calendar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bg_tf"
+                android:padding="4dp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tf_date_start_year"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_calendar"
+                app:tint="@color/tf_icon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/tv_date_end"
@@ -223,7 +300,7 @@
             android:textColor="@color/tv_label1"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tf_date_start" />
+            app:layout_constraintTop_toBottomOf="@+id/cl_date_start" />
 
         <TextView
             android:id="@+id/tv_date_end_prompt"
@@ -234,27 +311,101 @@
             android:text="End Date Prompt"
             android:textColor="@color/pro_text"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/tv_date_end"
             app:layout_constraintStart_toEndOf="@+id/tv_date_end"
             app:layout_constraintTop_toTopOf="@+id/tv_date_end" />
 
-        <EditText
-            android:id="@+id/tf_date_end"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_date_end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/bg_tf"
-            android:ellipsize="end"
-            android:fontFamily="@font/dm_sans"
-            android:hint="Enter End Date"
-            android:padding="12dp"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textColor="@color/tf_text"
-            android:textColorHint="@color/tf_hint"
-            android:textSize="14sp"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date_end" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_date_end">
+
+            <EditText
+                android:id="@+id/tf_date_end_month"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tf"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans"
+                android:hint="Month"
+                android:numeric="integer"
+                android:padding="12dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/tf_text"
+                android:textColorHint="@color/tf_hint"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tf_date_end_day"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/tf_date_end_day"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tf"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans"
+                android:hint="Day"
+                android:numeric="integer"
+                android:padding="12dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/tf_text"
+                android:textColorHint="@color/tf_hint"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tf_date_end_year"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/tf_date_end_month"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/tf_date_end_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tf"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans"
+                android:hint="Year"
+                android:numeric="integer"
+                android:padding="12dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/tf_text"
+                android:textColorHint="@color/tf_hint"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_date_end_calendar"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/tf_date_end_day"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_date_end_calendar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bg_tf"
+                android:padding="4dp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tf_date_end_year"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_calendar"
+                app:tint="@color/tf_icon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/tv_notes"
@@ -266,7 +417,7 @@
             android:textColor="@color/tv_label1"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tf_date_end" />
+            app:layout_constraintTop_toBottomOf="@+id/cl_date_end" />
 
         <TextView
             android:id="@+id/tv_notes_prompt"
@@ -277,6 +428,7 @@
             android:text="Notes Prompt"
             android:textColor="@color/pro_text"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/tv_notes"
             app:layout_constraintStart_toEndOf="@+id/tv_notes"
             app:layout_constraintTop_toTopOf="@+id/tv_notes" />

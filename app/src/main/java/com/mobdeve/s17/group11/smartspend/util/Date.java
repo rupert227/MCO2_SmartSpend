@@ -1,4 +1,4 @@
-package com.mobdeve.s17.group11.smartspend.util.date;
+package com.mobdeve.s17.group11.smartspend.util;
 
 public class Date {
 

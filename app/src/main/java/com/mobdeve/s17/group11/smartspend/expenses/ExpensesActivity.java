@@ -13,7 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mobdeve.s17.group11.smartspend.NavigationBar;
+import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
 import com.mobdeve.s17.group11.smartspend.R;
 import com.mobdeve.s17.group11.smartspend.util.DataGenerator;
 

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.group11.smartspend.R;
 import com.mobdeve.s17.group11.smartspend.util.FormatHelper;
-import com.mobdeve.s17.group11.smartspend.util.date.DateHelper;
+import com.mobdeve.s17.group11.smartspend.util.DateHelper;
 
 import java.util.ArrayList;
 import java.util.List;

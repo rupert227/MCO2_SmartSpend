@@ -1,7 +1,7 @@
 package com.mobdeve.s17.group11.smartspend.budgets;
 
 import com.mobdeve.s17.group11.smartspend.expenses.ExpensesCategory;
-import com.mobdeve.s17.group11.smartspend.util.date.Date;
+import com.mobdeve.s17.group11.smartspend.util.Date;
 
 public class BudgetsListItem {
 

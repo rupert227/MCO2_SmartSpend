@@ -1,6 +1,6 @@
 package com.mobdeve.s17.group11.smartspend.expenses;
 
-import com.mobdeve.s17.group11.smartspend.util.date.Date;
+import com.mobdeve.s17.group11.smartspend.util.Date;
 
 public class ExpensesListItem {
 

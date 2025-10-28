@@ -1,4 +1,4 @@
-package com.mobdeve.s17.group11.smartspend;
+package com.mobdeve.s17.group11.smartspend.util;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.widget.ImageButton;
 
 import androidx.core.content.ContextCompat;
 
+import com.mobdeve.s17.group11.smartspend.R;
 import com.mobdeve.s17.group11.smartspend.analytics.AnalyticsActivity;
 import com.mobdeve.s17.group11.smartspend.budgets.BudgetsActivity;
 import com.mobdeve.s17.group11.smartspend.expenses.ExpensesActivity;
