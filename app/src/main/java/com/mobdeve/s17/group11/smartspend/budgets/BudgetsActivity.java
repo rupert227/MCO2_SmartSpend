@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
 import com.mobdeve.s17.group11.smartspend.R;
 import com.mobdeve.s17.group11.smartspend.util.DataGenerator;
+import com.mobdeve.s17.group11.smartspend.util.UIUtils;
 
 public class BudgetsActivity extends AppCompatActivity {
 
@@ -64,6 +65,7 @@ public class BudgetsActivity extends AppCompatActivity {
         btnSort.setOnClickListener(view -> {
             if(!budgetsPopupSort.popupWindow.isShowing()) {
                 budgetsPopupSort.popupWindow.showAsDropDown(view);
+                UIUtils.Appearance.dimBehind(budgetsPopupSort.popupWindow.getContentView(), view, 0.1f);
             } else {
                 budgetsPopupSort.popupWindow.dismiss();
             }

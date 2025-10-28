@@ -9,6 +9,8 @@
     <color name="atv_navigation_foreground_selected">#62B1FF</color>
 
     <color name="btn_background">#041941</color>
+    <color name="btn_background_danger">#B41414</color>
+    <color name="btn_background_neutral">#646464</color>
     <color name="btn_text">#FFFFFF</color>
 
     <color name="cb_border">#073269</color>
