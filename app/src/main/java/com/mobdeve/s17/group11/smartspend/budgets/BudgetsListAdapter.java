@@ -72,7 +72,7 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
         public budgetsListItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvCategory = itemView.findViewById(R.id.tv_category);
+            tvCategory = itemView.findViewById(R.id.tv_header);
             tvDate = itemView.findViewById(R.id.tv_date);
             tvPrice = itemView.findViewById(R.id.tv_price);
         }

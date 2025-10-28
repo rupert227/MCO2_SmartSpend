@@ -19,9 +19,13 @@
 
     <color name="dlg_background">#E4E1EC</color>
     <color name="dlg_border">#19000000</color>
+    <color name="dlg_header">#073269</color>
+    <color name="dlg_message">#000000</color>
 
     <color name="pop_background">#E4E1EC</color>
     <color name="pop_border">#19000000</color>
+
+    <color name="pro_text">#FA4454</color>
 
     <color name="sys_bars">#000000</color>
 

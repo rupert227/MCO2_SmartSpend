@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ll_root"
+    android:id="@+id/cl_root"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_popup"
@@ -197,7 +197,7 @@
         tools:layout_editor_absoluteY="29dp">
 
         <TextView
-            android:id="@+id/tv_category"
+            android:id="@+id/tv_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/dm_sans_bold"
@@ -216,9 +216,9 @@
             android:padding="0dp"
             android:scaleType="fitXY"
             app:tint="@color/atv_navigation_background"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_category"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_header"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_category"
+            app:layout_constraintTop_toTopOf="@+id/tv_header"
             app:srcCompat="@drawable/ic_rewind" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -231,11 +231,11 @@
             android:scrollbars="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_category" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_header" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/btn_apply"
+        android:id="@+id/btn_option0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
