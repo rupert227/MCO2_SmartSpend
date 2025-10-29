@@ -40,7 +40,9 @@ public class BudgetsPopupSort {
     private void initRecyclerViews() {
         budgetSortAdapter = new BudgetSortAdapter();
 
-        Arrays.stream(ExpensesCategory.values()).forEach(category -> budgetSortAdapter.items.add(category.getDisplayName()));
+        Arrays.stream(ExpensesCategory.getListOrder()).forEach(categoryID -> {
+            budgetSortAdapter.items.add(ExpensesCategory.getExpenseCategoryName(categoryID));
+        });
 
         budgetsSortRecyclerView.setLayoutManager(new LinearLayoutManager(
                 view.getContext(),

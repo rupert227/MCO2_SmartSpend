@@ -83,8 +83,8 @@ public class BudgetsEditActivity extends AppCompatActivity {
     }
 
     private void initRecyclerViews() {
-        Arrays.stream(ExpensesCategory.values()).forEach(category -> {
-            categoryDropdownComposite.items.add(category.getDisplayName());
+        Arrays.stream(ExpensesCategory.getListOrder()).forEach(categoryID -> {
+            categoryDropdownComposite.items.add(ExpensesCategory.getExpenseCategoryName(categoryID));
         });
 
         UIUtils.CompositeInstantiator.categoryDropdown(categoryDropdownComposite, tfCategory);

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.group11.smartspend.R;
+import com.mobdeve.s17.group11.smartspend.expenses.ExpensesCategory;
 import com.mobdeve.s17.group11.smartspend.util.DateHelper;
 import com.mobdeve.s17.group11.smartspend.util.FormatHelper;
 
@@ -42,7 +43,7 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
     public void onBindViewHolder(@NonNull budgetsListItemViewHolder holder, int position) {
         BudgetsListItem budgetsListItem = items.get(position);
 
-        holder.tvCategory.setText(budgetsListItem.budgetCategory.getDisplayName());
+        holder.tvCategory.setText(ExpensesCategory.getExpenseCategoryName(budgetsListItem.budgetCategoryID));
 
         holder.tvDate.setText(
                 DateHelper.numericalDateTransform1(budgetsListItem.startDate)

@@ -40,7 +40,7 @@ public class ExpensesListAdapter extends RecyclerView.Adapter<ExpensesListAdapte
     public void onBindViewHolder(@NonNull ExpensesListItemViewHolder holder, int position) {
         ExpensesListItem expensesListItem = items.get(position);
 
-        holder.tvCategory.setText(expensesListItem.expensesCategory.getDisplayName());
+        holder.tvCategory.setText(ExpensesCategory.getExpenseCategoryName(expensesListItem.expensesCategoryID));
         holder.tvDate.setText(DateHelper.numericalDateTransform0(expensesListItem.date));
         holder.tvPrice.setText(FormatHelper.floatToPrice(expensesListItem.price));
 

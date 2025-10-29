@@ -13,8 +13,6 @@ public class AppStart extends Application {
         super.onCreate();
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
-        Algorithm.init();
     }
 
 }

@@ -84,7 +84,7 @@ public class UIUtils {
                     if(!filtered.isEmpty())
                         dropdownListAdapter.items.addAll(filtered);
                     else
-                        dropdownListAdapter.items.add(ExpensesCategory.OTHERS.getDisplayName());
+                        dropdownListAdapter.items.add(ExpensesCategory.getExpenseCategoryName(ExpensesCategory.OTHERS));
 
                     dropdownListAdapter.notifyDataSetChanged();
 
@@ -120,7 +120,7 @@ public class UIUtils {
             dropdownListAdapter.itemClick = view -> {
                 String category = ((TextView) view.findViewById(R.id.tv_label)).getText().toString();
 
-                editText.setText(Algorithm.expenseCategoryDisplayNameMap.get(category.toLowerCase()));
+                editText.setText(category);
                 editText.setSelection(category.length());
 
                 dropdownPopupWindow.get().dismiss();

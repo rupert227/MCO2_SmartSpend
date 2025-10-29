@@ -39,7 +39,9 @@ public class ExpensesPopupSort {
     private void initRecyclerViews() {
         expensesSortAdapter = new ExpensesSortAdapter();
 
-        Arrays.stream(ExpensesCategory.values()).forEach(category -> expensesSortAdapter.items.add(category.getDisplayName()));
+        Arrays.stream(ExpensesCategory.getListOrder()).forEach(categoryID -> {
+            expensesSortAdapter.items.add(ExpensesCategory.getExpenseCategoryName(categoryID));
+        });
 
         expensesSortRecyclerView.setLayoutManager(new LinearLayoutManager(
                 view.getContext(),
