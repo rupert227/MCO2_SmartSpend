@@ -17,10 +17,11 @@ public class BudgetsPopupSort {
 
     private final Activity activity;
 
-    public BudgetSortAdapter budgetSortAdapter;
     public PopupWindow popupWindow;
-    public RecyclerView budgetsSortRecyclerView;
-    public View view;
+
+    private BudgetSortAdapter budgetSortAdapter;
+    private RecyclerView budgetsSortRecyclerView;
+    private View view;
 
     public BudgetsPopupSort(Activity activity) {
         this.activity = activity;

@@ -14,7 +14,7 @@ public class DateHelper {
     public static String numericalDateTransform1(Date date) {
         int month = date.month >= 0 && date.month < longMonthNames.length ? date.month : 0;
 
-        return shortMonthNames[month] + " " + date.day + ", " + date.year;
+        return shortMonthNames[month] + ". " + date.day + ", " + date.year;
     }
 
 }

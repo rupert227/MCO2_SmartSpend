@@ -22,7 +22,7 @@ public class ExpensesSortAdapter extends RecyclerView.Adapter<ExpensesSortAdapte
     public ExpensesSortListItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ExpensesSortListItemViewHolder(
                 LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.item_expenses_sort_list,parent, false)
+                        .inflate(R.layout.item_categories_sort_list, parent, false)
         );
     }
 

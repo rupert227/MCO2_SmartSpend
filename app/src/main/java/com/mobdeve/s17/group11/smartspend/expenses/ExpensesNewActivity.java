@@ -2,6 +2,7 @@ package com.mobdeve.s17.group11.smartspend.expenses;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -10,10 +11,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
 import com.mobdeve.s17.group11.smartspend.R;
+import com.mobdeve.s17.group11.smartspend.util.DropdownComposite;
+import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
+import com.mobdeve.s17.group11.smartspend.util.UIUtils;
+
+import java.util.Arrays;
 
 public class ExpensesNewActivity extends AppCompatActivity {
+
+    private Button btnSave;
+    private DropdownComposite categoryDropdownComposite = new DropdownComposite();
+    private EditText tfCategory;
+    private ImageButton btnBack;
+    private TextView tvDelete;
+    private TextView tvHeaderTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +41,24 @@ public class ExpensesNewActivity extends AppCompatActivity {
 
         NavigationBar.init(this);
 
-        TextView tvHeaderTitle = findViewById(R.id.tv_header_title);
-        ImageButton btnBack = findViewById(R.id.btn_header_back);
-        Button btnSave = findViewById(R.id.btn_save);
-        TextView tvDelete = findViewById(R.id.tv_delete);
+        initViews();
+        initListeners();
+        initRecyclerViews();
 
         tvHeaderTitle.setText("Create Expense Entry");
         tvDelete.setVisibility(TextView.GONE);
         btnSave.setText("Create Entry");
+    }
 
+    private void initViews() {
+        btnBack = findViewById(R.id.btn_header_back);
+        btnSave = findViewById(R.id.btn_save);
+        tfCategory = findViewById(R.id.tf_category);
+        tvDelete = findViewById(R.id.tv_delete);
+        tvHeaderTitle = findViewById(R.id.tv_header_title);
+    }
+
+    private void initListeners() {
         btnBack.setOnClickListener(view -> {
             finish();
             overridePendingTransition(0, 0);
@@ -47,7 +68,14 @@ public class ExpensesNewActivity extends AppCompatActivity {
             finish();
             overridePendingTransition(0, 0);
         });
+    }
 
+    private void initRecyclerViews() {
+        Arrays.stream(ExpensesCategory.values()).forEach(category -> {
+            categoryDropdownComposite.items.add(category.getDisplayName());
+        });
+
+        UIUtils.CompositeInstantiator.categoryDropdown(categoryDropdownComposite, tfCategory);
     }
 
 }

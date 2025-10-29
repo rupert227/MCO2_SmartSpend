@@ -1,10 +1,10 @@
 package com.mobdeve.s17.group11.smartspend;
 
 import android.app.Application;
-import android.content.res.ColorStateList;
 
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.ContextCompat;
+
+import com.mobdeve.s17.group11.smartspend.util.Algorithm;
 
 public class AppStart extends Application {
 
@@ -13,6 +13,8 @@ public class AppStart extends Application {
         super.onCreate();
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        Algorithm.init();
     }
 
 }

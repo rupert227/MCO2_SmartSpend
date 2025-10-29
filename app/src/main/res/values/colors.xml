@@ -19,6 +19,10 @@
 
     <color name="crd_background">#FFFFFF</color>
 
+    <color name="dd_border">#FFFFFF</color>
+    <color name="dd_background">#FFFFFF</color>
+    <color name="dd_foreground">#000000</color>
+
     <color name="dlg_background">#E4E1EC</color>
     <color name="dlg_border">#19000000</color>
     <color name="dlg_header">#073269</color>

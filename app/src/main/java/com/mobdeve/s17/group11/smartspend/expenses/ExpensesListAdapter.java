@@ -5,15 +5,14 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.group11.smartspend.R;
-import com.mobdeve.s17.group11.smartspend.util.FormatHelper;
 import com.mobdeve.s17.group11.smartspend.util.DateHelper;
+import com.mobdeve.s17.group11.smartspend.util.FormatHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +59,6 @@ public class ExpensesListAdapter extends RecyclerView.Adapter<ExpensesListAdapte
     public static class ExpensesListItemViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tvCategory, tvDate, tvPrice;
-        public ImageButton btnDelete;
 
         public ExpensesListItemViewHolder(@NonNull View itemView) {
             super(itemView);

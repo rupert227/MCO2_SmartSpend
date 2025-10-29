@@ -6,15 +6,14 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.group11.smartspend.R;
-import com.mobdeve.s17.group11.smartspend.util.FormatHelper;
 import com.mobdeve.s17.group11.smartspend.util.DateHelper;
+import com.mobdeve.s17.group11.smartspend.util.FormatHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +45,9 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
         holder.tvCategory.setText(budgetsListItem.budgetCategory.getDisplayName());
 
         holder.tvDate.setText(
-                DateHelper.numericalDateTransform0(budgetsListItem.startDate) + " - " +
-                        DateHelper.numericalDateTransform0(budgetsListItem.endDate)
+                DateHelper.numericalDateTransform1(budgetsListItem.startDate)
+                        + " - "
+                        + DateHelper.numericalDateTransform1(budgetsListItem.endDate)
         );
 
         holder.tvPrice.setText(FormatHelper.floatToPrice(budgetsListItem.price));
@@ -67,7 +67,6 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
     public static class budgetsListItemViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tvCategory, tvDate, tvPrice;
-        public ImageButton btnDelete;
 
         public budgetsListItemViewHolder(@NonNull View itemView) {
             super(itemView);

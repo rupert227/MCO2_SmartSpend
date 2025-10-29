@@ -20,13 +20,12 @@ import com.mobdeve.s17.group11.smartspend.util.UIUtils;
 
 public class ExpensesActivity extends AppCompatActivity {
 
-    public ExpensesPopupSort expensesPopupSort;
-    public ExpensesListAdapter expensesListAdapter;
-    public ImageButton btnAdd;
-    public ImageButton btnSort;
-    public RecyclerView expensesListRecyclerView;
-
-    public TextView tvPromptEmptyList;
+    private ExpensesPopupSort expensesPopupSort;
+    private ExpensesListAdapter expensesListAdapter;
+    private ImageButton btnAdd;
+    private ImageButton btnSort;
+    private RecyclerView expensesListRecyclerView;
+    private TextView tvPromptEmptyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +84,11 @@ public class ExpensesActivity extends AppCompatActivity {
             tvPromptEmptyList.setVisibility(View.VISIBLE);
         }
 
-        expensesListRecyclerView.setLayoutManager(new LinearLayoutManager(this,
+        expensesListRecyclerView.setLayoutManager(new LinearLayoutManager(
+                this,
                 LinearLayoutManager.VERTICAL,
-                false));
+                false
+        ));
 
         expensesListRecyclerView.setAdapter(expensesListAdapter);
     }

@@ -22,7 +22,7 @@ public class BudgetSortAdapter extends RecyclerView.Adapter<BudgetSortAdapter.bu
     public budgetsSortListItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new budgetsSortListItemViewHolder(
                 LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.item_expenses_sort_list,parent, false)
+                        .inflate(R.layout.item_categories_sort_list, parent, false)
         );
     }
 

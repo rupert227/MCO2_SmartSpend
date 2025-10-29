@@ -16,10 +16,11 @@ public class ExpensesPopupSort {
 
     private final Activity activity;
 
-    public ExpensesSortAdapter expensesSortAdapter;
     public PopupWindow popupWindow;
-    public RecyclerView expensesSortRecyclerView;
-    public View view;
+
+    private ExpensesSortAdapter expensesSortAdapter;
+    private RecyclerView expensesSortRecyclerView;
+    private View view;
 
     public ExpensesPopupSort(Activity activity) {
         this.activity = activity;
