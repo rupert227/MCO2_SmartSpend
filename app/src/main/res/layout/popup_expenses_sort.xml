@@ -60,7 +60,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ll_amount"
+        android:id="@+id/cl_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -189,7 +189,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ll_category"
+        android:id="@+id/cl_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -225,20 +225,21 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_category"
-            android:layout_width="200dp"
-            android:layout_height="300dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fadeScrollbars="false"
             android:scrollbarStyle="insideOverlay"
             android:scrollbars="vertical"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="250dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_header" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/btn_option0"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:backgroundTint="@color/btn_background"
