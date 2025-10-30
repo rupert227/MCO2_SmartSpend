@@ -16,7 +16,6 @@ import java.util.List;
 public class DropdownListAdapter extends RecyclerView.Adapter<DropdownListAdapter.DropdownListItemViewHolder> {
 
     public List<String> items = new ArrayList<>();
-
     public View.OnClickListener itemClick = null;
 
     @NonNull

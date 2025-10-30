@@ -17,32 +17,36 @@ public class ExpensesCategory {
 
     private static final int[] listOrder = {1, 2, 3, 4, 5, 6, 7, 8, 0};
 
-    private static final Map<Integer, String> expenseCategoryNamesMap = new TreeMap<>();
-    private static final Map<String, Integer> expenseCategoryIDMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private static final Map<Integer, String> expensesCategoryNamesMap = new TreeMap<>();
+    private static final Map<String, Integer> expensesCategoryIDMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
     static {
-        registerExpenseCategory(OTHERS, "Others");
-        registerExpenseCategory(ACCOMMODATION, "Accommodation");
-        registerExpenseCategory(ENTERTAINMENT, "Entertainment");
-        registerExpenseCategory(FOOD_AND_DRINKS, "Food & Drinks");
-        registerExpenseCategory(HEALTH_AND_FITNESS, "Health & Fitness");
-        registerExpenseCategory(HOME_AND_ESSENTIALS, "Home & Essentials");
-        registerExpenseCategory(PERSONAL_ITEMS, "Personal Items");
-        registerExpenseCategory(SUBSCRIPTIONS, "Subscriptions");
-        registerExpenseCategory(TRANSPORTATION, "Transportation");
+        registerExpensesCategory(OTHERS, "Others");
+        registerExpensesCategory(ACCOMMODATION, "Accommodation");
+        registerExpensesCategory(ENTERTAINMENT, "Entertainment");
+        registerExpensesCategory(FOOD_AND_DRINKS, "Food & Drinks");
+        registerExpensesCategory(HEALTH_AND_FITNESS, "Health & Fitness");
+        registerExpensesCategory(HOME_AND_ESSENTIALS, "Home & Essentials");
+        registerExpensesCategory(PERSONAL_ITEMS, "Personal Items");
+        registerExpensesCategory(SUBSCRIPTIONS, "Subscriptions");
+        registerExpensesCategory(TRANSPORTATION, "Transportation");
     }
 
-    private static void registerExpenseCategory(int expenseCategoryID, String expenseCategoryName) {
-        expenseCategoryIDMap.put(expenseCategoryName, expenseCategoryID);
-        expenseCategoryNamesMap.put(expenseCategoryID, expenseCategoryName);
+    private static void registerExpensesCategory(int expensesCategoryID, String expensesCategoryName) {
+        expensesCategoryIDMap.put(expensesCategoryName, expensesCategoryID);
+        expensesCategoryNamesMap.put(expensesCategoryID, expensesCategoryName);
     }
 
-    public static int getExpenseCategoryID(String expenseCategoryName) {
-        return expenseCategoryIDMap.getOrDefault(expenseCategoryName, -1);
+    public static boolean containsExpensesCategoryName(String expensesCategoryName) {
+        return expensesCategoryIDMap.containsKey(expensesCategoryName);
     }
 
-    public static String getExpenseCategoryName(int expenseCategoryID) {
-        return expenseCategoryNamesMap.getOrDefault(expenseCategoryID, "Unknown Category");
+    public static int getExpensesCategoryID(String expensesCategoryName) {
+        return expensesCategoryIDMap.getOrDefault(expensesCategoryName, -1);
+    }
+
+    public static String getExpensesCategoryName(int expensesCategoryID) {
+        return expensesCategoryNamesMap.getOrDefault(expensesCategoryID, "Unknown Category");
     }
 
     public static int[] getListOrder() {

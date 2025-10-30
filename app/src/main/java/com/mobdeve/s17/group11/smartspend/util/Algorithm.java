@@ -6,6 +6,53 @@ import java.util.List;
 
 public class Algorithm {
 
+    private static final int[] daysInMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    public static boolean isPositiveDecimal(String input) {
+        if(input == null || input.isEmpty())
+            return false;
+
+        return input.matches("\\d*\\.?\\d+") && !input.startsWith("-");
+    }
+
+    public static boolean isSignedInteger(String input) {
+        if(input == null || input.isEmpty())
+            return false;
+
+        return input.matches("[+-]?\\d+");
+    }
+
+    public static boolean isValidDate(int day, int month, int year) {
+        if(month < 1 || month > 12)
+            return false;
+
+        if(day < 1)
+            return false;
+
+        daysInMonth[1] = isLeapYear(year) ? 29 : 28;
+
+        return day <= daysInMonth[month - 1];
+    }
+
+    public static boolean isValidDate(String dayStr, String monthStr, String yearStr) {
+        if(!isSignedInteger(dayStr) || !isSignedInteger(monthStr) || !isSignedInteger(yearStr))
+            return false;
+
+        try {
+            int day = Integer.parseInt(dayStr);
+            int month = Integer.parseInt(monthStr);
+            int year = Integer.parseInt(yearStr);
+
+            return isValidDate(day, month, year);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+
     public static List<String> filterStringSearch(List<String> inputStrings, String query) {
         List<String> filteredStrings = new ArrayList<>();
 

@@ -21,13 +21,13 @@ import java.util.List;
 
 public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.budgetsListItemViewHolder> {
 
+    public List<BudgetsListItem> items = new ArrayList<>();
+
     private final Context context;
 
     public BudgetsListAdapter(Context context) {
         this.context = context;
     }
-
-    public List<BudgetsListItem> items = new ArrayList<>();
 
     @NonNull
     @Override
@@ -43,7 +43,8 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
     public void onBindViewHolder(@NonNull budgetsListItemViewHolder holder, int position) {
         BudgetsListItem budgetsListItem = items.get(position);
 
-        holder.tvCategory.setText(ExpensesCategory.getExpenseCategoryName(budgetsListItem.budgetCategoryID));
+        holder.tvAmount.setText(FormatHelper.floatToPrice(budgetsListItem.amount));
+        holder.tvCategory.setText(ExpensesCategory.getExpensesCategoryName(budgetsListItem.budgetCategoryID));
 
         holder.tvDate.setText(
                 DateHelper.numericalDateTransform1(budgetsListItem.startDate)
@@ -51,11 +52,18 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
                         + DateHelper.numericalDateTransform1(budgetsListItem.endDate)
         );
 
-        holder.tvPrice.setText(FormatHelper.floatToPrice(budgetsListItem.price));
-
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, BudgetsEditActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+            BudgetsEditActivity.fieldData.amount = budgetsListItem.amount;
+            BudgetsEditActivity.fieldData.categoryID = budgetsListItem.budgetCategoryID;
+            BudgetsEditActivity.fieldData.endDate = budgetsListItem.endDate;
+            BudgetsEditActivity.fieldData.listIndex = holder.getAbsoluteAdapterPosition();
+            BudgetsEditActivity.fieldData.notes = budgetsListItem.notes;
+            BudgetsEditActivity.fieldData.startDate = budgetsListItem.startDate;
+            BudgetsEditActivity.fieldData.use = true;
+
             context.startActivity(intent);
         });
     }
@@ -67,14 +75,14 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
 
     public static class budgetsListItemViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvCategory, tvDate, tvPrice;
+        public TextView tvAmount, tvCategory, tvDate;
 
         public budgetsListItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            tvAmount = itemView.findViewById(R.id.tv_amount);
             tvCategory = itemView.findViewById(R.id.tv_header);
             tvDate = itemView.findViewById(R.id.tv_date);
-            tvPrice = itemView.findViewById(R.id.tv_price);
         }
 
     }

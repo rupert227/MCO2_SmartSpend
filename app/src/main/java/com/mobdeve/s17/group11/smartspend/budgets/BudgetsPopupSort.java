@@ -15,13 +15,13 @@ import java.util.Arrays;
 
 public class BudgetsPopupSort {
 
-    private final Activity activity;
-
     public PopupWindow popupWindow;
 
     private BudgetSortAdapter budgetSortAdapter;
     private RecyclerView budgetsSortRecyclerView;
     private View view;
+
+    private final Activity activity;
 
     public BudgetsPopupSort(Activity activity) {
         this.activity = activity;
@@ -40,9 +40,9 @@ public class BudgetsPopupSort {
     private void initRecyclerViews() {
         budgetSortAdapter = new BudgetSortAdapter();
 
-        Arrays.stream(ExpensesCategory.getListOrder()).forEach(categoryID -> {
-            budgetSortAdapter.items.add(ExpensesCategory.getExpenseCategoryName(categoryID));
-        });
+        Arrays.stream(ExpensesCategory.getListOrder()).forEach(categoryID ->
+            budgetSortAdapter.items.add(ExpensesCategory.getExpensesCategoryName(categoryID))
+        );
 
         budgetsSortRecyclerView.setLayoutManager(new LinearLayoutManager(
                 view.getContext(),

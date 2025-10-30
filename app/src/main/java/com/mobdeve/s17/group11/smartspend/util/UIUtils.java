@@ -84,7 +84,7 @@ public class UIUtils {
                     if(!filtered.isEmpty())
                         dropdownListAdapter.items.addAll(filtered);
                     else
-                        dropdownListAdapter.items.add(ExpensesCategory.getExpenseCategoryName(ExpensesCategory.OTHERS));
+                        dropdownListAdapter.items.add(ExpensesCategory.getExpensesCategoryName(ExpensesCategory.OTHERS));
 
                     dropdownListAdapter.notifyDataSetChanged();
 
@@ -221,6 +221,69 @@ public class UIUtils {
             popupWindow.showAsDropDown(anchorView);
 
             return popupWindow;
+        }
+
+    }
+
+    public static class Validator {
+
+        public static boolean validateAmountField(EditText tfInput, TextView tvPrompt) {
+            String amount = tfInput.getText().toString().trim();
+
+            if(amount.isEmpty()) {
+                tvPrompt.setText("Input is required");
+                tvPrompt.setVisibility(TextView.VISIBLE);
+                return false;
+            }
+
+            if(!Algorithm.isPositiveDecimal(amount)) {
+                tvPrompt.setText("Amount is invalid");
+                tvPrompt.setVisibility(TextView.VISIBLE);
+                return false;
+            }
+
+            tvPrompt.setVisibility(TextView.GONE);
+            return true;
+        }
+
+        public static boolean validateCategoryField(EditText tfInput, TextView tvPrompt) {
+            String category = tfInput.getText().toString().trim();
+
+            if(category.isEmpty()) {
+                tvPrompt.setText("Input is required");
+                tvPrompt.setVisibility(TextView.VISIBLE);
+                return false;
+            }
+
+            if(!ExpensesCategory.containsExpensesCategoryName(category)) {
+                tvPrompt.setText("Category not found");
+                tvPrompt.setVisibility(TextView.VISIBLE);
+                return false;
+            }
+
+            tvPrompt.setVisibility(TextView.GONE);
+            return true;
+        }
+
+        public static boolean validateDateFields(EditText tfDateDay, EditText tfDateMonth, EditText tfDateYear, TextView tvPrompt) {
+            String day = tfDateDay.getText().toString().trim();
+            String month = tfDateMonth.getText().toString().trim();
+            String year = tfDateYear.getText().toString().trim();
+
+            if(day.isEmpty() || month.isEmpty() || year.isEmpty()) {
+                tvPrompt.setText("Input is required");
+                tvPrompt.setVisibility(TextView.VISIBLE);
+                return false;
+            }
+
+            if(!Algorithm.isValidDate(day, month, year)) {
+                tvPrompt.setText("Date is invalid");
+                tvPrompt.setVisibility(TextView.VISIBLE);
+                return false;
+            }
+
+            tvPrompt.setVisibility(TextView.GONE);
+            return true;
         }
 
     }

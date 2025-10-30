@@ -46,9 +46,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
-        android:id="@+id/fl_budgets"
+        android:id="@+id/fl_expenses"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/atv_background"
         app:layout_constraintBottom_toTopOf="@+id/ll_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,10 +69,9 @@
             app:tint="#FFFFFF" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_budgets"
+            android:id="@+id/rv_expenses"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/atv_background"
             android:fadeScrollbars="false"
             android:scrollbarStyle="insideOverlay"
             android:scrollbars="vertical"

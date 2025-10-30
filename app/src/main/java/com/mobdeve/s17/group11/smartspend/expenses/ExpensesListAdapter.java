@@ -19,13 +19,13 @@ import java.util.List;
 
 public class ExpensesListAdapter extends RecyclerView.Adapter<ExpensesListAdapter.ExpensesListItemViewHolder> {
 
+    public List<ExpensesListItem> items = new ArrayList<>();
+
     private final Context context;
 
     public ExpensesListAdapter(Context context) {
         this.context = context;
     }
-
-    public List<ExpensesListItem> items = new ArrayList<>();
 
     @NonNull
     @Override
@@ -40,13 +40,22 @@ public class ExpensesListAdapter extends RecyclerView.Adapter<ExpensesListAdapte
     public void onBindViewHolder(@NonNull ExpensesListItemViewHolder holder, int position) {
         ExpensesListItem expensesListItem = items.get(position);
 
-        holder.tvCategory.setText(ExpensesCategory.getExpenseCategoryName(expensesListItem.expensesCategoryID));
+        holder.tvAmount.setText(FormatHelper.floatToPrice(expensesListItem.amount));
+        holder.tvCategory.setText(ExpensesCategory.getExpensesCategoryName(expensesListItem.expensesCategoryID));
         holder.tvDate.setText(DateHelper.numericalDateTransform0(expensesListItem.date));
-        holder.tvPrice.setText(FormatHelper.floatToPrice(expensesListItem.price));
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ExpensesEditActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+            ExpensesEditActivity.fieldData.amount = expensesListItem.amount;
+            ExpensesEditActivity.fieldData.categoryID = expensesListItem.expensesCategoryID;
+            ExpensesEditActivity.fieldData.date = expensesListItem.date;
+            ExpensesEditActivity.fieldData.listIndex = holder.getAbsoluteAdapterPosition();
+            ExpensesEditActivity.fieldData.location = expensesListItem.location;
+            ExpensesEditActivity.fieldData.notes = expensesListItem.notes;
+            ExpensesEditActivity.fieldData.use = true;
+
             context.startActivity(intent);
         });
     }
@@ -58,14 +67,14 @@ public class ExpensesListAdapter extends RecyclerView.Adapter<ExpensesListAdapte
 
     public static class ExpensesListItemViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvCategory, tvDate, tvPrice;
+        public TextView tvAmount, tvCategory, tvDate;
 
         public ExpensesListItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            tvAmount = itemView.findViewById(R.id.tv_amount);
             tvCategory = itemView.findViewById(R.id.tv_header);
             tvDate = itemView.findViewById(R.id.tv_date);
-            tvPrice = itemView.findViewById(R.id.tv_price);
         }
 
     }

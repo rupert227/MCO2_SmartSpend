@@ -26,12 +26,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_price"
+        android:id="@+id/tv_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/dm_sans"
         android:gravity="right"
-        android:text="Price"
+        android:text="Amount"
         android:textColor="@color/tv_label1"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

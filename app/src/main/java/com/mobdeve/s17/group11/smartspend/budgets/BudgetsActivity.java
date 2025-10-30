@@ -13,10 +13,11 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
 import com.mobdeve.s17.group11.smartspend.R;
-import com.mobdeve.s17.group11.smartspend.util.DataGenerator;
+import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
 import com.mobdeve.s17.group11.smartspend.util.UIUtils;
+
+import java.lang.ref.WeakReference;
 
 public class BudgetsActivity extends AppCompatActivity {
 
@@ -24,7 +25,7 @@ public class BudgetsActivity extends AppCompatActivity {
     private BudgetsListAdapter budgetsListAdapter;
     private ImageButton btnAdd;
     private ImageButton btnSort;
-    private RecyclerView budgetsListRecyclerView;
+    private RecyclerView rvBudgetsList;
 
     private TextView tvPromptEmptyList;
 
@@ -51,7 +52,7 @@ public class BudgetsActivity extends AppCompatActivity {
     private void initViews() {
         btnAdd = findViewById(R.id.btn_add);
         btnSort = findViewById(R.id.btn_header_sort);
-        budgetsListRecyclerView = findViewById(R.id.rv_budgets);
+        rvBudgetsList = findViewById(R.id.rv_budgets);
         tvPromptEmptyList = findViewById(R.id.tv_empty_list);
     }
 
@@ -70,28 +71,44 @@ public class BudgetsActivity extends AppCompatActivity {
                 budgetsPopupSort.popupWindow.dismiss();
             }
         });
+
+        Runnable formExitListener = () -> {
+            if(!budgetsListAdapter.items.isEmpty()) {
+                rvBudgetsList.setVisibility(View.VISIBLE);
+                tvPromptEmptyList.setVisibility(View.GONE);
+            } else {
+                rvBudgetsList.setVisibility(View.GONE);
+                tvPromptEmptyList.setVisibility(View.VISIBLE);
+            }
+        };
+
+        BudgetsEditActivity.exitListener = formExitListener;
+        BudgetsNewActivity.exitListener = formExitListener;
     }
 
     private void initRecyclerViews() {
         budgetsListAdapter = new BudgetsListAdapter(this);
 
-        budgetsListAdapter.items = DataGenerator.getBudgetDataList();
+        // budgetsListAdapter.items = DataGenerator.getBudgetDataList();
 
         if(!budgetsListAdapter.items.isEmpty()) {
-            budgetsListRecyclerView.setVisibility(View.VISIBLE);
+            rvBudgetsList.setVisibility(View.VISIBLE);
             tvPromptEmptyList.setVisibility(View.GONE);
         } else {
-            budgetsListRecyclerView.setVisibility(View.GONE);
+            rvBudgetsList.setVisibility(View.GONE);
             tvPromptEmptyList.setVisibility(View.VISIBLE);
         }
 
-        budgetsListRecyclerView.setLayoutManager(new LinearLayoutManager(
+        rvBudgetsList.setLayoutManager(new LinearLayoutManager(
                 this,
                 LinearLayoutManager.VERTICAL,
                 false
         ));
 
-        budgetsListRecyclerView.setAdapter(budgetsListAdapter);
+        rvBudgetsList.setAdapter(budgetsListAdapter);
+
+        BudgetsEditActivity.rvBudgetsListRef = new WeakReference<>(rvBudgetsList);
+        BudgetsNewActivity.rvBudgetsListRef = new WeakReference<>(rvBudgetsList);
     }
 
 }

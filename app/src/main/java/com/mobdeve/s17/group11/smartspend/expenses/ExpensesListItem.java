@@ -4,14 +4,18 @@ import com.mobdeve.s17.group11.smartspend.util.Date;
 
 public class ExpensesListItem {
 
-    public int expensesCategoryID;
-    public float price;
     public Date date;
+    public float amount;
+    public int expensesCategoryID;
+    public String location;
+    public String notes;
 
-    public ExpensesListItem(int expensesCategoryID, float price, Date date) {
+    public ExpensesListItem(int expensesCategoryID, float amount, Date date, String location, String notes) {
         this.expensesCategoryID = expensesCategoryID;
-        this.price = price;
+        this.amount = amount;
         this.date = date;
+        this.location = location;
+        this.notes = notes;
     }
 
 }

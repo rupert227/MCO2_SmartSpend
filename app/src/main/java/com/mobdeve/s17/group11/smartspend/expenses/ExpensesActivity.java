@@ -13,18 +13,20 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
 import com.mobdeve.s17.group11.smartspend.R;
-import com.mobdeve.s17.group11.smartspend.util.DataGenerator;
+import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
 import com.mobdeve.s17.group11.smartspend.util.UIUtils;
+
+import java.lang.ref.WeakReference;
 
 public class ExpensesActivity extends AppCompatActivity {
 
+    public ExpensesListAdapter expensesListAdapter;
+
     private ExpensesPopupSort expensesPopupSort;
-    private ExpensesListAdapter expensesListAdapter;
     private ImageButton btnAdd;
     private ImageButton btnSort;
-    private RecyclerView expensesListRecyclerView;
+    private RecyclerView rvExpensesList;
     private TextView tvPromptEmptyList;
 
     @Override
@@ -50,7 +52,7 @@ public class ExpensesActivity extends AppCompatActivity {
     private void initViews() {
         btnAdd = findViewById(R.id.btn_add);
         btnSort = findViewById(R.id.btn_header_sort);
-        expensesListRecyclerView = findViewById(R.id.rv_budgets);
+        rvExpensesList = findViewById(R.id.rv_expenses);
         tvPromptEmptyList = findViewById(R.id.tv_empty_list);
     }
 
@@ -58,6 +60,7 @@ public class ExpensesActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(view -> {
             Intent intent = new Intent(this, ExpensesNewActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
             startActivity(intent);
         });
 
@@ -69,28 +72,44 @@ public class ExpensesActivity extends AppCompatActivity {
                 expensesPopupSort.popupWindow.dismiss();
             }
         });
+
+        Runnable formExitListener = () -> {
+            if(!expensesListAdapter.items.isEmpty()) {
+                rvExpensesList.setVisibility(View.VISIBLE);
+                tvPromptEmptyList.setVisibility(View.GONE);
+            } else {
+                rvExpensesList.setVisibility(View.GONE);
+                tvPromptEmptyList.setVisibility(View.VISIBLE);
+            }
+        };
+
+        ExpensesEditActivity.exitListener = formExitListener;
+        ExpensesNewActivity.exitListener = formExitListener;
     }
 
     private void initRecyclerViews() {
         expensesListAdapter = new ExpensesListAdapter(this);
 
-        expensesListAdapter.items = DataGenerator.getExpenseDataList();
+        // expensesListAdapter.items = DataGenerator.getExpenseDataList();
 
         if(!expensesListAdapter.items.isEmpty()) {
-            expensesListRecyclerView.setVisibility(View.VISIBLE);
+            rvExpensesList.setVisibility(View.VISIBLE);
             tvPromptEmptyList.setVisibility(View.GONE);
         } else {
-            expensesListRecyclerView.setVisibility(View.GONE);
+            rvExpensesList.setVisibility(View.GONE);
             tvPromptEmptyList.setVisibility(View.VISIBLE);
         }
 
-        expensesListRecyclerView.setLayoutManager(new LinearLayoutManager(
+        rvExpensesList.setLayoutManager(new LinearLayoutManager(
                 this,
                 LinearLayoutManager.VERTICAL,
                 false
         ));
 
-        expensesListRecyclerView.setAdapter(expensesListAdapter);
+        rvExpensesList.setAdapter(expensesListAdapter);
+
+        ExpensesEditActivity.rvExpensesListRef = new WeakReference<>(rvExpensesList);
+        ExpensesNewActivity.rvExpensesListRef = new WeakReference<>(rvExpensesList);
     }
 
 }
