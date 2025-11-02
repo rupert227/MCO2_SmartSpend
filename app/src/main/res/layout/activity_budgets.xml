@@ -37,11 +37,11 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            app:tint="@color/atv_header_foreground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_sort" />
+            app:srcCompat="@drawable/ic_sort"
+            app:tint="@color/atv_header_foreground" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -70,9 +70,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_budgets"
+            android:clipToPadding="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fadeScrollbars="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:scrollbarStyle="insideOverlay"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toTopOf="@+id/cl_navigation"
@@ -113,8 +116,8 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            app:tint="@color/atv_navigation_foreground"
-            app:srcCompat="@drawable/ic_navigationbar_moneybag" />
+            app:srcCompat="@drawable/ic_navigationbar_moneybag"
+            app:tint="@color/atv_navigation_foreground" />
 
         <ImageButton
             android:id="@+id/btn_navigation_budgets"
@@ -125,8 +128,8 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            app:tint="@color/atv_navigation_foreground"
-            app:srcCompat="@drawable/ic_navigationbar_meter" />
+            app:srcCompat="@drawable/ic_navigationbar_meter"
+            app:tint="@color/atv_navigation_foreground" />
 
         <ImageButton
             android:id="@+id/btn_navigation_map"
@@ -137,8 +140,8 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            app:tint="@color/atv_navigation_foreground"
-            app:srcCompat="@drawable/ic_navigationbar_map" />
+            app:srcCompat="@drawable/ic_navigationbar_map"
+            app:tint="@color/atv_navigation_foreground" />
 
         <ImageButton
             android:id="@+id/btn_navigation_analytics"
@@ -149,8 +152,8 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            app:tint="@color/atv_navigation_foreground"
-            app:srcCompat="@drawable/ic_navigationbar_barchart" />
+            app:srcCompat="@drawable/ic_navigationbar_barchart"
+            app:tint="@color/atv_navigation_foreground" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

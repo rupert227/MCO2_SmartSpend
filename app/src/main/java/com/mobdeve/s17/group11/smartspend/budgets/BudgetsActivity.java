@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.group11.smartspend.R;
+import com.mobdeve.s17.group11.smartspend.util.DataGenerator;
 import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
 import com.mobdeve.s17.group11.smartspend.util.SessionCache;
 import com.mobdeve.s17.group11.smartspend.util.UIUtils;
@@ -91,7 +92,7 @@ public class BudgetsActivity extends AppCompatActivity {
         budgetsListAdapter = new BudgetsListAdapter(this);
 
         budgetsListAdapter.items = SessionCache.budgetsItems;
-        // budgetsListAdapter.items = DataGenerator.getBudgetDataList();
+        budgetsListAdapter.items.addAll(DataGenerator.getBudgetDataList());
 
         if(!budgetsListAdapter.items.isEmpty()) {
             rvBudgetsList.setVisibility(View.VISIBLE);
