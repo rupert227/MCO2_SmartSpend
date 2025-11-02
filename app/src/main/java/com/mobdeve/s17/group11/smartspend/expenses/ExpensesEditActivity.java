@@ -114,21 +114,19 @@ public class ExpensesEditActivity extends AppCompatActivity {
             if(!validFields)
                 return;
 
-            float amount = Float.parseFloat(tfAmount.getText().toString().trim());
-            int categoryID = ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim());
-            int dateDay = Integer.parseInt(tfDateDay.getText().toString().trim());
-            int dateMonth = Integer.parseInt(tfDateMonth.getText().toString().trim());
-            int dateYear = Integer.parseInt(tfDateYear.getText().toString().trim());
-            String location = tfLocation.getText().toString().trim();
-            String notes = tfNotes.getText().toString().trim();
-
             ExpensesListItem expensesListItem = expensesListAdapter.items.get(fieldData.listIndex);
 
-            expensesListItem.amount = amount;
-            expensesListItem.date = new Date(dateDay, dateMonth, dateYear);
-            expensesListItem.expensesCategoryID = categoryID;
-            expensesListItem.location = location;
-            expensesListItem.notes = notes;
+            expensesListItem.amount = Float.parseFloat(tfAmount.getText().toString().trim());
+
+            expensesListItem.date = new Date(
+                    Integer.parseInt(tfDateDay.getText().toString().trim()),
+                    Integer.parseInt(tfDateMonth.getText().toString().trim()),
+                    Integer.parseInt(tfDateYear.getText().toString().trim())
+            );
+
+            expensesListItem.expensesCategoryID = ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim());
+            expensesListItem.location = tfLocation.getText().toString().trim();
+            expensesListItem.notes = tfNotes.getText().toString().trim();
 
             expensesListAdapter.notifyItemChanged(fieldData.listIndex);
 

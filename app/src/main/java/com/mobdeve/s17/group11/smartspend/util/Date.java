@@ -10,4 +10,8 @@ public class Date {
         this.year = year;
     }
 
+    public int getUniqueValue() {
+        return year << 9 | month << 5 | day;
+    }
+
 }

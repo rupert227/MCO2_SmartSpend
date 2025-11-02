@@ -118,23 +118,33 @@ public class BudgetsEditActivity extends AppCompatActivity {
             if(!validFields)
                 return;
 
-            float amount = Float.parseFloat(tfAmount.getText().toString().trim());
-            int categoryID = ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim());
-            int dateEndDay = Integer.parseInt(tfDateEndDay.getText().toString().trim());
-            int dateEndMonth = Integer.parseInt(tfDateEndMonth.getText().toString().trim());
-            int dateEndYear = Integer.parseInt(tfDateEndYear.getText().toString().trim());
-            int dateStartDay = Integer.parseInt(tfDateStartDay.getText().toString().trim());
-            int dateStartMonth = Integer.parseInt(tfDateStartMonth.getText().toString().trim());
-            int dateStartYear = Integer.parseInt(tfDateStartYear.getText().toString().trim());
-            String notes = tfNotes.getText().toString().trim();
+            Date endDate = new Date(
+                    Integer.parseInt(tfDateEndDay.getText().toString().trim()),
+                    Integer.parseInt(tfDateEndMonth.getText().toString().trim()),
+                    Integer.parseInt(tfDateEndYear.getText().toString().trim())
+            );
+
+            Date startDate = new Date(
+                    Integer.parseInt(tfDateStartDay.getText().toString().trim()),
+                    Integer.parseInt(tfDateStartMonth.getText().toString().trim()),
+                    Integer.parseInt(tfDateStartYear.getText().toString().trim())
+            );
+
+            if(endDate.getUniqueValue() < startDate.getUniqueValue()) {
+                tvDateEndPrompt.setText("End Date < Start Date");
+                tvDateEndPrompt.setVisibility(TextView.VISIBLE);
+                return;
+            }
+
+            tvDateEndPrompt.setVisibility(TextView.GONE);
 
             BudgetsListItem budgetsListItem = budgetsListAdapter.items.get(fieldData.listIndex);
 
-            budgetsListItem.amount = amount;
-            budgetsListItem.endDate = new Date(dateEndDay, dateEndMonth, dateEndYear);
-            budgetsListItem.startDate = new Date(dateStartDay, dateStartMonth, dateStartYear);
-            budgetsListItem.budgetCategoryID = categoryID;
-            budgetsListItem.notes = notes;
+            budgetsListItem.amount = Float.parseFloat(tfAmount.getText().toString().trim());
+            budgetsListItem.endDate = endDate;
+            budgetsListItem.startDate = startDate;
+            budgetsListItem.budgetCategoryID = ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim());
+            budgetsListItem.notes = tfNotes.getText().toString().trim();
 
             budgetsListAdapter.notifyItemChanged(fieldData.listIndex);
 

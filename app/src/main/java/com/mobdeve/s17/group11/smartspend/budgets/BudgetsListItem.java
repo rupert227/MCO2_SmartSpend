@@ -4,9 +4,9 @@ import com.mobdeve.s17.group11.smartspend.util.Date;
 
 public class BudgetsListItem {
 
-    public int budgetCategoryID;
+    public Date endDate, startDate;
     public float amount;
-    public Date startDate, endDate;
+    public int budgetCategoryID;
     public String notes;
 
     public BudgetsListItem(int budgetCategoryID, float amount, Date startDate, Date endDate, String notes) {

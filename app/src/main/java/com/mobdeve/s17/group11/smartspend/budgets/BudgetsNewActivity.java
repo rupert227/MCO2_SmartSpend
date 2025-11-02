@@ -1,7 +1,6 @@
 package com.mobdeve.s17.group11.smartspend.budgets;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mobdeve.s17.group11.smartspend.R;
 import com.mobdeve.s17.group11.smartspend.expenses.ExpensesCategory;
 import com.mobdeve.s17.group11.smartspend.util.Date;
+import com.mobdeve.s17.group11.smartspend.util.DateHelper;
 import com.mobdeve.s17.group11.smartspend.util.DropdownComposite;
 import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
 import com.mobdeve.s17.group11.smartspend.util.UIUtils;
@@ -85,6 +85,16 @@ public class BudgetsNewActivity extends AppCompatActivity {
         tvHeaderTitle.setText("Create Budget Entry");
         tvDelete.setVisibility(TextView.GONE);
         btnSave.setText("Create Entry");
+
+        Date currentDate = DateHelper.getCurrentDate();
+
+        tfDateEndDay.setText(Integer.toString(currentDate.day));
+        tfDateEndMonth.setText(Integer.toString(currentDate.month));
+        tfDateEndYear.setText(Integer.toString(currentDate.year));
+
+        tfDateStartDay.setText(Integer.toString(currentDate.day));
+        tfDateStartMonth.setText(Integer.toString(currentDate.month));
+        tfDateStartYear.setText(Integer.toString(currentDate.year));
     }
 
     private void initListeners() {
@@ -107,22 +117,32 @@ public class BudgetsNewActivity extends AppCompatActivity {
             if(!validFields)
                 return;
 
-            float amount = Float.parseFloat(tfAmount.getText().toString().trim());
-            int categoryID = ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim());
-            int dateEndDay = Integer.parseInt(tfDateEndDay.getText().toString().trim());
-            int dateEndMonth = Integer.parseInt(tfDateEndMonth.getText().toString().trim());
-            int dateEndYear = Integer.parseInt(tfDateEndYear.getText().toString().trim());
-            int dateStartDay = Integer.parseInt(tfDateStartDay.getText().toString().trim());
-            int dateStartMonth = Integer.parseInt(tfDateStartMonth.getText().toString().trim());
-            int dateStartYear = Integer.parseInt(tfDateStartYear.getText().toString().trim());
-            String notes = tfNotes.getText().toString().trim();
+            Date endDate = new Date(
+                    Integer.parseInt(tfDateEndDay.getText().toString().trim()),
+                    Integer.parseInt(tfDateEndMonth.getText().toString().trim()),
+                    Integer.parseInt(tfDateEndYear.getText().toString().trim())
+            );
+
+            Date startDate = new Date(
+                    Integer.parseInt(tfDateStartDay.getText().toString().trim()),
+                    Integer.parseInt(tfDateStartMonth.getText().toString().trim()),
+                    Integer.parseInt(tfDateStartYear.getText().toString().trim())
+            );
+
+            if(endDate.getUniqueValue() < startDate.getUniqueValue()) {
+                tvDateEndPrompt.setText("End Date < Start Date");
+                tvDateEndPrompt.setVisibility(TextView.VISIBLE);
+                return;
+            }
+
+            tvDateEndPrompt.setVisibility(TextView.GONE);
 
             budgetsListAdapter.items.add(0, new BudgetsListItem(
-                    categoryID,
-                    amount,
-                    new Date(dateEndDay, dateEndMonth, dateEndYear),
-                    new Date(dateStartDay, dateStartMonth, dateStartYear),
-                    notes
+                    ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim()),
+                    Float.parseFloat(tfAmount.getText().toString().trim()),
+                    startDate,
+                    endDate,
+                    tfNotes.getText().toString().trim()
             ));
 
             budgetsListAdapter.notifyItemInserted(0);

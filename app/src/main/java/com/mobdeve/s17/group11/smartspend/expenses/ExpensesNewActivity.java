@@ -1,7 +1,6 @@
 package com.mobdeve.s17.group11.smartspend.expenses;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -111,20 +110,16 @@ public class ExpensesNewActivity extends AppCompatActivity {
             if(!validFields)
                 return;
 
-            float amount = Float.parseFloat(tfAmount.getText().toString().trim());
-            int categoryID = ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim());
-            int dateDay = Integer.parseInt(tfDateDay.getText().toString().trim());
-            int dateMonth = Integer.parseInt(tfDateMonth.getText().toString().trim());
-            int dateYear = Integer.parseInt(tfDateYear.getText().toString().trim());
-            String location = tfLocation.getText().toString().trim();
-            String notes = tfNotes.getText().toString().trim();
-
             expensesListAdapter.items.add(0, new ExpensesListItem(
-                    categoryID,
-                    amount,
-                    new Date(dateDay, dateMonth, dateYear),
-                    location,
-                    notes
+                    ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim()),
+                    Float.parseFloat(tfAmount.getText().toString().trim()),
+                    new Date(
+                            Integer.parseInt(tfDateDay.getText().toString().trim()),
+                            Integer.parseInt(tfDateMonth.getText().toString().trim()),
+                            Integer.parseInt(tfDateYear.getText().toString().trim())
+                    ),
+                    tfLocation.getText().toString().trim(),
+                    tfNotes.getText().toString().trim()
             ));
 
             expensesListAdapter.notifyItemInserted(0);
