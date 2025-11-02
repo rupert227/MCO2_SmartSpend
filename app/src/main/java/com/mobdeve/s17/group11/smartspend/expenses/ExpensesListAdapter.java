@@ -14,16 +14,17 @@ import com.mobdeve.s17.group11.smartspend.R;
 import com.mobdeve.s17.group11.smartspend.util.DateHelper;
 import com.mobdeve.s17.group11.smartspend.util.FormatHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ExpensesListAdapter extends RecyclerView.Adapter<ExpensesListAdapter.ExpensesListItemViewHolder> {
 
-    public List<ExpensesListItem> items = new ArrayList<>();
+    public List<ExpensesListItem> items;
 
     private final Context context;
 
     public ExpensesListAdapter(Context context) {
+
+
         this.context = context;
     }
 

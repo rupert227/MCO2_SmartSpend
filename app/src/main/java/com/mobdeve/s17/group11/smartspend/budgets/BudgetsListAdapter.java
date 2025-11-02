@@ -16,12 +16,11 @@ import com.mobdeve.s17.group11.smartspend.expenses.ExpensesCategory;
 import com.mobdeve.s17.group11.smartspend.util.DateHelper;
 import com.mobdeve.s17.group11.smartspend.util.FormatHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.budgetsListItemViewHolder> {
 
-    public List<BudgetsListItem> items = new ArrayList<>();
+    public List<BudgetsListItem> items;
 
     private final Context context;
 
