@@ -43,7 +43,7 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
         BudgetsListItem budgetsListItem = items.get(position);
 
         holder.tvAmount.setText(FormatHelper.floatToPrice(budgetsListItem.amount));
-        holder.tvCategory.setText(ExpensesCategory.getExpensesCategoryName(budgetsListItem.budgetCategoryID));
+        holder.tvCategory.setText(ExpensesCategory.getExpensesCategoryName(budgetsListItem.budgetsCategoryID));
 
         holder.tvDate.setText(
                 DateHelper.numericalDateTransform1(budgetsListItem.startDate)
@@ -55,13 +55,8 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
             Intent intent = new Intent(context, BudgetsEditActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
-            BudgetsEditActivity.fieldData.amount = budgetsListItem.amount;
-            BudgetsEditActivity.fieldData.categoryID = budgetsListItem.budgetCategoryID;
-            BudgetsEditActivity.fieldData.endDate = budgetsListItem.endDate;
-            BudgetsEditActivity.fieldData.listIndex = holder.getAbsoluteAdapterPosition();
-            BudgetsEditActivity.fieldData.notes = budgetsListItem.notes;
-            BudgetsEditActivity.fieldData.startDate = budgetsListItem.startDate;
-            BudgetsEditActivity.fieldData.use = true;
+            BudgetsEditActivity.intentVariables.budget = budgetsListItem;
+            BudgetsEditActivity.intentVariables.listIndex = holder.getAbsoluteAdapterPosition();
 
             context.startActivity(intent);
         });

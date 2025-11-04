@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.group11.smartspend.R;
-import com.mobdeve.s17.group11.smartspend.util.DataGenerator;
 import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
 import com.mobdeve.s17.group11.smartspend.util.SessionCache;
 import com.mobdeve.s17.group11.smartspend.util.UIUtils;
@@ -93,7 +92,6 @@ public class ExpensesActivity extends AppCompatActivity {
         expensesListAdapter = new ExpensesListAdapter(this);
 
         expensesListAdapter.items = SessionCache.expensesItems;
-        expensesListAdapter.items.addAll(DataGenerator.getExpenseDataList());
 
         if(!expensesListAdapter.items.isEmpty()) {
             rvExpensesList.setVisibility(View.VISIBLE);

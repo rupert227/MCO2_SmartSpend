@@ -18,8 +18,9 @@ import com.mobdeve.s17.group11.smartspend.R;
 import com.mobdeve.s17.group11.smartspend.expenses.ExpensesCategory;
 import com.mobdeve.s17.group11.smartspend.util.Date;
 import com.mobdeve.s17.group11.smartspend.util.DropdownComposite;
-import com.mobdeve.s17.group11.smartspend.util.FieldData;
+import com.mobdeve.s17.group11.smartspend.util.IntentVariables;
 import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
+import com.mobdeve.s17.group11.smartspend.util.SessionCache;
 import com.mobdeve.s17.group11.smartspend.util.UIUtils;
 
 import java.lang.ref.WeakReference;
@@ -27,7 +28,7 @@ import java.util.Arrays;
 
 public class BudgetsEditActivity extends AppCompatActivity {
 
-    public static FieldData.Budget fieldData = new FieldData.Budget();
+    public static IntentVariables.BudgetEdit intentVariables = new IntentVariables.BudgetEdit();
     public static Runnable exitListener;
     public static WeakReference<RecyclerView> rvBudgetsListRef;
 
@@ -83,19 +84,15 @@ public class BudgetsEditActivity extends AppCompatActivity {
         tvDelete = findViewById(R.id.tv_delete);
         tvNotesPrompt = findViewById(R.id.tv_notes_prompt);
 
-        if(fieldData.use) {
-            tfAmount.setText(Float.toString(fieldData.amount));
-            tfCategory.setText(ExpensesCategory.getExpensesCategoryName(fieldData.categoryID));
-            tfDateEndDay.setText(Integer.toString(fieldData.endDate.day));
-            tfDateEndMonth.setText(Integer.toString(fieldData.endDate.month));
-            tfDateEndYear.setText(Integer.toString(fieldData.endDate.year));
-            tfDateStartDay.setText(Integer.toString(fieldData.startDate.day));
-            tfDateStartMonth.setText(Integer.toString(fieldData.startDate.month));
-            tfDateStartYear.setText(Integer.toString(fieldData.startDate.year));
-            tfNotes.setText(fieldData.notes);
-
-            fieldData.use = false;
-        }
+        tfAmount.setText(Float.toString(intentVariables.budget.amount));
+        tfCategory.setText(ExpensesCategory.getExpensesCategoryName(intentVariables.budget.budgetsCategoryID));
+        tfDateEndDay.setText(Integer.toString(intentVariables.budget.endDate.day));
+        tfDateEndMonth.setText(Integer.toString(intentVariables.budget.endDate.month));
+        tfDateEndYear.setText(Integer.toString(intentVariables.budget.endDate.year));
+        tfDateStartDay.setText(Integer.toString(intentVariables.budget.startDate.day));
+        tfDateStartMonth.setText(Integer.toString(intentVariables.budget.startDate.month));
+        tfDateStartYear.setText(Integer.toString(intentVariables.budget.startDate.year));
+        tfNotes.setText(intentVariables.budget.notes);
     }
 
     private void initListeners() {
@@ -138,15 +135,16 @@ public class BudgetsEditActivity extends AppCompatActivity {
 
             tvDateEndPrompt.setVisibility(TextView.GONE);
 
-            BudgetsListItem budgetsListItem = budgetsListAdapter.items.get(fieldData.listIndex);
+            BudgetsListItem budgetsListItem = budgetsListAdapter.items.get(intentVariables.listIndex);
 
             budgetsListItem.amount = Float.parseFloat(tfAmount.getText().toString().trim());
             budgetsListItem.endDate = endDate;
             budgetsListItem.startDate = startDate;
-            budgetsListItem.budgetCategoryID = ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim());
+            budgetsListItem.budgetsCategoryID = ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim());
             budgetsListItem.notes = tfNotes.getText().toString().trim();
 
-            budgetsListAdapter.notifyItemChanged(fieldData.listIndex);
+            SessionCache.budgetsDatabase.updateBudget(budgetsListItem.sqlRowID, budgetsListItem);
+            budgetsListAdapter.notifyItemChanged(intentVariables.listIndex);
 
             finish();
             overridePendingTransition(0, 0);
@@ -167,8 +165,9 @@ public class BudgetsEditActivity extends AppCompatActivity {
                     ColorStateList.valueOf(ContextCompat.getColor(this, R.color.btn_background_danger)).getDefaultColor(),
                     null,
                     btn1View -> {
-                        budgetsListAdapter.items.remove(fieldData.listIndex);
-                        budgetsListAdapter.notifyItemRemoved(fieldData.listIndex);
+                        SessionCache.budgetsDatabase.deleteBudget(intentVariables.budget.sqlRowID);
+                        budgetsListAdapter.items.remove(intentVariables.listIndex);
+                        budgetsListAdapter.notifyItemRemoved(intentVariables.listIndex);
 
                         finish();
                         overridePendingTransition(0, 0);

@@ -41,6 +41,7 @@ public class BudgetSortAdapter extends RecyclerView.Adapter<BudgetSortAdapter.bu
     public static class budgetsSortListItemViewHolder extends RecyclerView.ViewHolder {
 
         public CheckBox chOption;
+
         public budgetsSortListItemViewHolder(@NonNull View itemView) {
             super(itemView);
 

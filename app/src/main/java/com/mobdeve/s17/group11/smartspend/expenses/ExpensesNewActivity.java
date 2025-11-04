@@ -17,6 +17,7 @@ import com.mobdeve.s17.group11.smartspend.util.Date;
 import com.mobdeve.s17.group11.smartspend.util.DateHelper;
 import com.mobdeve.s17.group11.smartspend.util.DropdownComposite;
 import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
+import com.mobdeve.s17.group11.smartspend.util.SessionCache;
 import com.mobdeve.s17.group11.smartspend.util.UIUtils;
 
 import java.lang.ref.WeakReference;
@@ -110,7 +111,7 @@ public class ExpensesNewActivity extends AppCompatActivity {
             if(!validFields)
                 return;
 
-            expensesListAdapter.items.add(0, new ExpensesListItem(
+            ExpensesListItem expense = new ExpensesListItem(
                     ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim()),
                     Float.parseFloat(tfAmount.getText().toString().trim()),
                     new Date(
@@ -120,8 +121,11 @@ public class ExpensesNewActivity extends AppCompatActivity {
                     ),
                     tfLocation.getText().toString().trim(),
                     tfNotes.getText().toString().trim()
-            ));
+            );
 
+            expense.sqlRowID = SessionCache.expensesDatabase.addExpense(expense);
+
+            expensesListAdapter.items.add(0, expense);
             expensesListAdapter.notifyItemInserted(0);
 
             finish();

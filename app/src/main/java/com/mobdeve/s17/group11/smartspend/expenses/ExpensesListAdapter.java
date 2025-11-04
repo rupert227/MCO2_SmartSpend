@@ -49,13 +49,8 @@ public class ExpensesListAdapter extends RecyclerView.Adapter<ExpensesListAdapte
             Intent intent = new Intent(context, ExpensesEditActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
-            ExpensesEditActivity.fieldData.amount = expensesListItem.amount;
-            ExpensesEditActivity.fieldData.categoryID = expensesListItem.expensesCategoryID;
-            ExpensesEditActivity.fieldData.date = expensesListItem.date;
-            ExpensesEditActivity.fieldData.listIndex = holder.getAbsoluteAdapterPosition();
-            ExpensesEditActivity.fieldData.location = expensesListItem.location;
-            ExpensesEditActivity.fieldData.notes = expensesListItem.notes;
-            ExpensesEditActivity.fieldData.use = true;
+            ExpensesEditActivity.intentVariables.expense = expensesListItem;
+            ExpensesEditActivity.intentVariables.listIndex = holder.getAbsoluteAdapterPosition();
 
             context.startActivity(intent);
         });

@@ -41,6 +41,7 @@ public class ExpensesSortAdapter extends RecyclerView.Adapter<ExpensesSortAdapte
     public static class ExpensesSortListItemViewHolder extends RecyclerView.ViewHolder {
 
         public CheckBox chOption;
+
         public ExpensesSortListItemViewHolder(@NonNull View itemView) {
             super(itemView);
 

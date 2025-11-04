@@ -17,8 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mobdeve.s17.group11.smartspend.R;
 import com.mobdeve.s17.group11.smartspend.util.Date;
 import com.mobdeve.s17.group11.smartspend.util.DropdownComposite;
-import com.mobdeve.s17.group11.smartspend.util.FieldData;
+import com.mobdeve.s17.group11.smartspend.util.IntentVariables;
 import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
+import com.mobdeve.s17.group11.smartspend.util.SessionCache;
 import com.mobdeve.s17.group11.smartspend.util.UIUtils;
 
 import java.lang.ref.WeakReference;
@@ -26,7 +27,7 @@ import java.util.Arrays;
 
 public class ExpensesEditActivity extends AppCompatActivity {
 
-    public static FieldData.Expense fieldData = new FieldData.Expense();
+    public static IntentVariables.ExpenseEdit intentVariables = new IntentVariables.ExpenseEdit();
     public static Runnable exitListener;
     public static WeakReference<RecyclerView> rvExpensesListRef;
 
@@ -60,19 +61,6 @@ public class ExpensesEditActivity extends AppCompatActivity {
         NavigationBar.init(this);
 
         initViews();
-
-        if(fieldData.use) {
-            tfAmount.setText(Float.toString(fieldData.amount));
-            tfCategory.setText(ExpensesCategory.getExpensesCategoryName(fieldData.categoryID));
-            tfDateDay.setText(Integer.toString(fieldData.date.day));
-            tfDateMonth.setText(Integer.toString(fieldData.date.month));
-            tfDateYear.setText(Integer.toString(fieldData.date.year));
-            tfLocation.setText(fieldData.location);
-            tfNotes.setText(fieldData.notes);
-
-            fieldData.use = false;
-        }
-
         initListeners();
         initRecyclerViews();
     }
@@ -93,6 +81,14 @@ public class ExpensesEditActivity extends AppCompatActivity {
         tvDelete = findViewById(R.id.tv_delete);
         tvLocationPrompt = findViewById(R.id.tv_location_prompt);
         tvNotesPrompt = findViewById(R.id.tv_notes_prompt);
+
+        tfAmount.setText(Float.toString(intentVariables.expense.amount));
+        tfCategory.setText(ExpensesCategory.getExpensesCategoryName(intentVariables.expense.expensesCategoryID));
+        tfDateDay.setText(Integer.toString(intentVariables.expense.date.day));
+        tfDateMonth.setText(Integer.toString(intentVariables.expense.date.month));
+        tfDateYear.setText(Integer.toString(intentVariables.expense.date.year));
+        tfLocation.setText(intentVariables.expense.location);
+        tfNotes.setText(intentVariables.expense.notes);
     }
 
     private void initListeners() {
@@ -114,7 +110,7 @@ public class ExpensesEditActivity extends AppCompatActivity {
             if(!validFields)
                 return;
 
-            ExpensesListItem expensesListItem = expensesListAdapter.items.get(fieldData.listIndex);
+            ExpensesListItem expensesListItem = expensesListAdapter.items.get(intentVariables.listIndex);
 
             expensesListItem.amount = Float.parseFloat(tfAmount.getText().toString().trim());
 
@@ -128,7 +124,8 @@ public class ExpensesEditActivity extends AppCompatActivity {
             expensesListItem.location = tfLocation.getText().toString().trim();
             expensesListItem.notes = tfNotes.getText().toString().trim();
 
-            expensesListAdapter.notifyItemChanged(fieldData.listIndex);
+            SessionCache.expensesDatabase.updateExpense(expensesListItem.sqlRowID, expensesListItem);
+            expensesListAdapter.notifyItemChanged(intentVariables.listIndex);
 
             finish();
             overridePendingTransition(0, 0);
@@ -149,8 +146,9 @@ public class ExpensesEditActivity extends AppCompatActivity {
                     ColorStateList.valueOf(ContextCompat.getColor(this, R.color.btn_background_danger)).getDefaultColor(),
                     null,
                     btn1View -> {
-                        expensesListAdapter.items.remove(fieldData.listIndex);
-                        expensesListAdapter.notifyItemRemoved(fieldData.listIndex);
+                        SessionCache.expensesDatabase.deleteExpense(intentVariables.expense.sqlRowID);
+                        expensesListAdapter.items.remove(intentVariables.expense);
+                        expensesListAdapter.notifyItemRemoved(intentVariables.listIndex);
 
                         finish();
                         overridePendingTransition(0, 0);

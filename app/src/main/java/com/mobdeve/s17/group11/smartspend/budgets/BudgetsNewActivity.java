@@ -18,6 +18,7 @@ import com.mobdeve.s17.group11.smartspend.util.Date;
 import com.mobdeve.s17.group11.smartspend.util.DateHelper;
 import com.mobdeve.s17.group11.smartspend.util.DropdownComposite;
 import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
+import com.mobdeve.s17.group11.smartspend.util.SessionCache;
 import com.mobdeve.s17.group11.smartspend.util.UIUtils;
 
 import java.lang.ref.WeakReference;
@@ -137,14 +138,17 @@ public class BudgetsNewActivity extends AppCompatActivity {
 
             tvDateEndPrompt.setVisibility(TextView.GONE);
 
-            budgetsListAdapter.items.add(0, new BudgetsListItem(
+            BudgetsListItem budget = new BudgetsListItem(
                     ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim()),
                     Float.parseFloat(tfAmount.getText().toString().trim()),
                     startDate,
                     endDate,
                     tfNotes.getText().toString().trim()
-            ));
+            );
 
+            budget.sqlRowID = SessionCache.budgetsDatabase.addBudget(budget);
+
+            budgetsListAdapter.items.add(0, budget);
             budgetsListAdapter.notifyItemInserted(0);
 
             finish();
