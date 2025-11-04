@@ -1,8 +1,11 @@
 package com.mobdeve.s17.group11.smartspend.budgets;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -26,6 +29,7 @@ import com.mobdeve.s17.group11.smartspend.util.UIUtils;
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
 
+@SuppressLint("SetTextI18n")
 public class BudgetsEditActivity extends AppCompatActivity {
 
     public static IntentVariables.BudgetEdit intentVariables = new IntentVariables.BudgetEdit();
@@ -40,6 +44,8 @@ public class BudgetsEditActivity extends AppCompatActivity {
     private EditText tfDateStartDay, tfDateStartMonth, tfDateStartYear;
     private EditText tfNotes;
     private ImageButton btnBack;
+    private ImageButton btnDateEndCalendar;
+    private ImageButton btnDateStartCalendar;
     private TextView tvAmountPrompt;
     private TextView tvCategoryPrompt;
     private TextView tvDateEndPrompt, tvDateStartPrompt;
@@ -67,6 +73,8 @@ public class BudgetsEditActivity extends AppCompatActivity {
 
     private void initViews() {
         btnBack = findViewById(R.id.btn_header_back);
+        btnDateEndCalendar = findViewById(R.id.btn_date_end_calendar);
+        btnDateStartCalendar = findViewById(R.id.btn_date_start_calendar);
         btnSave = findViewById(R.id.btn_save);
         tfAmount = findViewById(R.id.tf_amount);
         tfCategory = findViewById(R.id.tf_category);
@@ -102,6 +110,42 @@ public class BudgetsEditActivity extends AppCompatActivity {
         btnBack.setOnClickListener(view -> {
             finish();
             overridePendingTransition(0, 0);
+        });
+
+        btnDateEndCalendar.setOnClickListener(view -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    BudgetsEditActivity.this,
+
+                    (DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) -> {
+                        tfDateEndDay.setText(Integer.toString(selectedDay));
+                        tfDateEndMonth.setText(Integer.toString(selectedMonth + 1));
+                        tfDateEndYear.setText(Integer.toString(selectedYear));
+                    },
+
+                    Integer.parseInt(tfDateEndYear.getText().toString().trim()),
+                    Integer.parseInt(tfDateEndMonth.getText().toString().trim()) - 1,
+                    Integer.parseInt(tfDateEndDay.getText().toString().trim())
+            );
+
+            datePickerDialog.show();
+        });
+
+        btnDateStartCalendar.setOnClickListener(view -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    BudgetsEditActivity.this,
+
+                    (DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) -> {
+                        tfDateStartDay.setText(Integer.toString(selectedDay));
+                        tfDateStartMonth.setText(Integer.toString(selectedMonth + 1));
+                        tfDateStartYear.setText(Integer.toString(selectedYear));
+                    },
+
+                    Integer.parseInt(tfDateStartYear.getText().toString().trim()),
+                    Integer.parseInt(tfDateStartMonth.getText().toString().trim()) - 1,
+                    Integer.parseInt(tfDateStartDay.getText().toString().trim())
+            );
+
+            datePickerDialog.show();
         });
 
         btnSave.setOnClickListener(view -> {

@@ -1,7 +1,10 @@
 package com.mobdeve.s17.group11.smartspend.expenses;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import com.mobdeve.s17.group11.smartspend.util.UIUtils;
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
 
+@SuppressLint("SetTextI18n")
 public class ExpensesNewActivity extends AppCompatActivity {
 
     public static Runnable exitListener;
@@ -36,6 +40,7 @@ public class ExpensesNewActivity extends AppCompatActivity {
     private EditText tfLocation;
     private EditText tfNotes;
     private ImageButton btnBack;
+    private ImageButton btnDateCalendar;
     private TextView tvAmountPrompt;
     private TextView tvCategoryPrompt;
     private TextView tvDatePrompt;
@@ -65,6 +70,7 @@ public class ExpensesNewActivity extends AppCompatActivity {
 
     private void initViews() {
         btnBack = findViewById(R.id.btn_header_back);
+        btnDateCalendar = findViewById(R.id.btn_date_calendar);
         btnSave = findViewById(R.id.btn_save);
         tfAmount = findViewById(R.id.tf_amount);
         tfCategory = findViewById(R.id.tf_category);
@@ -99,6 +105,24 @@ public class ExpensesNewActivity extends AppCompatActivity {
         btnBack.setOnClickListener(view -> {
             finish();
             overridePendingTransition(0, 0);
+        });
+
+        btnDateCalendar.setOnClickListener(view -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    ExpensesNewActivity.this,
+
+                    (DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) -> {
+                        tfDateDay.setText(Integer.toString(selectedDay));
+                        tfDateMonth.setText(Integer.toString(selectedMonth + 1));
+                        tfDateYear.setText(Integer.toString(selectedYear));
+                    },
+
+                    Integer.parseInt(tfDateYear.getText().toString().trim()),
+                    Integer.parseInt(tfDateMonth.getText().toString().trim()) - 1,
+                    Integer.parseInt(tfDateDay.getText().toString().trim())
+            );
+
+            datePickerDialog.show();
         });
 
         btnSave.setOnClickListener(view -> {
