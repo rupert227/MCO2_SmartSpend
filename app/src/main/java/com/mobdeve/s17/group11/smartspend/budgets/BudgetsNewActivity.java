@@ -192,8 +192,12 @@ public class BudgetsNewActivity extends AppCompatActivity {
 
             budget.sqlRowID = SessionCache.budgetsDatabase.addBudget(budget);
 
-            budgetsListAdapter.items.add(0, budget);
-            budgetsListAdapter.notifyItemInserted(0);
+            SessionCache.budgetsItems.add(0, budget);
+
+            for(int i = 0; i < SessionCache.budgetsItems.size(); i++)
+                SessionCache.budgetsItems.get(i).listIndex = i;
+
+            BudgetsActivity.budgetsPopupSortRef.get().applySort();
 
             finish();
             overridePendingTransition(0, 0);

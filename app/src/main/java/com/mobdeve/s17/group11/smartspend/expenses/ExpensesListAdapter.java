@@ -14,17 +14,16 @@ import com.mobdeve.s17.group11.smartspend.R;
 import com.mobdeve.s17.group11.smartspend.util.DateHelper;
 import com.mobdeve.s17.group11.smartspend.util.FormatHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExpensesListAdapter extends RecyclerView.Adapter<ExpensesListAdapter.ExpensesListItemViewHolder> {
 
-    public List<ExpensesListItem> items;
+    public List<ExpensesListItem> items = new ArrayList<>();
 
     private final Context context;
 
     public ExpensesListAdapter(Context context) {
-
-
         this.context = context;
     }
 
@@ -39,18 +38,18 @@ public class ExpensesListAdapter extends RecyclerView.Adapter<ExpensesListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ExpensesListItemViewHolder holder, int position) {
-        ExpensesListItem expensesListItem = items.get(position);
+        ExpensesListItem expense = items.get(position);
 
-        holder.tvAmount.setText(FormatHelper.floatToPrice(expensesListItem.amount));
-        holder.tvCategory.setText(ExpensesCategory.getExpensesCategoryName(expensesListItem.expensesCategoryID));
-        holder.tvDate.setText(DateHelper.numericalDateTransform0(expensesListItem.date));
+        holder.itemView.setOnClickListener(null);
+        holder.tvAmount.setText(FormatHelper.floatToPrice(expense.amount));
+        holder.tvCategory.setText(ExpensesCategory.getExpensesCategoryName(expense.expensesCategoryID));
+        holder.tvDate.setText(DateHelper.numericalDateTransform0(expense.date));
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ExpensesEditActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
-            ExpensesEditActivity.intentVariables.expense = expensesListItem;
-            ExpensesEditActivity.intentVariables.listIndex = holder.getAbsoluteAdapterPosition();
+            ExpensesEditActivity.expenseEdit = expense;
 
             context.startActivity(intent);
         });

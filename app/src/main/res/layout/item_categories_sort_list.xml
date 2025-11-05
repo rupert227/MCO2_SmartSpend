@@ -10,13 +10,14 @@
     android:layout_marginRight="8dp"
     android:layout_marginBottom="2dp"
     android:background="@drawable/bg_rv_item"
-    android:elevation="4dp">
+    android:elevation="4dp"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp">
 
     <CheckBox
         android:id="@+id/ch_option"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:fontFamily="@font/dm_sans"
         android:text="Category"
         android:textColor="@color/btn_background"

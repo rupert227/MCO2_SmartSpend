@@ -51,7 +51,7 @@ public class BudgetsDatabase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
-        values.put(COLUMN_CATEGORY_ID, budget.budgetsCategoryID);
+        values.put(COLUMN_CATEGORY_ID, budget.expensesCategoryID);
         values.put(COLUMN_AMOUNT, budget.amount);
         values.put(COLUMN_DATE_START, budget.startDate.getUniqueValue());
         values.put(COLUMN_DATE_END, budget.endDate.getUniqueValue());
@@ -74,7 +74,7 @@ public class BudgetsDatabase extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
-        contentValues.put(COLUMN_CATEGORY_ID, budget.budgetsCategoryID);
+        contentValues.put(COLUMN_CATEGORY_ID, budget.expensesCategoryID);
         contentValues.put(COLUMN_AMOUNT, budget.amount);
         contentValues.put(COLUMN_DATE_START, budget.startDate.getUniqueValue());
         contentValues.put(COLUMN_DATE_END, budget.endDate.getUniqueValue());

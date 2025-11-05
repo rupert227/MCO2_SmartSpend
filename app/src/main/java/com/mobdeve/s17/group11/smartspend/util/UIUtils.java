@@ -139,7 +139,7 @@ public class UIUtils {
 
             TextView tvHeader = dialogView.findViewById(R.id.tv_header);
             TextView tvMessage = dialogView.findViewById(R.id.tv_message);
-            Button btnOption0 = dialogView.findViewById(R.id.btn_option0);
+            Button btnOption0 = dialogView.findViewById(R.id.btn_apply);
             Button btnOption1 = dialogView.findViewById(R.id.btn_option1);
 
             tvHeader.setText(header);
@@ -182,7 +182,7 @@ public class UIUtils {
             if(dialogView == null)
                 dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt0, null, false);
 
-            Button btnOption0 = dialogView.findViewById(R.id.btn_option0);
+            Button btnOption0 = dialogView.findViewById(R.id.btn_apply);
             Button btnOption1 = dialogView.findViewById(R.id.btn_option1);
 
             btnOption0.setBackgroundColor(btn0Bg);

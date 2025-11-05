@@ -7,6 +7,7 @@ public class ExpensesListItem {
     public Date date;
     public float amount;
     public int expensesCategoryID;
+    public int listIndex;
     public long sqlRowID;
     public String location;
     public String notes;

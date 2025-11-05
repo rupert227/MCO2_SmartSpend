@@ -38,23 +38,35 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            app:tint="@color/atv_navigation_background"
             app:layout_constraintBottom_toBottomOf="@+id/tv_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_date"
-            app:srcCompat="@drawable/ic_rewind" />
+            app:srcCompat="@drawable/ic_rewind"
+            app:tint="@color/atv_navigation_background" />
 
         <CheckBox
-            android:id="@+id/ch_oldest"
+            android:id="@+id/cb_oldest"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/dm_sans"
-            android:text="Oldest First"
+            android:text="Oldest to Newest"
             android:textColor="@color/btn_background"
             app:buttonIconTint="@color/btn_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_date"
+            app:useMaterialThemeColors="false" />
+
+        <CheckBox
+            android:id="@+id/cb_newest"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:fontFamily="@font/dm_sans"
+            android:text="Newest to Oldest"
+            android:textColor="@color/btn_background"
+            app:buttonIconTint="@color/btn_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cb_oldest"
             app:useMaterialThemeColors="false" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -88,14 +100,14 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            app:tint="@color/atv_navigation_background"
             app:layout_constraintBottom_toBottomOf="@+id/tv_amount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_amount"
-            app:srcCompat="@drawable/ic_rewind" />
+            app:srcCompat="@drawable/ic_rewind"
+            app:tint="@color/atv_navigation_background" />
 
         <CheckBox
-            android:id="@+id/ch_low"
+            android:id="@+id/cb_lowest"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_marginTop="8dp"
@@ -108,7 +120,7 @@
             app:useMaterialThemeColors="false" />
 
         <CheckBox
-            android:id="@+id/ch_high"
+            android:id="@+id/cb_highest"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:fontFamily="@font/dm_sans"
@@ -116,7 +128,7 @@
             android:textColor="@color/btn_background"
             app:buttonIconTint="@color/btn_background"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ch_low"
+            app:layout_constraintTop_toBottomOf="@+id/cb_lowest"
             app:useMaterialThemeColors="false" />
 
         <TextView
@@ -129,7 +141,7 @@
             android:textColor="@color/tv_label1"
             android:textSize="14dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ch_high" />
+            app:layout_constraintTop_toBottomOf="@+id/cb_highest" />
 
         <EditText
             android:id="@+id/tf_lowest"
@@ -217,18 +229,18 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            app:tint="@color/atv_navigation_background"
             app:layout_constraintBottom_toBottomOf="@+id/tv_header"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_header"
-            app:srcCompat="@drawable/ic_rewind" />
+            app:srcCompat="@drawable/ic_rewind"
+            app:tint="@color/atv_navigation_background" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_category"
-            android:clipToPadding="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:clipToPadding="false"
             android:fadeScrollbars="false"
             android:scrollbarStyle="insideOverlay"
             android:scrollbars="vertical"
@@ -239,8 +251,8 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/btn_option0"
-        android:layout_width="200dp"
+        android:id="@+id/btn_apply"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:backgroundTint="@color/btn_background"

@@ -149,8 +149,12 @@ public class ExpensesNewActivity extends AppCompatActivity {
 
             expense.sqlRowID = SessionCache.expensesDatabase.addExpense(expense);
 
-            expensesListAdapter.items.add(0, expense);
-            expensesListAdapter.notifyItemInserted(0);
+            SessionCache.expensesItems.add(0, expense);
+
+            for(int i = 0; i < SessionCache.expensesItems.size(); i++)
+                SessionCache.expensesItems.get(i).listIndex = i;
+
+            ExpensesActivity.expensesPopupSortRef.get().applySort();
 
             finish();
             overridePendingTransition(0, 0);

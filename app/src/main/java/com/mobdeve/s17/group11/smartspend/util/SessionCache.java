@@ -16,4 +16,7 @@ public class SessionCache {
     public static final List<BudgetsListItem> budgetsItems = new ArrayList<>();
     public static final List<ExpensesListItem> expensesItems = new ArrayList<>();
 
+    public static final SortSettingsVariables budgetsSortSettings = new SortSettingsVariables();
+    public static final SortSettingsVariables expensesSortSettings = new SortSettingsVariables();
+
 }

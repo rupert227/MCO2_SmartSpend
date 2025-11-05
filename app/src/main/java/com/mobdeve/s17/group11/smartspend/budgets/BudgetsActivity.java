@@ -22,12 +22,14 @@ import java.lang.ref.WeakReference;
 
 public class BudgetsActivity extends AppCompatActivity {
 
+    public static WeakReference<BudgetsPopupSort> budgetsPopupSortRef;
+
+    public BudgetsListAdapter budgetsListAdapter;
+
     private BudgetsPopupSort budgetsPopupSort;
-    private BudgetsListAdapter budgetsListAdapter;
     private ImageButton btnAdd;
     private ImageButton btnSort;
     private RecyclerView rvBudgetsList;
-
     private TextView tvPromptEmptyList;
 
     @Override
@@ -43,11 +45,26 @@ public class BudgetsActivity extends AppCompatActivity {
         });
 
         NavigationBar.init(this);
-        budgetsPopupSort = new BudgetsPopupSort(this);
 
         initViews();
         initListeners();
         initRecyclerViews();
+
+        budgetsPopupSort = new BudgetsPopupSort(this);
+        budgetsPopupSortRef = new WeakReference<>(budgetsPopupSort);
+
+        budgetsPopupSort.applySettings(SessionCache.budgetsSortSettings);
+        budgetsPopupSort.applySort();
+    }
+
+    public void validateUI() {
+        if(!budgetsListAdapter.items.isEmpty()) {
+            rvBudgetsList.setVisibility(View.VISIBLE);
+            tvPromptEmptyList.setVisibility(View.GONE);
+        } else {
+            rvBudgetsList.setVisibility(View.GONE);
+            tvPromptEmptyList.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initViews() {
@@ -66,6 +83,7 @@ public class BudgetsActivity extends AppCompatActivity {
 
         btnSort.setOnClickListener(view -> {
             if(!budgetsPopupSort.popupWindow.isShowing()) {
+                budgetsPopupSort.applySettings(SessionCache.budgetsSortSettings);
                 budgetsPopupSort.popupWindow.showAsDropDown(view);
                 UIUtils.Appearance.dimBehind(budgetsPopupSort.popupWindow.getContentView(), view, 0.1f);
             } else {
@@ -90,15 +108,10 @@ public class BudgetsActivity extends AppCompatActivity {
     private void initRecyclerViews() {
         budgetsListAdapter = new BudgetsListAdapter(this);
 
-        budgetsListAdapter.items = SessionCache.budgetsItems;
+        // SessionCache.budgetsItems.addAll(DataGenerator.getBudgetDataList());
 
-        if(!budgetsListAdapter.items.isEmpty()) {
-            rvBudgetsList.setVisibility(View.VISIBLE);
-            tvPromptEmptyList.setVisibility(View.GONE);
-        } else {
-            rvBudgetsList.setVisibility(View.GONE);
-            tvPromptEmptyList.setVisibility(View.VISIBLE);
-        }
+        for(int i = 0; i < SessionCache.budgetsItems.size(); i++)
+            SessionCache.budgetsItems.get(i).listIndex = i;
 
         rvBudgetsList.setLayoutManager(new LinearLayoutManager(
                 this,

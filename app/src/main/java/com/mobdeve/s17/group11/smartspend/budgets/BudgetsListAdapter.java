@@ -16,11 +16,12 @@ import com.mobdeve.s17.group11.smartspend.expenses.ExpensesCategory;
 import com.mobdeve.s17.group11.smartspend.util.DateHelper;
 import com.mobdeve.s17.group11.smartspend.util.FormatHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.budgetsListItemViewHolder> {
 
-    public List<BudgetsListItem> items;
+    public List<BudgetsListItem> items = new ArrayList<>();
 
     private final Context context;
 
@@ -40,23 +41,23 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull budgetsListItemViewHolder holder, int position) {
-        BudgetsListItem budgetsListItem = items.get(position);
+        BudgetsListItem budget = items.get(position);
 
-        holder.tvAmount.setText(FormatHelper.floatToPrice(budgetsListItem.amount));
-        holder.tvCategory.setText(ExpensesCategory.getExpensesCategoryName(budgetsListItem.budgetsCategoryID));
+        holder.itemView.setOnClickListener(null);
+        holder.tvAmount.setText(FormatHelper.floatToPrice(budget.amount));
+        holder.tvCategory.setText(ExpensesCategory.getExpensesCategoryName(budget.expensesCategoryID));
 
         holder.tvDate.setText(
-                DateHelper.numericalDateTransform1(budgetsListItem.startDate)
+                DateHelper.numericalDateTransform1(budget.startDate)
                         + " - "
-                        + DateHelper.numericalDateTransform1(budgetsListItem.endDate)
+                        + DateHelper.numericalDateTransform1(budget.endDate)
         );
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, BudgetsEditActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
-            BudgetsEditActivity.intentVariables.budget = budgetsListItem;
-            BudgetsEditActivity.intentVariables.listIndex = holder.getAbsoluteAdapterPosition();
+            BudgetsEditActivity.budgetEdit = budget;
 
             context.startActivity(intent);
         });

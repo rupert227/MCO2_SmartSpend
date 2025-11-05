@@ -22,6 +22,8 @@ import java.lang.ref.WeakReference;
 
 public class ExpensesActivity extends AppCompatActivity {
 
+    public static WeakReference<ExpensesPopupSort> expensesPopupSortRef;
+
     public ExpensesListAdapter expensesListAdapter;
 
     private ExpensesPopupSort expensesPopupSort;
@@ -43,11 +45,26 @@ public class ExpensesActivity extends AppCompatActivity {
         });
 
         NavigationBar.init(this);
-        expensesPopupSort = new ExpensesPopupSort(this);
 
         initViews();
         initListeners();
         initRecyclerViews();
+
+        expensesPopupSort = new ExpensesPopupSort(this);
+        expensesPopupSortRef = new WeakReference<>(expensesPopupSort);
+
+        expensesPopupSort.applySettings(SessionCache.expensesSortSettings);
+        expensesPopupSort.applySort();
+    }
+
+    public void validateUI() {
+        if(!expensesListAdapter.items.isEmpty()) {
+            rvExpensesList.setVisibility(View.VISIBLE);
+            tvPromptEmptyList.setVisibility(View.GONE);
+        } else {
+            rvExpensesList.setVisibility(View.GONE);
+            tvPromptEmptyList.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initViews() {
@@ -67,6 +84,7 @@ public class ExpensesActivity extends AppCompatActivity {
 
         btnSort.setOnClickListener(view -> {
             if(!expensesPopupSort.popupWindow.isShowing()) {
+                expensesPopupSort.applySettings(SessionCache.expensesSortSettings);
                 expensesPopupSort.popupWindow.showAsDropDown(view);
                 UIUtils.Appearance.dimBehind(expensesPopupSort.popupWindow.getContentView(), view, 0.1f);
             } else {
@@ -91,15 +109,10 @@ public class ExpensesActivity extends AppCompatActivity {
     private void initRecyclerViews() {
         expensesListAdapter = new ExpensesListAdapter(this);
 
-        expensesListAdapter.items = SessionCache.expensesItems;
+        // SessionCache.expensesItems.addAll(DataGenerator.getExpenseDataList());
 
-        if(!expensesListAdapter.items.isEmpty()) {
-            rvExpensesList.setVisibility(View.VISIBLE);
-            tvPromptEmptyList.setVisibility(View.GONE);
-        } else {
-            rvExpensesList.setVisibility(View.GONE);
-            tvPromptEmptyList.setVisibility(View.VISIBLE);
-        }
+        for(int i = 0; i < SessionCache.expensesItems.size(); i++)
+            SessionCache.expensesItems.get(i).listIndex = i;
 
         rvExpensesList.setLayoutManager(new LinearLayoutManager(
                 this,
