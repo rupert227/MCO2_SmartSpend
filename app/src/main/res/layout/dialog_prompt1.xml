@@ -75,6 +75,21 @@
                 tools:layout_editor_absoluteX="48dp"
                 tools:layout_editor_absoluteY="154dp" />
 
+            <Button
+                android:id="@+id/btn_option1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="24dp"
+                android:backgroundTint="@color/btn_background"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans_bold"
+                android:text="Option 1"
+                android:textColor="@color/btn_text"
+                android:textSize="16sp"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="81dp"
+                tools:layout_editor_absoluteX="283dp"
+                tools:layout_editor_absoluteY="178dp" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

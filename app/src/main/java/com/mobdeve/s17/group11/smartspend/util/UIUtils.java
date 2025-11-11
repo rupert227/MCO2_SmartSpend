@@ -133,13 +133,13 @@ public class UIUtils {
 
     public static class Dialog {
 
-        public static void showPrompt0(View anchorView, View dialogView, String header, String message, String btn0Label, String btn1Label, View.OnClickListener btn0Click, View.OnClickListener btn1Click) {
+        public static void showPrompt1(View anchorView, View dialogView, String header, String message, String btn0Label, String btn1Label, View.OnClickListener btn0Click, View.OnClickListener btn1Click) {
             if(dialogView == null)
-                dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt0, null, false);
+                dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt1, null, false);
 
             TextView tvHeader = dialogView.findViewById(R.id.tv_header);
             TextView tvMessage = dialogView.findViewById(R.id.tv_message);
-            Button btnOption0 = dialogView.findViewById(R.id.btn_apply);
+            Button btnOption0 = dialogView.findViewById(R.id.btn_option0);
             Button btnOption1 = dialogView.findViewById(R.id.btn_option1);
 
             tvHeader.setText(header);
@@ -178,17 +178,17 @@ public class UIUtils {
             dialog.show();
         }
 
-        public static void showPrompt0(View anchorView, View dialogView, String header, String message, String btn0Label, String btn1Label, int btn0Bg, int btn1Bg, View.OnClickListener btn0Click, View.OnClickListener btn1Click) {
+        public static void showPrompt1(View anchorView, View dialogView, String header, String message, String btn0Label, String btn1Label, int btn0Bg, int btn1Bg, View.OnClickListener btn0Click, View.OnClickListener btn1Click) {
             if(dialogView == null)
-                dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt0, null, false);
+                dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt1, null, false);
 
-            Button btnOption0 = dialogView.findViewById(R.id.btn_apply);
+            Button btnOption0 = dialogView.findViewById(R.id.btn_option0);
             Button btnOption1 = dialogView.findViewById(R.id.btn_option1);
 
             btnOption0.setBackgroundColor(btn0Bg);
             btnOption1.setBackgroundColor(btn1Bg);
 
-            showPrompt0(anchorView, dialogView, header, message, btn0Label, btn1Label, btn0Click, btn1Click);
+            showPrompt1(anchorView, dialogView, header, message, btn0Label, btn1Label, btn0Click, btn1Click);
         }
 
     }

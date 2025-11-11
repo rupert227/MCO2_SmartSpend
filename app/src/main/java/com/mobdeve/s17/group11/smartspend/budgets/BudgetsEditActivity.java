@@ -196,7 +196,7 @@ public class BudgetsEditActivity extends AppCompatActivity {
         });
 
         tvDelete.setOnClickListener(view -> {
-            UIUtils.Dialog.showPrompt0(
+            UIUtils.Dialog.showPrompt1(
                     view,
                     null,
                     "Delete Budget Entry",
