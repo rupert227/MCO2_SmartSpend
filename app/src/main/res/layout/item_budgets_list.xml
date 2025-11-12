@@ -16,7 +16,7 @@
     <LinearLayout
         android:id="@+id/ll_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="start"
         android:layout_weight="0.75"
         android:orientation="vertical">
@@ -48,19 +48,42 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_amount_current"
+    <LinearLayout
+        android:id="@+id/ll_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="start"
         android:layout_marginStart="4dp"
         android:layout_weight="1"
-        android:ellipsize="end"
-        android:fontFamily="@font/dm_sans"
-        android:gravity="end"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:text="Amount"
-        android:textColor="@color/tv_label1"
-        android:textSize="18sp" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_amount_current"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:fontFamily="@font/dm_sans"
+            android:gravity="end"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Current"
+            android:textColor="@color/tv_label1"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_amount_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:fontFamily="@font/dm_sans_bold"
+            android:gravity="end"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Max"
+            android:textColor="@color/tv_label1"
+            android:textSize="18sp" />
+    </LinearLayout>
+
 </LinearLayout>

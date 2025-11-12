@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cl_root"
+    android:id="@+id/ll_root"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_popup"
@@ -82,7 +82,7 @@
         tools:layout_editor_absoluteY="29dp">
 
         <TextView
-            android:id="@+id/tv_amount"
+            android:id="@+id/tv_amount_current"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/dm_sans_bold"
@@ -100,9 +100,9 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_amount"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_amount_current"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_amount"
+            app:layout_constraintTop_toTopOf="@+id/tv_amount_current"
             app:srcCompat="@drawable/ic_rewind"
             app:tint="@color/atv_navigation_background" />
 
@@ -116,7 +116,7 @@
             android:textColor="@color/btn_background"
             app:buttonIconTint="@color/btn_background"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_amount"
+            app:layout_constraintTop_toBottomOf="@+id/tv_amount_current"
             app:useMaterialThemeColors="false" />
 
         <CheckBox
