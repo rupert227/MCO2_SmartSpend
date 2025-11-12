@@ -48,7 +48,6 @@ public class BudgetsNewActivity extends AppCompatActivity {
     private TextView tvDateEndPrompt, tvDateStartPrompt;
     private TextView tvDelete;
     private TextView tvHeaderTitle;
-    private TextView tvNotesPrompt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +88,6 @@ public class BudgetsNewActivity extends AppCompatActivity {
         tvDateStartPrompt = findViewById(R.id.tv_date_start_prompt);
         tvDelete = findViewById(R.id.tv_delete);
         tvHeaderTitle = findViewById(R.id.tv_header_title);
-        tvNotesPrompt = findViewById(R.id.tv_notes_prompt);
 
         tvHeaderTitle.setText("Create Budget Entry");
         tvDelete.setVisibility(TextView.GONE);
@@ -184,11 +182,24 @@ public class BudgetsNewActivity extends AppCompatActivity {
 
             BudgetsListItem budget = new BudgetsListItem(
                     ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim()),
+                    0,
                     Float.parseFloat(tfAmount.getText().toString().trim()),
                     startDate,
                     endDate,
                     tfNotes.getText().toString().trim()
             );
+
+            SessionCache.expensesItems.forEach(expense -> {
+                int budgetDateEnd = budget.endDate.getUniqueValue();
+                int budgetDateStart = budget.startDate.getUniqueValue();
+                int expenseDate = expense.date.getUniqueValue();
+
+                if(budget.expensesCategoryID == expense.expensesCategoryID
+                        && budgetDateStart <= expenseDate
+                        && budgetDateEnd >= expenseDate) {
+                    budget.currentAmount += expense.amount;
+                }
+            });
 
             budget.sqlRowID = SessionCache.budgetsDatabase.addBudget(budget);
 

@@ -34,6 +34,7 @@ public class DataGenerator {
         for(int i = 0; i < 50; i++) {
             items.add(new BudgetsListItem(
                     rand.nextInt(ExpensesCategory.getListOrder().length),
+                    0,
                     rand.nextFloat() * 15000.0f,
                     new Date(rand.nextInt(28) + 1, rand.nextInt(12) + 1, rand.nextInt(2) + 2025),
                     new Date(rand.nextInt(28) + 1, rand.nextInt(12) + 1, rand.nextInt(2) + 2025),

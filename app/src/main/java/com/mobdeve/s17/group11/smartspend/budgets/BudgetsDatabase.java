@@ -12,16 +12,17 @@ import java.util.ArrayList;
 
 public class BudgetsDatabase extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "budgets.db";
-    private static final int DATABASE_VERSION = 1;
-    private static final String TABLE_NAME = "budgets";
+    public static final String DATABASE_NAME = "budgets.db";
+    public static final int DATABASE_VERSION = 1;
+    public static final String TABLE_NAME = "budgets";
 
-    private static final String COLUMN_ID = "id";
-    private static final String COLUMN_CATEGORY_ID = "category_id";
-    private static final String COLUMN_AMOUNT = "amount";
-    private static final String COLUMN_DATE_START = "date_start";
-    private static final String COLUMN_DATE_END = "date_end";
-    private static final String COLUMN_NOTES = "notes";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_CATEGORY_ID = "category_id";
+    public static final String COLUMN_AMOUNT_CURRENT = "amount_current";
+    public static final String COLUMN_AMOUNT_MAX = "amount_max";
+    public static final String COLUMN_DATE_START = "date_start";
+    public static final String COLUMN_DATE_END = "date_end";
+    public static final String COLUMN_NOTES = "notes";
 
     public BudgetsDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -33,7 +34,8 @@ public class BudgetsDatabase extends SQLiteOpenHelper {
                 "CREATE TABLE " + TABLE_NAME + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_CATEGORY_ID + " INTEGER, " +
-                COLUMN_AMOUNT + " REAL, " +
+                COLUMN_AMOUNT_CURRENT + " REAL, " +
+                COLUMN_AMOUNT_MAX + " REAL, " +
                 COLUMN_DATE_START + " INTEGER, " +
                 COLUMN_DATE_END + " INTEGER, " +
                 COLUMN_NOTES + " TEXT" + ")";
@@ -48,23 +50,24 @@ public class BudgetsDatabase extends SQLiteOpenHelper {
     }
 
     public long addBudget(BudgetsListItem budget) {
-        ContentValues values = new ContentValues();
+        ContentValues contentValues = new ContentValues();
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
-        values.put(COLUMN_CATEGORY_ID, budget.expensesCategoryID);
-        values.put(COLUMN_AMOUNT, budget.amount);
-        values.put(COLUMN_DATE_START, budget.startDate.getUniqueValue());
-        values.put(COLUMN_DATE_END, budget.endDate.getUniqueValue());
-        values.put(COLUMN_NOTES, budget.notes);
+        contentValues.put(COLUMN_CATEGORY_ID, budget.expensesCategoryID);
+        contentValues.put(COLUMN_AMOUNT_CURRENT, budget.currentAmount);
+        contentValues.put(COLUMN_AMOUNT_MAX, budget.maxAmount);
+        contentValues.put(COLUMN_DATE_START, budget.startDate.getUniqueValue());
+        contentValues.put(COLUMN_DATE_END, budget.endDate.getUniqueValue());
+        contentValues.put(COLUMN_NOTES, budget.notes);
 
-        long rowID = sqLiteDatabase.insert(TABLE_NAME, null, values);
+        long rowID = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
 
         sqLiteDatabase.close();
         return rowID;
     }
 
     public void deleteBudget(long rowID) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         sqLiteDatabase.delete(TABLE_NAME, COLUMN_ID + "=?", new String[]{String.valueOf(rowID)});
         sqLiteDatabase.close();
@@ -72,10 +75,11 @@ public class BudgetsDatabase extends SQLiteOpenHelper {
 
     public int updateBudget(long rowID, BudgetsListItem budget) {
         ContentValues contentValues = new ContentValues();
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         contentValues.put(COLUMN_CATEGORY_ID, budget.expensesCategoryID);
-        contentValues.put(COLUMN_AMOUNT, budget.amount);
+        contentValues.put(COLUMN_AMOUNT_CURRENT, budget.currentAmount);
+        contentValues.put(COLUMN_AMOUNT_MAX, budget.maxAmount);
         contentValues.put(COLUMN_DATE_START, budget.startDate.getUniqueValue());
         contentValues.put(COLUMN_DATE_END, budget.endDate.getUniqueValue());
         contentValues.put(COLUMN_NOTES, budget.notes);
@@ -86,8 +90,33 @@ public class BudgetsDatabase extends SQLiteOpenHelper {
         return rows;
     }
 
+    public <T> boolean updateBudgetRow(long rowID, String column, T value) {
+        ContentValues contentValues = new ContentValues();
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        if(value instanceof String)
+            contentValues.put(column, (String) value);
+        else if(value instanceof Integer)
+            contentValues.put(column, (Integer) value);
+        else if(value instanceof Float)
+            contentValues.put(column, (Float) value);
+        else if(value instanceof Double)
+            contentValues.put(column, (Double) value);
+        else if(value instanceof Long)
+            contentValues.put(column, (Long) value);
+        else if(value instanceof Boolean)
+            contentValues.put(column, (Boolean) value);
+        else
+            throw new IllegalArgumentException("Unsupported value type: " + value.getClass().getName());
+
+        int rows = sqLiteDatabase.update(TABLE_NAME, contentValues, "id = ?", new String[]{String.valueOf(rowID)});
+
+        sqLiteDatabase.close();
+        return rows > 0;
+    }
+
     public BudgetsListItem getBudgetByID(int rowID) {
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
 
         Cursor cursor = sqLiteDatabase.rawQuery(
                 "SELECT * FROM " + TABLE_NAME + " WHERE id = ?",
@@ -100,7 +129,8 @@ public class BudgetsDatabase extends SQLiteOpenHelper {
             budget = new BudgetsListItem(
                     cursor.getInt(cursor.getColumnIndexOrThrow("id")),
                     cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY_ID)),
-                    cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_AMOUNT)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_AMOUNT_CURRENT)),
+                    cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_AMOUNT_MAX)),
                     new Date(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_DATE_START))),
                     new Date(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_DATE_END))),
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTES))
@@ -116,7 +146,7 @@ public class BudgetsDatabase extends SQLiteOpenHelper {
 
     public ArrayList<BudgetsListItem> getAllBudgets() {
         ArrayList<BudgetsListItem> budgets = new ArrayList<>();
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
 
         Cursor cursor = sqLiteDatabase.rawQuery(
                 "SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMN_ID + " DESC",
@@ -128,11 +158,11 @@ public class BudgetsDatabase extends SQLiteOpenHelper {
                 budgets.add(new BudgetsListItem(
                         cursor.getInt(cursor.getColumnIndexOrThrow("id")),
                         cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY_ID)),
-                        cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_AMOUNT)),
+                        cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_AMOUNT_CURRENT)),
+                        cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_AMOUNT_MAX)),
                         new Date(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_DATE_START))),
                         new Date(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_DATE_END))),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTES))
-
                 ));
             } while(cursor.moveToNext());
         }

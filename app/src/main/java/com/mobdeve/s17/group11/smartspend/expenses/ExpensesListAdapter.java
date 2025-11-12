@@ -67,7 +67,7 @@ public class ExpensesListAdapter extends RecyclerView.Adapter<ExpensesListAdapte
         public ExpensesListItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvAmount = itemView.findViewById(R.id.tv_amount);
+            tvAmount = itemView.findViewById(R.id.tv_amount_current);
             tvCategory = itemView.findViewById(R.id.tv_header);
             tvDate = itemView.findViewById(R.id.tv_date);
         }

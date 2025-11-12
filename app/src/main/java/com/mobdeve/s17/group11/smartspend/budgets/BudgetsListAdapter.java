@@ -15,6 +15,7 @@ import com.mobdeve.s17.group11.smartspend.R;
 import com.mobdeve.s17.group11.smartspend.expenses.ExpensesCategory;
 import com.mobdeve.s17.group11.smartspend.util.DateHelper;
 import com.mobdeve.s17.group11.smartspend.util.FormatHelper;
+import com.mobdeve.s17.group11.smartspend.util.SessionCache;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
     public budgetsListItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new budgetsListItemViewHolder(
                 LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.item_expenses_list, parent, false)
+                        .inflate(R.layout.item_budgets_list, parent, false)
         );
     }
 
@@ -44,7 +45,8 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
         BudgetsListItem budget = items.get(position);
 
         holder.itemView.setOnClickListener(null);
-        holder.tvAmount.setText(FormatHelper.floatToPrice(budget.amount));
+        holder.tvCurrentAmount.setText(FormatHelper.floatToPrice(budget.currentAmount));
+
         holder.tvCategory.setText(ExpensesCategory.getExpensesCategoryName(budget.expensesCategoryID));
 
         holder.tvDate.setText(
@@ -52,6 +54,13 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
                         + " - "
                         + DateHelper.numericalDateTransform1(budget.endDate)
         );
+
+        holder.tvMaxAmount.setText(FormatHelper.floatToPrice(budget.maxAmount));
+
+        if(budget.currentAmount <= budget.maxAmount)
+            holder.tvCurrentAmount.setTextColor(SessionCache.Color.tvLabel1);
+        else
+            holder.tvCurrentAmount.setTextColor(SessionCache.Color.tvDanger);
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, BudgetsEditActivity.class);
@@ -70,14 +79,15 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
 
     public static class budgetsListItemViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvAmount, tvCategory, tvDate;
+        public TextView tvCategory, tvCurrentAmount, tvDate, tvMaxAmount;
 
         public budgetsListItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvAmount = itemView.findViewById(R.id.tv_amount);
+            tvCurrentAmount = itemView.findViewById(R.id.tv_amount_current);
             tvCategory = itemView.findViewById(R.id.tv_header);
             tvDate = itemView.findViewById(R.id.tv_date);
+            tvMaxAmount = itemView.findViewById(R.id.tv_amount_max);
         }
 
     }

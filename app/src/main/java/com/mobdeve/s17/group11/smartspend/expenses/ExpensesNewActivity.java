@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.group11.smartspend.R;
+import com.mobdeve.s17.group11.smartspend.budgets.BudgetsDatabase;
 import com.mobdeve.s17.group11.smartspend.util.Date;
 import com.mobdeve.s17.group11.smartspend.util.DateHelper;
 import com.mobdeve.s17.group11.smartspend.util.DropdownComposite;
@@ -25,6 +26,7 @@ import com.mobdeve.s17.group11.smartspend.util.UIUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @SuppressLint("SetTextI18n")
 public class ExpensesNewActivity extends AppCompatActivity {
@@ -46,8 +48,6 @@ public class ExpensesNewActivity extends AppCompatActivity {
     private TextView tvDatePrompt;
     private TextView tvDelete;
     private TextView tvHeaderTitle;
-    private TextView tvLocationPrompt;
-    private TextView tvNotesPrompt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +84,6 @@ public class ExpensesNewActivity extends AppCompatActivity {
         tvDatePrompt = findViewById(R.id.tv_date_prompt);
         tvDelete = findViewById(R.id.tv_delete);
         tvHeaderTitle = findViewById(R.id.tv_header_title);
-        tvLocationPrompt = findViewById(R.id.tv_location_prompt);
-        tvNotesPrompt = findViewById(R.id.tv_notes_prompt);
 
         tvHeaderTitle.setText("Create Expense Entry");
         tvDelete.setVisibility(TextView.GONE);
@@ -147,6 +145,29 @@ public class ExpensesNewActivity extends AppCompatActivity {
                     tfNotes.getText().toString().trim()
             );
 
+            AtomicBoolean budgetExceeded = new AtomicBoolean(false);
+
+            SessionCache.budgetsItems.forEach(budget -> {
+                int budgetDateEnd = budget.endDate.getUniqueValue();
+                int budgetDateStart = budget.startDate.getUniqueValue();
+                int expenseDate = expense.date.getUniqueValue();
+
+                if(budget.expensesCategoryID == expense.expensesCategoryID
+                        && budgetDateStart <= expenseDate
+                        && budgetDateEnd >= expenseDate) {
+                    budget.currentAmount += expense.amount;
+
+                    if(budget.maxAmount < budget.currentAmount)
+                        budgetExceeded.set(true);
+
+                    SessionCache.budgetsDatabase.updateBudgetRow(
+                            budget.sqlRowID,
+                            BudgetsDatabase.COLUMN_AMOUNT_CURRENT,
+                            budget.currentAmount
+                    );
+                }
+            });
+
             expense.sqlRowID = SessionCache.expensesDatabase.addExpense(expense);
 
             SessionCache.expensesItems.add(0, expense);
@@ -156,12 +177,30 @@ public class ExpensesNewActivity extends AppCompatActivity {
 
             ExpensesActivity.expensesPopupSortRef.get().applySort();
 
-            finish();
-            overridePendingTransition(0, 0);
-            rvExpensesListRef.get().scrollToPosition(0);
+            if(!budgetExceeded.get()) {
+                finish();
+                overridePendingTransition(0, 0);
+                rvExpensesListRef.get().scrollToPosition(0);
 
-            if(exitListener != null)
-                exitListener.run();
+                if(exitListener != null)
+                    exitListener.run();
+            } else {
+                UIUtils.Dialog.showPrompt0(
+                        view,
+                        null,
+                        "Budget Exceeded",
+                        "You have exceeded one of your budget entries!",
+                        "Acknowledge",
+                        btnView -> {
+                            finish();
+                            overridePendingTransition(0, 0);
+                            rvExpensesListRef.get().scrollToPosition(0);
+
+                            if(exitListener != null)
+                                exitListener.run();
+                        }
+                );
+            }
         });
     }
 

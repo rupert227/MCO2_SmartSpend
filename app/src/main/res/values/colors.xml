@@ -41,6 +41,7 @@
     <color name="tf_icon">#333333</color>
     <color name="tf_text">#555555</color>
 
+    <color name="tv_danger">#FA4454</color>
     <color name="tv_highlight0">#0057D4</color>
     <color name="tv_label0">#073269</color>
     <color name="tv_label1">#000000</color>

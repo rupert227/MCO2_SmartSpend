@@ -135,10 +135,10 @@ public class BudgetsPopupSort {
                                 && !settings.selectedCategories.contains(item.expensesCategoryID))
                             return false;
 
-                        if(settings.highestAmount > 0f && item.amount > settings.highestAmount)
+                        if(settings.highestAmount > 0f && item.maxAmount > settings.highestAmount)
                             return false;
 
-                        return settings.lowestAmount <= 0f || item.amount >= settings.lowestAmount;
+                        return settings.lowestAmount <= 0f || item.maxAmount >= settings.lowestAmount;
                     }).collect(Collectors.toList())
             );
 
@@ -153,7 +153,7 @@ public class BudgetsPopupSort {
 
             if(settings.lowestFirst || settings.highestFirst) {
                 Comparator<BudgetsListItem> amountComparator = Comparator.comparing(
-                        (BudgetsListItem item) -> item.amount,
+                        (BudgetsListItem item) -> item.maxAmount,
                         settings.lowestFirst ? Comparator.naturalOrder() : Comparator.reverseOrder()
                 );
 

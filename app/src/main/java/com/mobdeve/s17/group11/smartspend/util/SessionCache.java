@@ -1,5 +1,7 @@
 package com.mobdeve.s17.group11.smartspend.util;
 
+import android.content.res.ColorStateList;
+
 import com.mobdeve.s17.group11.smartspend.budgets.BudgetsDatabase;
 import com.mobdeve.s17.group11.smartspend.budgets.BudgetsListItem;
 import com.mobdeve.s17.group11.smartspend.expenses.ExpensesDatabase;
@@ -18,5 +20,12 @@ public class SessionCache {
 
     public static final SortSettingsVariables budgetsSortSettings = new SortSettingsVariables();
     public static final SortSettingsVariables expensesSortSettings = new SortSettingsVariables();
+
+    public static class Color {
+
+        public static int tvDanger;
+        public static int tvLabel1;
+
+    }
 
 }

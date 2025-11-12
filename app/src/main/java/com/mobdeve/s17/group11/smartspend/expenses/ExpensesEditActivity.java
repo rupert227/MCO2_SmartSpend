@@ -18,6 +18,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.group11.smartspend.R;
+import com.mobdeve.s17.group11.smartspend.budgets.BudgetsDatabase;
+import com.mobdeve.s17.group11.smartspend.budgets.BudgetsListItem;
 import com.mobdeve.s17.group11.smartspend.util.Date;
 import com.mobdeve.s17.group11.smartspend.util.DropdownComposite;
 import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
@@ -26,6 +28,9 @@ import com.mobdeve.s17.group11.smartspend.util.UIUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @SuppressLint("SetTextI18n")
 public class ExpensesEditActivity extends AppCompatActivity {
@@ -34,6 +39,7 @@ public class ExpensesEditActivity extends AppCompatActivity {
     public static Runnable exitListener;
     public static WeakReference<RecyclerView> rvExpensesListRef;
 
+    private Set<BudgetsListItem> presentInBudgets = new HashSet<>();
     private Button btnSave;
     private DropdownComposite categoryDropdownComposite = new DropdownComposite();
     private EditText tfAmount;
@@ -47,8 +53,6 @@ public class ExpensesEditActivity extends AppCompatActivity {
     private TextView tvCategoryPrompt;
     private TextView tvDatePrompt;
     private TextView tvDelete;
-    private TextView tvLocationPrompt;
-    private TextView tvNotesPrompt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +88,6 @@ public class ExpensesEditActivity extends AppCompatActivity {
         tvCategoryPrompt = findViewById(R.id.tv_category_prompt);
         tvDatePrompt = findViewById(R.id.tv_date_prompt);
         tvDelete = findViewById(R.id.tv_delete);
-        tvLocationPrompt = findViewById(R.id.tv_location_prompt);
-        tvNotesPrompt = findViewById(R.id.tv_notes_prompt);
 
         tfAmount.setText(Float.toString(expenseEdit.amount));
         tfCategory.setText(ExpensesCategory.getExpensesCategoryName(expenseEdit.expensesCategoryID));
@@ -133,6 +135,22 @@ public class ExpensesEditActivity extends AppCompatActivity {
             if(!validFields)
                 return;
 
+            presentInBudgets.clear();
+
+            SessionCache.budgetsItems.forEach(budget -> {
+                int budgetDateEnd = budget.endDate.getUniqueValue();
+                int budgetDateStart = budget.startDate.getUniqueValue();
+                int expenseDate = expenseEdit.date.getUniqueValue();
+
+                if(budget.expensesCategoryID == expenseEdit.expensesCategoryID
+                        && budgetDateStart <= expenseDate
+                        && budgetDateEnd >= expenseDate) {
+                    presentInBudgets.add(budget);
+                }
+            });
+
+            float lastAmount = expenseEdit.amount;
+
             expenseEdit.amount = Float.parseFloat(tfAmount.getText().toString().trim());
 
             expenseEdit.date = new Date(
@@ -145,15 +163,69 @@ public class ExpensesEditActivity extends AppCompatActivity {
             expenseEdit.location = tfLocation.getText().toString().trim();
             expenseEdit.notes = tfNotes.getText().toString().trim();
 
+            AtomicBoolean budgetExceeded = new AtomicBoolean(false);
+
+            SessionCache.budgetsItems.forEach(budget -> {
+                boolean updateBudgetsDB = false;
+
+                int budgetDateEnd = budget.endDate.getUniqueValue();
+                int budgetDateStart = budget.startDate.getUniqueValue();
+                int expenseDate = expenseEdit.date.getUniqueValue();
+
+                if(budget.expensesCategoryID == expenseEdit.expensesCategoryID
+                        && budgetDateStart <= expenseDate
+                        && budgetDateEnd >= expenseDate) {
+                    if(presentInBudgets.contains(budget))
+                        budget.currentAmount -= lastAmount - expenseEdit.amount;
+                    else
+                        budget.currentAmount += expenseEdit.amount;
+
+                    if(budget.maxAmount < budget.currentAmount)
+                        budgetExceeded.set(true);
+
+                    updateBudgetsDB = true;
+                } else if(presentInBudgets.contains(budget)) {
+                    budget.currentAmount -= lastAmount;
+                    updateBudgetsDB = true;
+                }
+
+                if(updateBudgetsDB) {
+                    SessionCache.budgetsDatabase.updateBudgetRow(
+                            budget.sqlRowID,
+                            BudgetsDatabase.COLUMN_AMOUNT_CURRENT,
+                            budget.currentAmount
+                    );
+                }
+            });
+
             SessionCache.expensesDatabase.updateExpense(expenseEdit.sqlRowID, expenseEdit);
 
             ExpensesActivity.expensesPopupSortRef.get().applySort();
 
-            finish();
-            overridePendingTransition(0, 0);
+            if(!budgetExceeded.get()) {
+                finish();
+                overridePendingTransition(0, 0);
+                rvExpensesListRef.get().scrollToPosition(0);
 
-            if(exitListener != null)
-                exitListener.run();
+                if(exitListener != null)
+                    exitListener.run();
+            } else {
+                UIUtils.Dialog.showPrompt0(
+                        view,
+                        null,
+                        "Budget Exceeded",
+                        "You have exceeded one of your budget entries!",
+                        "Acknowledge",
+                        btnView -> {
+                            finish();
+                            overridePendingTransition(0, 0);
+                            rvExpensesListRef.get().scrollToPosition(0);
+
+                            if(exitListener != null)
+                                exitListener.run();
+                        }
+                );
+            }
         });
 
         tvDelete.setOnClickListener(view -> {
@@ -168,6 +240,24 @@ public class ExpensesEditActivity extends AppCompatActivity {
                     ColorStateList.valueOf(ContextCompat.getColor(this, R.color.btn_background_danger)).getDefaultColor(),
                     null,
                     btn1View -> {
+                        SessionCache.budgetsItems.forEach(budget -> {
+                            int budgetDateEnd = budget.endDate.getUniqueValue();
+                            int budgetDateStart = budget.startDate.getUniqueValue();
+                            int expenseDate = expenseEdit.date.getUniqueValue();
+
+                            if(budget.expensesCategoryID == expenseEdit.expensesCategoryID
+                                    && budgetDateStart <= expenseDate
+                                    && budgetDateEnd >= expenseDate) {
+                                budget.currentAmount -= expenseEdit.amount;
+
+                                SessionCache.budgetsDatabase.updateBudgetRow(
+                                        budget.sqlRowID,
+                                        BudgetsDatabase.COLUMN_AMOUNT_CURRENT,
+                                        budget.currentAmount
+                                );
+                            }
+                        });
+
                         SessionCache.expensesDatabase.deleteExpense(expenseEdit.sqlRowID);
                         SessionCache.expensesItems.remove(expenseEdit.listIndex);
 

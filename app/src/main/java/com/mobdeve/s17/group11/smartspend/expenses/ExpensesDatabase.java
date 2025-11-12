@@ -12,16 +12,16 @@ import java.util.ArrayList;
 
 public class ExpensesDatabase extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "expenses.db";
-    private static final int DATABASE_VERSION = 1;
-    private static final String TABLE_NAME = "expenses";
+    public static final String DATABASE_NAME = "expenses.db";
+    public static final int DATABASE_VERSION = 1;
+    public static final String TABLE_NAME = "expenses";
 
-    private static final String COLUMN_ID = "id";
-    private static final String COLUMN_CATEGORY_ID = "category_id";
-    private static final String COLUMN_AMOUNT = "amount";
-    private static final String COLUMN_DATE = "date";
-    private static final String COLUMN_LOCATION = "location";
-    private static final String COLUMN_NOTES = "notes";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_CATEGORY_ID = "category_id";
+    public static final String COLUMN_AMOUNT = "amount";
+    public static final String COLUMN_DATE = "date";
+    public static final String COLUMN_LOCATION = "location";
+    public static final String COLUMN_NOTES = "notes";
 
     public ExpensesDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -48,23 +48,23 @@ public class ExpensesDatabase extends SQLiteOpenHelper {
     }
 
     public long addExpense(ExpensesListItem expense) {
-        ContentValues values = new ContentValues();
+        ContentValues contentValues = new ContentValues();
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
-        values.put(COLUMN_CATEGORY_ID, expense.expensesCategoryID);
-        values.put(COLUMN_AMOUNT, expense.amount);
-        values.put(COLUMN_DATE, expense.date.getUniqueValue());
-        values.put(COLUMN_LOCATION, expense.location);
-        values.put(COLUMN_NOTES, expense.notes);
+        contentValues.put(COLUMN_CATEGORY_ID, expense.expensesCategoryID);
+        contentValues.put(COLUMN_AMOUNT, expense.amount);
+        contentValues.put(COLUMN_DATE, expense.date.getUniqueValue());
+        contentValues.put(COLUMN_LOCATION, expense.location);
+        contentValues.put(COLUMN_NOTES, expense.notes);
 
-        long rowID = sqLiteDatabase.insert(TABLE_NAME, null, values);
+        long rowID = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
 
         sqLiteDatabase.close();
         return rowID;
     }
 
     public void deleteExpense(long rowID) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         sqLiteDatabase.delete(TABLE_NAME, COLUMN_ID + "=?", new String[]{String.valueOf(rowID)});
         sqLiteDatabase.close();
@@ -72,7 +72,7 @@ public class ExpensesDatabase extends SQLiteOpenHelper {
 
     public int updateExpense(long rowID, ExpensesListItem expense) {
         ContentValues contentValues = new ContentValues();
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         contentValues.put(COLUMN_CATEGORY_ID, expense.expensesCategoryID);
         contentValues.put(COLUMN_AMOUNT, expense.amount);
@@ -86,8 +86,33 @@ public class ExpensesDatabase extends SQLiteOpenHelper {
         return rows;
     }
 
+    public <T> boolean updateExpenseRow(long rowID, String column, T value) {
+        ContentValues contentValues = new ContentValues();
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        if(value instanceof String)
+            contentValues.put(column, (String) value);
+        else if(value instanceof Integer)
+            contentValues.put(column, (Integer) value);
+        else if(value instanceof Float)
+            contentValues.put(column, (Float) value);
+        else if(value instanceof Double)
+            contentValues.put(column, (Double) value);
+        else if(value instanceof Long)
+            contentValues.put(column, (Long) value);
+        else if(value instanceof Boolean)
+            contentValues.put(column, (Boolean) value);
+        else
+            throw new IllegalArgumentException("Unsupported value type: " + value.getClass().getName());
+
+        int rows = sqLiteDatabase.update(TABLE_NAME, contentValues, "id = ?", new String[]{String.valueOf(rowID)});
+
+        sqLiteDatabase.close();
+        return rows > 0;
+    }
+
     public ExpensesListItem getExpenseByID(int rowID) {
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
 
         Cursor cursor = sqLiteDatabase.rawQuery(
                 "SELECT * FROM " + TABLE_NAME + " WHERE id = ?",
@@ -116,7 +141,7 @@ public class ExpensesDatabase extends SQLiteOpenHelper {
 
     public ArrayList<ExpensesListItem> getAllExpenses() {
         ArrayList<ExpensesListItem> expenses = new ArrayList<>();
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
 
         Cursor cursor = sqLiteDatabase.rawQuery(
                 "SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMN_ID + " DESC",
@@ -132,7 +157,6 @@ public class ExpensesDatabase extends SQLiteOpenHelper {
                         new Date(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_DATE))),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTES))
-
                 ));
             } while(cursor.moveToNext());
         }

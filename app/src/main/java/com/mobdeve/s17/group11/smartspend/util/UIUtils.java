@@ -133,13 +133,60 @@ public class UIUtils {
 
     public static class Dialog {
 
+        public static void showPrompt0(View anchorView, View dialogView, String header, String message, String btnLabel, View.OnClickListener btnClick) {
+            if(dialogView == null)
+                dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt0, null, false);
+
+            TextView tvHeader = dialogView.findViewById(R.id.tv_header);
+            TextView tvMessage = dialogView.findViewById(R.id.tv_message);
+            Button btnOption = dialogView.findViewById(R.id.btn_option);
+
+            tvHeader.setText(header);
+            tvMessage.setText(message);
+            btnOption.setText(btnLabel);
+
+            android.app.Dialog dialog = new android.app.Dialog(anchorView.getContext());
+            dialog.setContentView(dialogView);
+            dialog.setCanceledOnTouchOutside(false);
+
+            Window window = dialog.getWindow();
+
+            assert window != null;
+            window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            window.setDimAmount(0.1f);
+            window.setGravity(Gravity.CENTER);
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            window.setWindowAnimations(0);
+
+            btnOption.setOnClickListener(btnView -> {
+                if(btnClick != null)
+                    btnClick.onClick(btnView);
+
+                dialog.dismiss();
+            });
+
+            dialog.show();
+        }
+
+        public static void showPrompt0(View anchorView, View dialogView, String header, String message, String btnLabel, int btnBg, View.OnClickListener btnClick) {
+            if(dialogView == null)
+                dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt1, null, false);
+
+            Button btnOption = dialogView.findViewById(R.id.btn_option);
+
+            btnOption.setBackgroundColor(btnBg);
+
+            showPrompt0(anchorView, dialogView, header, message, btnLabel, btnClick);
+        }
+
         public static void showPrompt1(View anchorView, View dialogView, String header, String message, String btn0Label, String btn1Label, View.OnClickListener btn0Click, View.OnClickListener btn1Click) {
             if(dialogView == null)
                 dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt1, null, false);
 
             TextView tvHeader = dialogView.findViewById(R.id.tv_header);
             TextView tvMessage = dialogView.findViewById(R.id.tv_message);
-            Button btnOption0 = dialogView.findViewById(R.id.btn_option0);
+            Button btnOption0 = dialogView.findViewById(R.id.btn_option);
             Button btnOption1 = dialogView.findViewById(R.id.btn_option1);
 
             tvHeader.setText(header);
@@ -182,7 +229,7 @@ public class UIUtils {
             if(dialogView == null)
                 dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt1, null, false);
 
-            Button btnOption0 = dialogView.findViewById(R.id.btn_option0);
+            Button btnOption0 = dialogView.findViewById(R.id.btn_option);
             Button btnOption1 = dialogView.findViewById(R.id.btn_option1);
 
             btnOption0.setBackgroundColor(btn0Bg);

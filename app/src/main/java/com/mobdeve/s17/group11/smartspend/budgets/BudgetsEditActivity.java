@@ -49,7 +49,6 @@ public class BudgetsEditActivity extends AppCompatActivity {
     private TextView tvCategoryPrompt;
     private TextView tvDateEndPrompt, tvDateStartPrompt;
     private TextView tvDelete;
-    private TextView tvNotesPrompt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +88,8 @@ public class BudgetsEditActivity extends AppCompatActivity {
         tvDateEndPrompt = findViewById(R.id.tv_date_end_prompt);
         tvDateStartPrompt = findViewById(R.id.tv_date_start_prompt);
         tvDelete = findViewById(R.id.tv_delete);
-        tvNotesPrompt = findViewById(R.id.tv_notes_prompt);
 
-        tfAmount.setText(Float.toString(budgetEdit.amount));
+        tfAmount.setText(Float.toString(budgetEdit.maxAmount));
         tfCategory.setText(ExpensesCategory.getExpensesCategoryName(budgetEdit.expensesCategoryID));
         tfDateEndDay.setText(Integer.toString(budgetEdit.endDate.day));
         tfDateEndMonth.setText(Integer.toString(budgetEdit.endDate.month));
@@ -178,11 +176,24 @@ public class BudgetsEditActivity extends AppCompatActivity {
 
             tvDateEndPrompt.setVisibility(TextView.GONE);
 
-            budgetEdit.amount = Float.parseFloat(tfAmount.getText().toString().trim());
+            budgetEdit.currentAmount = 0;
             budgetEdit.endDate = endDate;
-            budgetEdit.startDate = startDate;
             budgetEdit.expensesCategoryID = ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim());
+            budgetEdit.maxAmount = Float.parseFloat(tfAmount.getText().toString().trim());
             budgetEdit.notes = tfNotes.getText().toString().trim();
+            budgetEdit.startDate = startDate;
+
+            SessionCache.expensesItems.forEach(expense -> {
+                int budgetDateEnd = budgetEdit.endDate.getUniqueValue();
+                int budgetDateStart = budgetEdit.startDate.getUniqueValue();
+                int expenseDate = expense.date.getUniqueValue();
+
+                if(budgetEdit.expensesCategoryID == expense.expensesCategoryID
+                        && budgetDateStart <= expenseDate
+                        && budgetDateEnd >= expenseDate) {
+                    budgetEdit.currentAmount += expense.amount;
+                }
+            });
 
             SessionCache.budgetsDatabase.updateBudget(budgetEdit.sqlRowID, budgetEdit);
 
