@@ -11,7 +11,7 @@ import com.mobdeve.s17.group11.smartspend.R;
 import com.mobdeve.s17.group11.smartspend.analytics.AnalyticsActivity;
 import com.mobdeve.s17.group11.smartspend.budgets.BudgetsActivity;
 import com.mobdeve.s17.group11.smartspend.expenses.ExpensesActivity;
-import com.mobdeve.s17.group11.smartspend.map.MapActivity;
+import com.mobdeve.s17.group11.smartspend.gallery.GalleryActivity;
 
 public class NavigationBar {
 
@@ -19,7 +19,7 @@ public class NavigationBar {
         ImageButton btnAnalytics = activity.findViewById(R.id.btn_navigation_analytics);
         ImageButton btnBudgets = activity.findViewById(R.id.btn_navigation_budgets);
         ImageButton btnExpenses = activity.findViewById(R.id.btn_navigation_expenses);
-        ImageButton btnMap = activity.findViewById(R.id.btn_navigation_map);
+        ImageButton btnGallery = activity.findViewById(R.id.btn_navigation_gallery);
 
         if(!(activity instanceof AnalyticsActivity)) {
             btnAnalytics.setOnClickListener(view -> {
@@ -45,9 +45,9 @@ public class NavigationBar {
             });
         }
 
-        if(!(activity instanceof MapActivity)) {
-            btnMap.setOnClickListener(view -> {
-                Intent intent = new Intent(activity.getBaseContext(), MapActivity.class);
+        if(!(activity instanceof GalleryActivity)) {
+            btnGallery.setOnClickListener(view -> {
+                Intent intent = new Intent(activity.getBaseContext(), GalleryActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 activity.startActivity(intent);
             });
@@ -60,22 +60,22 @@ public class NavigationBar {
             btnAnalytics.setImageTintList(selectedColor);
             btnBudgets.setImageTintList(defaultColor);
             btnExpenses.setImageTintList(defaultColor);
-            btnMap.setImageTintList(defaultColor);
+            btnGallery.setImageTintList(defaultColor);
         } else if(activity instanceof BudgetsActivity) {
             btnAnalytics.setImageTintList(defaultColor);
             btnBudgets.setImageTintList(selectedColor);
             btnExpenses.setImageTintList(defaultColor);
-            btnMap.setImageTintList(defaultColor);
+            btnGallery.setImageTintList(defaultColor);
         } else if(activity instanceof ExpensesActivity) {
             btnAnalytics.setImageTintList(defaultColor);
             btnBudgets.setImageTintList(defaultColor);
             btnExpenses.setImageTintList(selectedColor);
-            btnMap.setImageTintList(defaultColor);
-        } else if(activity instanceof MapActivity) {
+            btnGallery.setImageTintList(defaultColor);
+        } else if(activity instanceof GalleryActivity) {
             btnAnalytics.setImageTintList(defaultColor);
             btnBudgets.setImageTintList(defaultColor);
             btnExpenses.setImageTintList(defaultColor);
-            btnMap.setImageTintList(selectedColor);
+            btnGallery.setImageTintList(selectedColor);
         }
     }
 

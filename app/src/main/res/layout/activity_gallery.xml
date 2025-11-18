@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:text="Spendings Map"
+            android:text="Gallery"
             android:textColor="@color/atv_header_foreground"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -30,18 +30,43 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_content"
+    <FrameLayout
+        android:id="@+id/fl_gallery"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/atv_background"
         app:layout_constraintBottom_toTopOf="@+id/ll_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_header"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/cl_header">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fadeScrollbars="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:scrollbarStyle="insideOverlay"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/cl_navigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_header" />
+
+        <TextView
+            android:id="@+id/tv_empty_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/dm_sans"
+            android:gravity="center"
+            android:text="No Images Found"
+            android:textColor="@color/tv_label2"
+            android:textSize="16dp"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/ll_navigation"
@@ -79,7 +104,7 @@
             app:srcCompat="@drawable/ic_navigationbar_meter" />
 
         <ImageButton
-            android:id="@+id/btn_navigation_map"
+            android:id="@+id/btn_navigation_gallery"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="48dp"
@@ -87,8 +112,8 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            app:tint="@color/atv_navigation_foreground"
-            app:srcCompat="@drawable/ic_navigationbar_map" />
+            app:srcCompat="@drawable/ic_navigationbar_gallery"
+            app:tint="@color/atv_navigation_foreground" />
 
         <ImageButton
             android:id="@+id/btn_navigation_analytics"

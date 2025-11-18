@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -31,7 +30,7 @@
         <activity android:name=".budgets.BudgetsNewActivity" />
         <activity android:name=".expenses.ExpensesEditActivity" />
         <activity android:name=".expenses.ExpensesNewActivity" />
-        <activity android:name=".map.MapActivity" />
+        <activity android:name=".gallery.GalleryActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
