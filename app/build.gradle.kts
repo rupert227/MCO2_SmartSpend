@@ -37,7 +37,10 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.recyclerview)
+    implementation("com.github.bumptech.glide:glide:5.0.5")
+    implementation("io.getstream:photoview:1.0.3")
     testImplementation(libs.junit)
+    annotationProcessor("com.github.bumptech.glide:compiler:5.0.5")
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }

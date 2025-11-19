@@ -133,7 +133,12 @@ public class UIUtils {
 
     public static class Dialog {
 
-        public static void showPrompt0(View anchorView, View dialogView, String header, String message, String btnLabel, View.OnClickListener btnClick) {
+        public static void showPrompt0(View anchorView,
+                                       View dialogView,
+                                       String header,
+                                       String message,
+                                       String btnLabel,
+                                       View.OnClickListener btnClick) {
             if(dialogView == null)
                 dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt0, null, false);
 
@@ -169,7 +174,13 @@ public class UIUtils {
             dialog.show();
         }
 
-        public static void showPrompt0(View anchorView, View dialogView, String header, String message, String btnLabel, int btnBg, View.OnClickListener btnClick) {
+        public static void showPrompt0(View anchorView,
+                                       View dialogView,
+                                       String header,
+                                       String message,
+                                       String btnLabel,
+                                       int btnBg,
+                                       View.OnClickListener btnClick) {
             if(dialogView == null)
                 dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt1, null, false);
 
@@ -180,7 +191,14 @@ public class UIUtils {
             showPrompt0(anchorView, dialogView, header, message, btnLabel, btnClick);
         }
 
-        public static void showPrompt1(View anchorView, View dialogView, String header, String message, String btn0Label, String btn1Label, View.OnClickListener btn0Click, View.OnClickListener btn1Click) {
+        public static void showPrompt1(View anchorView,
+                                       View dialogView,
+                                       String header,
+                                       String message,
+                                       String btn0Label,
+                                       String btn1Label,
+                                       View.OnClickListener btn0Click,
+                                       View.OnClickListener btn1Click) {
             if(dialogView == null)
                 dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt1, null, false);
 
@@ -225,7 +243,16 @@ public class UIUtils {
             dialog.show();
         }
 
-        public static void showPrompt1(View anchorView, View dialogView, String header, String message, String btn0Label, String btn1Label, int btn0Bg, int btn1Bg, View.OnClickListener btn0Click, View.OnClickListener btn1Click) {
+        public static void showPrompt1(View anchorView,
+                                       View dialogView,
+                                       String header,
+                                       String message,
+                                       String btn0Label,
+                                       String btn1Label,
+                                       int btn0Bg,
+                                       int btn1Bg,
+                                       View.OnClickListener btn0Click,
+                                       View.OnClickListener btn1Click) {
             if(dialogView == null)
                 dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt1, null, false);
 
@@ -236,6 +263,96 @@ public class UIUtils {
             btnOption1.setBackgroundColor(btn1Bg);
 
             showPrompt1(anchorView, dialogView, header, message, btn0Label, btn1Label, btn0Click, btn1Click);
+        }
+
+        public static void showPrompt2(View anchorView,
+                                       View dialogView,
+                                       String header,
+                                       String message,
+                                       String btn0Label,
+                                       String btn1Label,
+                                       String btn2Label,
+                                       View.OnClickListener btn0Click,
+                                       View.OnClickListener btn1Click,
+                                       View.OnClickListener btn2Click) {
+            if(dialogView == null)
+                dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt2, null, false);
+
+            TextView tvHeader = dialogView.findViewById(R.id.tv_header);
+            TextView tvMessage = dialogView.findViewById(R.id.tv_message);
+            Button btnOption0 = dialogView.findViewById(R.id.btn_option);
+            Button btnOption1 = dialogView.findViewById(R.id.btn_option1);
+            Button btnOption2 = dialogView.findViewById(R.id.btn_option2);
+
+            tvHeader.setText(header);
+            tvMessage.setText(message);
+            btnOption0.setText(btn0Label);
+            btnOption1.setText(btn1Label);
+            btnOption2.setText(btn2Label);
+
+            android.app.Dialog dialog = new android.app.Dialog(anchorView.getContext());
+            dialog.setContentView(dialogView);
+            dialog.setCanceledOnTouchOutside(false);
+
+            Window window = dialog.getWindow();
+
+            assert window != null;
+            window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            window.setDimAmount(0.1f);
+            window.setGravity(Gravity.CENTER);
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            window.setWindowAnimations(0);
+
+            btnOption0.setOnClickListener(btnView -> {
+                if(btn0Click != null)
+                    btn0Click.onClick(btnView);
+
+                dialog.dismiss();
+            });
+
+            btnOption1.setOnClickListener(btnView -> {
+                if(btn1Click != null)
+                    btn1Click.onClick(btnView);
+
+                dialog.dismiss();
+            });
+
+            btnOption2.setOnClickListener(btnView -> {
+                if(btn2Click != null)
+                    btn2Click.onClick(btnView);
+
+                dialog.dismiss();
+            });
+
+            dialog.show();
+        }
+
+        public static void showPrompt2(View anchorView,
+                                       View dialogView,
+                                       String header,
+                                       String message,
+                                       String btn0Label,
+                                       String btn1Label,
+                                       String btn2Label,
+                                       int btn0Bg,
+                                       int btn1Bg,
+                                       int btn2Bg,
+                                       View.OnClickListener btn0Click,
+                                       View.OnClickListener btn1Click,
+                                       View.OnClickListener btn2Click) {
+            if(dialogView == null)
+                dialogView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.dialog_prompt2, null, false);
+
+            Button btnOption0 = dialogView.findViewById(R.id.btn_option);
+            Button btnOption1 = dialogView.findViewById(R.id.btn_option1);
+            Button btnOption2 = dialogView.findViewById(R.id.btn_option2);
+
+            btnOption0.setBackgroundColor(btn0Bg);
+            btnOption1.setBackgroundColor(btn1Bg);
+            btnOption2.setBackgroundColor(btn2Bg);
+
+            showPrompt2(anchorView, dialogView, header, message, btn0Label, btn1Label, btn2Label, btn0Click, btn1Click, btn2Click);
         }
 
     }
@@ -266,7 +383,6 @@ public class UIUtils {
             popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
             popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             popupWindow.showAsDropDown(anchorView);
-
             return popupWindow;
         }
 

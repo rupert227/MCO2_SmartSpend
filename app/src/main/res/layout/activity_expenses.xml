@@ -75,7 +75,7 @@
             android:fadeScrollbars="false"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:scrollbarStyle="insideOverlay"
+            android:scrollbarStyle="outsideInset"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toTopOf="@+id/cl_navigation"
             app:layout_constraintEnd_toEndOf="parent"

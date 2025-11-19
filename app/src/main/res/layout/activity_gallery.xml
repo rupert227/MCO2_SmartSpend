@@ -46,9 +46,8 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:fadeScrollbars="false"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:scrollbarStyle="insideOverlay"
+            android:padding="2dp"
+            android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toTopOf="@+id/cl_navigation"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +61,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/dm_sans"
             android:gravity="center"
-            android:text="No Images Found"
+            android:text="No Images Found\nImages from expenses appear here"
             android:textColor="@color/tv_label2"
             android:textSize="16dp"
             android:visibility="gone" />
@@ -88,8 +87,8 @@
             android:backgroundTint="#00000000"
             android:padding="0dp"
             android:scaleType="fitXY"
-            app:tint="@color/atv_navigation_foreground"
-            app:srcCompat="@drawable/ic_navigationbar_moneybag" />
+            app:srcCompat="@drawable/ic_navigationbar_moneybag"
+            app:tint="@color/atv_navigation_foreground" />
 
         <ImageButton
             android:id="@+id/btn_navigation_budgets"

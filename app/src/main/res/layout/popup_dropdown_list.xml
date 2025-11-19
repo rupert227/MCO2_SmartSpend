@@ -14,7 +14,7 @@
         android:fadeScrollbars="false"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
-        android:scrollbarStyle="insideInset"
+        android:scrollbarStyle="outsideInset"
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_max="120dp"

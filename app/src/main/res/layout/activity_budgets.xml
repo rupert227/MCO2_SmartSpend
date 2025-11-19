@@ -69,13 +69,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_budgets"
-            android:clipToPadding="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
             android:fadeScrollbars="false"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:scrollbarStyle="insideOverlay"
+            android:scrollbarStyle="outsideInset"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toTopOf="@+id/cl_navigation"
             app:layout_constraintEnd_toEndOf="parent"

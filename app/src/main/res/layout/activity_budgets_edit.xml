@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -50,7 +51,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/atv_background"
-        app:layout_constraintBottom_toTopOf="@+id/cl_details"
+        app:layout_constraintBottom_toTopOf="@+id/sv_details"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/cl_header"
         app:layout_constraintTop_toBottomOf="@+id/cl_header">
@@ -69,416 +70,425 @@
             app:layout_constraintTop_toBottomOf="@+id/cl_header" />
     </FrameLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_details"
+    <ScrollView
+        android:id="@+id/sv_details"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="72dp"
         android:background="@color/atv_background"
-        android:paddingStart="40dp"
-        android:paddingEnd="40dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="24dp"
+        android:scrollbarStyle="outsideInset"
         app:layout_constraintBottom_toTopOf="@+id/ll_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_header"
-        app:layout_constraintVertical_bias="1.0">
-
-        <TextView
-            android:id="@+id/tv_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/dm_sans_bold"
-            android:text="Category"
-            android:textColor="@color/tv_label1"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_category_prompt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:fontFamily="@font/dm_sans"
-            android:text="Category Prompt"
-            android:textColor="@color/pro_text"
-            android:textSize="16sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_header"
-            app:layout_constraintStart_toEndOf="@+id/tv_header"
-            app:layout_constraintTop_toTopOf="@+id/tv_header" />
-
-        <EditText
-            android:id="@+id/tf_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_tf"
-            android:ellipsize="end"
-            android:fontFamily="@font/dm_sans"
-            android:hint="Enter Category"
-            android:padding="12dp"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textColor="@color/tf_text"
-            android:textColorHint="@color/tf_hint"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_header" />
-
-        <TextView
-            android:id="@+id/tv_amount_current"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/dm_sans_bold"
-            android:text="Amount"
-            android:textColor="@color/tv_label1"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tf_category" />
-
-        <TextView
-            android:id="@+id/tv_amount_prompt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:fontFamily="@font/dm_sans"
-            android:text="Amount Prompt"
-            android:textColor="@color/pro_text"
-            android:textSize="16sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_amount_current"
-            app:layout_constraintStart_toEndOf="@+id/tv_amount_current"
-            app:layout_constraintTop_toTopOf="@+id/tv_amount_current" />
-
-        <EditText
-            android:id="@+id/tf_amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_tf"
-            android:ellipsize="end"
-            android:fontFamily="@font/dm_sans"
-            android:hint="Enter Amount"
-            android:inputType="number|numberDecimal"
-            android:padding="12dp"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textColor="@color/tf_text"
-            android:textColorHint="@color/tf_hint"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_amount_current" />
-
-        <TextView
-            android:id="@+id/tv_date_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/dm_sans_bold"
-            android:text="Start Date"
-            android:textColor="@color/tv_label1"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tf_amount" />
-
-        <TextView
-            android:id="@+id/tv_date_start_prompt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:fontFamily="@font/dm_sans"
-            android:text="Start Date Prompt"
-            android:textColor="@color/pro_text"
-            android:textSize="16sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_date_start"
-            app:layout_constraintStart_toEndOf="@+id/tv_date_start"
-            app:layout_constraintTop_toTopOf="@+id/tv_date_start" />
+        app:layout_constraintTop_toBottomOf="@+id/cl_header">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_date_start"
+            android:id="@+id/cl_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date_start">
+            android:background="@color/atv_background"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp">
 
-            <EditText
-                android:id="@+id/tf_date_start_month"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/tv_header"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_tf"
-                android:ellipsize="end"
-                android:fontFamily="@font/dm_sans"
-                android:hint="Month"
-                android:inputType="number"
-                android:padding="12dp"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
-                android:textColor="@color/tf_text"
-                android:textColorHint="@color/tf_hint"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tf_date_start_day"
-                app:layout_constraintHorizontal_chainStyle="spread"
-                app:layout_constraintHorizontal_weight="1"
+                android:fontFamily="@font/dm_sans_bold"
+                android:text="Category"
+                android:textColor="@color/tv_label1"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/tf_date_start_day"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/tv_category_prompt"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/dm_sans"
+                android:text="Category Prompt"
+                android:textColor="@color/pro_text"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_header"
+                app:layout_constraintStart_toEndOf="@+id/tv_header"
+                app:layout_constraintTop_toTopOf="@+id/tv_header" />
+
+            <EditText
+                android:id="@+id/tf_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/bg_tf"
                 android:ellipsize="end"
                 android:fontFamily="@font/dm_sans"
-                android:hint="Day"
-                android:inputType="number"
+                android:hint="Enter Category"
                 android:padding="12dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textColor="@color/tf_text"
                 android:textColorHint="@color/tf_hint"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tf_date_start_year"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/tf_date_start_month"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/tf_date_start_year"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_tf"
-                android:ellipsize="end"
-                android:fontFamily="@font/dm_sans"
-                android:hint="Year"
-                android:inputType="number"
-                android:padding="12dp"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
-                android:textColor="@color/tf_text"
-                android:textColorHint="@color/tf_hint"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_date_start_calendar"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/tf_date_start_day"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/btn_date_start_calendar"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:adjustViewBounds="true"
-                android:background="@drawable/bg_tf"
-                android:padding="4dp"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tf_date_start_year"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_calendar"
-                app:tint="@color/tf_icon" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/tv_date_end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/dm_sans_bold"
-            android:text="End Date"
-            android:textColor="@color/tv_label1"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cl_date_start" />
-
-        <TextView
-            android:id="@+id/tv_date_end_prompt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:fontFamily="@font/dm_sans"
-            android:text="End Date Prompt"
-            android:textColor="@color/pro_text"
-            android:textSize="16sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_date_end"
-            app:layout_constraintStart_toEndOf="@+id/tv_date_end"
-            app:layout_constraintTop_toTopOf="@+id/tv_date_end" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_date_end"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date_end">
-
-            <EditText
-                android:id="@+id/tf_date_end_month"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_tf"
-                android:ellipsize="end"
-                android:fontFamily="@font/dm_sans"
-                android:hint="Month"
-                android:inputType="number"
-                android:padding="12dp"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
-                android:textColor="@color/tf_text"
-                android:textColorHint="@color/tf_hint"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tf_date_end_day"
-                app:layout_constraintHorizontal_chainStyle="spread"
-                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_header" />
+
+            <TextView
+                android:id="@+id/tv_amount_current"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/dm_sans_bold"
+                android:text="Amount"
+                android:textColor="@color/tv_label1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tf_category" />
+
+            <TextView
+                android:id="@+id/tv_amount_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/dm_sans"
+                android:text="Amount Prompt"
+                android:textColor="@color/pro_text"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_amount_current"
+                app:layout_constraintStart_toEndOf="@+id/tv_amount_current"
+                app:layout_constraintTop_toTopOf="@+id/tv_amount_current" />
 
             <EditText
-                android:id="@+id/tf_date_end_day"
-                android:layout_width="0dp"
+                android:id="@+id/tf_amount"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/bg_tf"
                 android:ellipsize="end"
                 android:fontFamily="@font/dm_sans"
-                android:hint="Day"
-                android:inputType="number"
+                android:hint="Enter Amount"
+                android:inputType="number|numberDecimal"
                 android:padding="12dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textColor="@color/tf_text"
                 android:textColorHint="@color/tf_hint"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tf_date_end_year"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/tf_date_end_month"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_amount_current" />
 
-            <EditText
-                android:id="@+id/tf_date_end_year"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/tv_date_start"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_tf"
-                android:ellipsize="end"
-                android:fontFamily="@font/dm_sans"
-                android:hint="Year"
-                android:inputType="number"
-                android:padding="12dp"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
-                android:textColor="@color/tf_text"
-                android:textColorHint="@color/tf_hint"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_date_end_calendar"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/tf_date_end_day"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/dm_sans_bold"
+                android:text="Start Date"
+                android:textColor="@color/tv_label1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tf_amount" />
 
-            <ImageButton
-                android:id="@+id/btn_date_end_calendar"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:adjustViewBounds="true"
-                android:background="@drawable/bg_tf"
-                android:padding="4dp"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1:1"
+            <TextView
+                android:id="@+id/tv_date_start_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/dm_sans"
+                android:text="Start Date Prompt"
+                android:textColor="@color/pro_text"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_date_start"
+                app:layout_constraintStart_toEndOf="@+id/tv_date_start"
+                app:layout_constraintTop_toTopOf="@+id/tv_date_start" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_date_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tf_date_end_year"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_calendar"
-                app:tint="@color/tf_icon" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_date_start">
+
+                <EditText
+                    android:id="@+id/tf_date_start_month"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tf"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/dm_sans"
+                    android:hint="Month"
+                    android:inputType="number"
+                    android:padding="12dp"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="@color/tf_text"
+                    android:textColorHint="@color/tf_hint"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tf_date_start_day"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/tf_date_start_day"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tf"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/dm_sans"
+                    android:hint="Day"
+                    android:inputType="number"
+                    android:padding="12dp"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="@color/tf_text"
+                    android:textColorHint="@color/tf_hint"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tf_date_start_year"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/tf_date_start_month"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/tf_date_start_year"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tf"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/dm_sans"
+                    android:hint="Year"
+                    android:inputType="number"
+                    android:padding="12dp"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="@color/tf_text"
+                    android:textColorHint="@color/tf_hint"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_date_start_calendar"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/tf_date_start_day"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btn_date_start_calendar"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/bg_tf"
+                    android:padding="4dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tf_date_start_year"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_calendar"
+                    app:tint="@color/tf_icon" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_date_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/dm_sans_bold"
+                android:text="End Date"
+                android:textColor="@color/tv_label1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cl_date_start" />
+
+            <TextView
+                android:id="@+id/tv_date_end_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/dm_sans"
+                android:text="End Date Prompt"
+                android:textColor="@color/pro_text"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_date_end"
+                app:layout_constraintStart_toEndOf="@+id/tv_date_end"
+                app:layout_constraintTop_toTopOf="@+id/tv_date_end" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_date_end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_date_end">
+
+                <EditText
+                    android:id="@+id/tf_date_end_month"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tf"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/dm_sans"
+                    android:hint="Month"
+                    android:inputType="number"
+                    android:padding="12dp"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="@color/tf_text"
+                    android:textColorHint="@color/tf_hint"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tf_date_end_day"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/tf_date_end_day"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tf"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/dm_sans"
+                    android:hint="Day"
+                    android:inputType="number"
+                    android:padding="12dp"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="@color/tf_text"
+                    android:textColorHint="@color/tf_hint"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tf_date_end_year"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/tf_date_end_month"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/tf_date_end_year"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tf"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/dm_sans"
+                    android:hint="Year"
+                    android:inputType="number"
+                    android:padding="12dp"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="@color/tf_text"
+                    android:textColorHint="@color/tf_hint"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_date_end_calendar"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/tf_date_end_day"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btn_date_end_calendar"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/bg_tf"
+                    android:padding="4dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tf_date_end_year"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_calendar"
+                    app:tint="@color/tf_icon" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/dm_sans_bold"
+                android:text="Enter Notes"
+                android:textColor="@color/tv_label1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cl_date_end" />
+
+            <TextView
+                android:id="@+id/tv_notes_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/dm_sans"
+                android:text="Notes Prompt"
+                android:textColor="@color/pro_text"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_notes"
+                app:layout_constraintStart_toEndOf="@+id/tv_notes"
+                app:layout_constraintTop_toTopOf="@+id/tv_notes" />
+
+            <EditText
+                android:id="@+id/tf_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_tf"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans"
+                android:hint="Enter Notes (Optional)"
+                android:padding="12dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/tf_text"
+                android:textColorHint="@color/tf_hint"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_notes" />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="@color/btn_background"
+                android:fontFamily="@font/dm_sans_bold"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="Save Changes"
+                android:textColor="@color/btn_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tf_notes" />
+
+            <TextView
+                android:id="@+id/tv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/dm_sans"
+                android:text="Delete"
+                android:textColor="@color/tv_danger"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_save" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/tv_notes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/dm_sans_bold"
-            android:text="Enter Notes"
-            android:textColor="@color/tv_label1"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cl_date_end" />
-
-        <TextView
-            android:id="@+id/tv_notes_prompt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:fontFamily="@font/dm_sans"
-            android:text="Notes Prompt"
-            android:textColor="@color/pro_text"
-            android:textSize="16sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_notes"
-            app:layout_constraintStart_toEndOf="@+id/tv_notes"
-            app:layout_constraintTop_toTopOf="@+id/tv_notes" />
-
-        <EditText
-            android:id="@+id/tf_notes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_tf"
-            android:ellipsize="end"
-            android:fontFamily="@font/dm_sans"
-            android:hint="Enter Notes (Optional)"
-            android:padding="12dp"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textColor="@color/tf_text"
-            android:textColorHint="@color/tf_hint"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_notes" />
-
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:backgroundTint="@color/btn_background"
-            android:fontFamily="@font/dm_sans_bold"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:text="Save Changes"
-            android:textColor="@color/btn_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tf_notes" />
-
-        <TextView
-            android:id="@+id/tv_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/dm_sans"
-            android:text="Delete"
-            android:textColor="@color/tv_label2"
-            android:textSize="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_save" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/ll_navigation"
