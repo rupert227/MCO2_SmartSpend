@@ -112,7 +112,7 @@ public class AnalyticsActivity extends AppCompatActivity {
         chartExpenseCategories.getDescription().setEnabled(false);
         chartExpenseCategories.getLegend().setEnabled(false);
 
-        // --- DONUT / RING CONFIGURATION ---
+        // Donut / Chart / Circle -- Whatever u want to call this
         chartExpenseCategories.setDrawHoleEnabled(true);
         chartExpenseCategories.setHoleColor(Color.TRANSPARENT);
         chartExpenseCategories.setHoleRadius(65f);
@@ -120,20 +120,16 @@ public class AnalyticsActivity extends AppCompatActivity {
         chartExpenseCategories.setTransparentCircleColor(Color.WHITE);
         chartExpenseCategories.setTransparentCircleAlpha(50);
 
-        // --- LABEL CONFIGURATION ---
-        chartExpenseCategories.setDrawEntryLabels(false); // Hides clutter on the ring
+        chartExpenseCategories.setDrawEntryLabels(false);
         chartExpenseCategories.setCenterTextColor(Color.BLACK);
         chartExpenseCategories.setCenterTextSize(16f);
-        // ---------------------------
 
         chartExpenseCategories.setRotationEnabled(false);
         chartExpenseCategories.setHighlightPerTapEnabled(true);
 
-        // Add padding so "Popped" slices don't get clipped
         chartExpenseCategories.setExtraOffsets(10f, 10f, 10f, 10f);
 
-        // --- INTERACTION LISTENER ---
-        // Shows Category Name & Value in the CENTER when clicked
+        // Shows indicator inside the circle
         chartExpenseCategories.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
@@ -200,9 +196,8 @@ public class AnalyticsActivity extends AppCompatActivity {
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
         dataSet.setColors(colors);
         dataSet.setSliceSpace(2f);
-        dataSet.setSelectionShift(10f); // How far the slice "pops" out when clicked
+        dataSet.setSelectionShift(10f);
 
-        // Disable values on the chart lines to keep it clean (Indicator is now in Center)
         dataSet.setDrawValues(false);
 
         PieData pieData = new PieData(dataSet);
@@ -216,8 +211,7 @@ public class AnalyticsActivity extends AppCompatActivity {
         if(SessionCache.expensesItems.isEmpty())
             return new LinkedHashMap<>();
 
-        // BUG FIX: Removed the "fallback" logic.
-        // Now strictly filters based on Current Date.
+
         return aggregateWithinBounds(range, DateHelper.getCurrentDate());
     }
 
