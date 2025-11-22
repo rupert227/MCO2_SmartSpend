@@ -1,7 +1,6 @@
 package com.mobdeve.s17.group11.smartspend.gallery;
 
 import android.graphics.Bitmap;
-import androidx.exifinterface.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,10 +11,9 @@ import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.exifinterface.media.ExifInterface;
 
 import com.mobdeve.s17.group11.smartspend.R;
-import com.mobdeve.s17.group11.smartspend.util.Algorithm;
-import com.mobdeve.s17.group11.smartspend.util.SessionCache;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,20 +23,16 @@ import io.getstream.photoview.PhotoView;
 
 public class GalleryImageViewerActivity extends AppCompatActivity {
 
-    public static String imageFilename = null;
+    public static File imageFile;
 
-    private File imageFile;
     private ImageButton btnClose;
     private PhotoView pvImage;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        imageFile = new File(SessionCache.galleryDirectory, imageFilename);
-
-        if(!imageFile.exists())
+        if(imageFile != null && !imageFile.exists())
             return;
 
         setContentView(R.layout.activity_image_view);
@@ -76,7 +70,7 @@ public class GalleryImageViewerActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        pvImage.setImageBitmap(Algorithm.rotateBitmap(
+        pvImage.setImageBitmap(GalleryUtils.Filter.rotateBitmap(
                 imageBitmap,
                 exifInterface.getAttributeInt(
                         ExifInterface.TAG_ORIENTATION,

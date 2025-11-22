@@ -79,42 +79,4 @@ public class Algorithm {
         return filteredStrings;
     }
 
-    public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
-        Matrix matrix = new Matrix();
-
-        switch(orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                matrix.postRotate(90);
-                break;
-
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                matrix.postRotate(180);
-                break;
-
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                matrix.postRotate(270);
-                break;
-
-            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
-                matrix.preScale(-1, 1);
-                break;
-
-            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
-                matrix.preScale(1, -1);
-                break;
-
-            default:
-                return bitmap;
-        }
-
-        return Bitmap.createBitmap(
-                bitmap,
-                0, 0,
-                bitmap.getWidth(),
-                bitmap.getHeight(),
-                matrix,
-                true
-        );
-    }
-
 }

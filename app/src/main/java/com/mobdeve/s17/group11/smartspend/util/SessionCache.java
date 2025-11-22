@@ -22,7 +22,7 @@ public class SessionCache {
     public static final SortSettingsVariables budgetsSortSettings = new SortSettingsVariables();
     public static final SortSettingsVariables expensesSortSettings = new SortSettingsVariables();
 
-    public static final int REQUEST_CODE_CAMERA = 1;
+    public static final String TEMP_IMAGE_NAME = "temp_img.jpg";
 
     public static class Color {
 

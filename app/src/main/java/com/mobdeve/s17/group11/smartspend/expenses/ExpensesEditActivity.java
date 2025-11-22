@@ -1,14 +1,10 @@
 package com.mobdeve.s17.group11.smartspend.expenses;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -17,14 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.exifinterface.media.ExifInterface;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -34,7 +27,7 @@ import com.mobdeve.s17.group11.smartspend.budgets.BudgetsDatabase;
 import com.mobdeve.s17.group11.smartspend.budgets.BudgetsListItem;
 import com.mobdeve.s17.group11.smartspend.gallery.GalleryActivity;
 import com.mobdeve.s17.group11.smartspend.gallery.GalleryImageViewerActivity;
-import com.mobdeve.s17.group11.smartspend.util.Algorithm;
+import com.mobdeve.s17.group11.smartspend.gallery.GalleryUtils;
 import com.mobdeve.s17.group11.smartspend.util.Date;
 import com.mobdeve.s17.group11.smartspend.util.DropdownComposite;
 import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
@@ -42,12 +35,9 @@ import com.mobdeve.s17.group11.smartspend.util.SessionCache;
 import com.mobdeve.s17.group11.smartspend.util.UIUtils;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -58,8 +48,6 @@ public class ExpensesEditActivity extends AppCompatActivity {
     public static Runnable exitListener;
     public static WeakReference<RecyclerView> rvExpensesListRef;
 
-    private Bitmap expenseImageBitmap = null;
-    private Set<BudgetsListItem> presentInBudgets = new HashSet<>();
     private Button btnSave;
     private DropdownComposite categoryDropdownComposite = new DropdownComposite();
     private EditText tfAmount;
@@ -67,16 +55,22 @@ public class ExpensesEditActivity extends AppCompatActivity {
     private EditText tfDateDay, tfDateMonth, tfDateYear;
     private EditText tfLocation;
     private EditText tfNotes;
+    private File tempImageFile = null;
+    private GalleryUtils.Camera camera;
+    private GalleryUtils.GalleryPicker galleryPicker;
     private ImageButton btnBack;
     private ImageButton btnDateCalendar;
     private ImageView imgThumbnail;
     private LinearLayout llAddImage;
     private LinearLayout llDeleteImage;
+    private Set<BudgetsListItem> presentInBudgets = new HashSet<>();
     private TextView tvAddImage;
     private TextView tvAmountPrompt;
     private TextView tvCategoryPrompt;
     private TextView tvDatePrompt;
     private TextView tvDelete;
+    private boolean deletedImage = false;
+    private boolean hasImagePreview = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,9 +86,78 @@ public class ExpensesEditActivity extends AppCompatActivity {
 
         NavigationBar.init(this);
 
+        initNativeActivities();
         initViews();
         initListeners();
         initRecyclerViews();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if(tempImageFile != null && tempImageFile.exists())
+            tempImageFile.delete();
+    }
+
+    private void initNativeActivities() {
+        camera = new GalleryUtils.Camera(this, new GalleryUtils.Camera.Callback() {
+
+            @Override
+            public void onPhotoCaptured(File file) {
+                tempImageFile = file;
+
+                imgThumbnail.setImageTintList(ColorStateList.valueOf(0));
+
+                Glide.with(ExpensesEditActivity.this)
+                        .load(file)
+                        .override(256, 256)
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .error(R.drawable.ic_image_missing)
+                        .into(imgThumbnail);
+
+                tvAddImage.setText("Edit");
+                llDeleteImage.setVisibility(LinearLayout.VISIBLE);
+
+                deletedImage = false;
+                hasImagePreview = true;
+            }
+
+            @Override
+            public void onCancelled() {}
+
+        });
+
+        galleryPicker = new GalleryUtils.GalleryPicker(this, new GalleryUtils.GalleryPicker.Callback() {
+
+            @Override
+            public void onImagePicked(File file) {
+                tempImageFile = file;
+
+                imgThumbnail.setImageTintList(ColorStateList.valueOf(0));
+
+                Glide.with(ExpensesEditActivity.this)
+                        .load(file)
+                        .override(256, 256)
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .error(R.drawable.ic_image_missing)
+                        .into(imgThumbnail);
+
+                tvAddImage.setText("Edit");
+                llDeleteImage.setVisibility(LinearLayout.VISIBLE);
+
+                deletedImage = false;
+                hasImagePreview = true;
+            }
+
+            @Override
+            public void onCancelled() {}
+
+        });
     }
 
     private void initViews() {
@@ -125,13 +188,13 @@ public class ExpensesEditActivity extends AppCompatActivity {
         tfLocation.setText(expenseEdit.location);
         tfNotes.setText(expenseEdit.notes);
 
-        File imageFilepath = new File(SessionCache.galleryDirectory, expenseEdit.sqlRowID + ".jpg");
+        File imagePreviewFile = new File(SessionCache.galleryDirectory, expenseEdit.sqlRowID + ".jpg");
 
-        if(imageFilepath.exists()) {
+        if(imagePreviewFile.exists()) {
             imgThumbnail.setImageTintList(ColorStateList.valueOf(0));
 
             Glide.with(this)
-                    .load(imageFilepath)
+                    .load(imagePreviewFile)
                     .override(256, 256)
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -142,7 +205,12 @@ public class ExpensesEditActivity extends AppCompatActivity {
             tvAddImage.setText("Edit");
             llDeleteImage.setVisibility(LinearLayout.VISIBLE);
 
-            GalleryActivity.refreshThumbnails = true;
+            hasImagePreview = true;
+        } else {
+            tvAddImage.setText("Add");
+            llDeleteImage.setVisibility(LinearLayout.GONE);
+
+            hasImagePreview = false;
         }
     }
 
@@ -250,15 +318,19 @@ public class ExpensesEditActivity extends AppCompatActivity {
 
             ExpensesActivity.expensesPopupSortRef.get().applySort();
 
-            if(expenseImageBitmap != null) {
-                try {
-                    File file = new File(SessionCache.galleryDirectory, expenseEdit.sqlRowID + ".jpg");
-                    FileOutputStream imageOutput = new FileOutputStream(file);
+            if(tempImageFile != null && tempImageFile.exists()) {
+                File file = new File(SessionCache.galleryDirectory, SessionCache.TEMP_IMAGE_NAME);
 
-                    expenseImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, imageOutput);
-                    imageOutput.flush();
-                } catch(IOException e) {
-                    throw new RuntimeException(e);
+                if(tempImageFile.exists()) {
+                    file.renameTo(new File(SessionCache.galleryDirectory, expenseEdit.sqlRowID + ".jpg"));
+                    GalleryActivity.refreshThumbnails = true;
+                }
+            } else if(deletedImage) {
+                File file = new File(SessionCache.galleryDirectory, expenseEdit.sqlRowID + ".jpg");
+
+                if(file.exists()) {
+                    file.delete();
+                    GalleryActivity.refreshThumbnails = true;
                 }
             }
 
@@ -328,8 +400,15 @@ public class ExpensesEditActivity extends AppCompatActivity {
 
                         File file = new File(SessionCache.galleryDirectory, expenseEdit.sqlRowID + ".jpg");
 
-                        if(file.exists())
+                        if(file.exists()) {
                             file.delete();
+                            GalleryActivity.refreshThumbnails = true;
+                        }
+
+                        if(tempImageFile.exists()) {
+                            tempImageFile.delete();
+                            GalleryActivity.refreshThumbnails = true;
+                        }
 
                         finish();
                         overridePendingTransition(0, 0);
@@ -344,7 +423,7 @@ public class ExpensesEditActivity extends AppCompatActivity {
             UIUtils.Dialog.showPrompt2(
                     view,
                     null,
-                    (expenseImageBitmap == null ? "Add" : "Edit") + " Expense Image",
+                    (hasImagePreview ? "Edit" : "Add") + " Expense Image",
                     "Choose where you want to retrieve your image from.",
                     "Use Camera",
                     "Camera Roll",
@@ -352,71 +431,35 @@ public class ExpensesEditActivity extends AppCompatActivity {
                     ColorStateList.valueOf(ContextCompat.getColor(this, R.color.btn_background)).getDefaultColor(),
                     ColorStateList.valueOf(ContextCompat.getColor(this, R.color.btn_background)).getDefaultColor(),
                     ColorStateList.valueOf(ContextCompat.getColor(this, R.color.btn_background_neutral)).getDefaultColor(),
-                    null, // TODO: Add camera function here
-                    (btn1View) -> {
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                        intent.setType("image/*");
-
-                        imagePickerLauncher.launch(intent);
-                    },
+                    (btn0View) -> camera.launchCamera(new File(SessionCache.galleryDirectory, SessionCache.TEMP_IMAGE_NAME)),
+                    (btn1View) -> galleryPicker.launchGallery(new File(SessionCache.galleryDirectory, SessionCache.TEMP_IMAGE_NAME)),
                     null
             );
         });
 
         llDeleteImage.setOnClickListener(view -> {
-            UIUtils.Dialog.showPrompt1(
-                    view,
-                    null,
-                    "Delete Expense Image",
-                    "Are you sure you want to delete this image?\nThis action cannot be undone.",
-                    "Cancel",
-                    "Delete",
-                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.btn_background_neutral)).getDefaultColor(),
-                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.btn_background_danger)).getDefaultColor(),
-                    null,
-                    (btn1View) -> {
-                        File file = new File(SessionCache.galleryDirectory, expenseEdit.sqlRowID + ".jpg");
+            imgThumbnail.setImageTintList(ColorStateList.valueOf(SessionCache.Color.icoGrayed));
+            Glide.with(imgThumbnail.getContext()).clear(imgThumbnail);
+            imgThumbnail.setImageResource(R.drawable.ic_image_missing);
 
-                        if(file.exists())
-                            file.delete();
+            tvAddImage.setText("Add");
+            llDeleteImage.setVisibility(LinearLayout.GONE);
 
-                        imgThumbnail.setImageTintList(ColorStateList.valueOf(SessionCache.Color.icoGrayed));
-                        Glide.with(imgThumbnail.getContext()).clear(imgThumbnail);
-                        imgThumbnail.setImageResource(R.drawable.ic_image_missing);
-
-                        expenseImageBitmap = null;
-                        tvAddImage.setText("Add");
-                        llDeleteImage.setVisibility(LinearLayout.GONE);
-
-                        GalleryActivity.refreshThumbnails = true;
-                    }
-            );
+            deletedImage = true;
+            hasImagePreview = false;
         });
 
         imgThumbnail.setOnClickListener(view -> {
-            if(expenseImageBitmap != null) {
-                UIUtils.Dialog.showPrompt0(
-                        view,
-                        null,
-                        "Image Viewer",
-                        "Image must be saved before viewing in full resolution.",
-                        "Acknowledge",
-                        null
-                );
-
-                return;
-            }
-
-            String imageFilename = expenseEdit.sqlRowID + ".jpg";
-
-            File imageFile = new File(SessionCache.galleryDirectory, imageFilename);
+            File imageFile = tempImageFile != null && tempImageFile.exists()
+                    ? tempImageFile
+                    : new File(SessionCache.galleryDirectory, expenseEdit.sqlRowID + ".jpg");
 
             if(!imageFile.exists())
                 return;
 
             Intent intent = new Intent(this, GalleryImageViewerActivity.class);
 
-            GalleryImageViewerActivity.imageFilename = imageFilename;
+            GalleryImageViewerActivity.imageFile = imageFile;
             startActivity(intent);
         });
     }
@@ -428,50 +471,5 @@ public class ExpensesEditActivity extends AppCompatActivity {
 
         UIUtils.CompositeInstantiator.categoryDropdown(categoryDropdownComposite, tfCategory);
     }
-
-    private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if(result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    Uri selectedImageUri = result.getData().getData();
-
-                    try {
-                        Bitmap selectedImageBitmap = MediaStore.Images.Media.getBitmap(
-                                this.getContentResolver(),
-                                selectedImageUri
-                        );
-
-                        ExifInterface exifInterface = new ExifInterface(
-                                Objects.requireNonNull(this.getContentResolver().openInputStream(selectedImageUri))
-                        );
-
-                        expenseImageBitmap = Algorithm.rotateBitmap(
-                                selectedImageBitmap,
-                                exifInterface.getAttributeInt(
-                                        ExifInterface.TAG_ORIENTATION,
-                                        ExifInterface.ORIENTATION_NORMAL
-                                )
-                        );
-
-                        imgThumbnail.setImageTintList(ColorStateList.valueOf(0));
-                        Glide.with(this)
-                                .load(expenseImageBitmap)
-                                .override(256, 256)
-                                .centerCrop()
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .skipMemoryCache(true)
-                                .error(R.drawable.ic_image_missing)
-                                .into(imgThumbnail);
-
-                        tvAddImage.setText("Edit");
-                        llDeleteImage.setVisibility(LinearLayout.VISIBLE);
-
-                        GalleryActivity.refreshThumbnails = true;
-                    } catch(IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-    );
 
 }
