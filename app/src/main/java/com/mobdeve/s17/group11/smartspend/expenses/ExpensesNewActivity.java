@@ -1,0 +1,363 @@
+package com.mobdeve.s17.group11.smartspend.expenses;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.media.ExifInterface;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.mobdeve.s17.group11.smartspend.R;
+import com.mobdeve.s17.group11.smartspend.budgets.BudgetsDatabase;
+import com.mobdeve.s17.group11.smartspend.gallery.GalleryActivity;
+import com.mobdeve.s17.group11.smartspend.util.Algorithm;
+import com.mobdeve.s17.group11.smartspend.util.Date;
+import com.mobdeve.s17.group11.smartspend.util.DateHelper;
+import com.mobdeve.s17.group11.smartspend.util.DropdownComposite;
+import com.mobdeve.s17.group11.smartspend.util.NavigationBar;
+import com.mobdeve.s17.group11.smartspend.util.SessionCache;
+import com.mobdeve.s17.group11.smartspend.util.UIUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+@SuppressLint("SetTextI18n")
+public class ExpensesNewActivity extends AppCompatActivity {
+
+    public static Runnable exitListener;
+    public static WeakReference<RecyclerView> rvExpensesListRef;
+
+    private Bitmap expenseImageBitmap = null;
+    private Button btnSave;
+    private DropdownComposite categoryDropdownComposite = new DropdownComposite();
+    private EditText tfAmount;
+    private EditText tfCategory;
+    private EditText tfDateDay, tfDateMonth, tfDateYear;
+    private EditText tfLocation;
+    private EditText tfNotes;
+    private ImageButton btnBack;
+    private ImageButton btnDateCalendar;
+    private ImageView imgThumbnail;
+    private LinearLayout llAddImage;
+    private LinearLayout llDeleteImage;
+    private TextView tvAddImage;
+    private TextView tvAmountPrompt;
+    private TextView tvCategoryPrompt;
+    private TextView tvDatePrompt;
+    private TextView tvDelete;
+    private TextView tvHeaderTitle;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_expenses_edit);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.cl_root), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        NavigationBar.init(this);
+
+        initViews();
+        initListeners();
+        initRecyclerViews();
+    }
+
+    private void initViews() {
+        btnBack = findViewById(R.id.btn_header_back);
+        btnDateCalendar = findViewById(R.id.btn_date_calendar);
+        btnSave = findViewById(R.id.btn_save);
+        imgThumbnail = findViewById(R.id.img_thumbnail);
+        llAddImage = findViewById(R.id.ll_image_add);
+        llDeleteImage = findViewById(R.id.ll_image_delete);
+        tfAmount = findViewById(R.id.tf_amount);
+        tfCategory = findViewById(R.id.tf_category);
+        tfDateDay = findViewById(R.id.tf_date_day);
+        tfDateMonth = findViewById(R.id.tf_date_month);
+        tfDateYear = findViewById(R.id.tf_date_year);
+        tfLocation = findViewById(R.id.tf_location);
+        tfNotes = findViewById(R.id.tf_notes);
+        tvAddImage = findViewById(R.id.tv_image_add);
+        tvAmountPrompt = findViewById(R.id.tv_amount_prompt);
+        tvCategoryPrompt = findViewById(R.id.tv_category_prompt);
+        tvDatePrompt = findViewById(R.id.tv_date_prompt);
+        tvDelete = findViewById(R.id.tv_delete);
+        tvHeaderTitle = findViewById(R.id.tv_header_title);
+
+        tvHeaderTitle.setText("Create Expense Entry");
+        tvDelete.setVisibility(TextView.GONE);
+        btnSave.setText("Create Entry");
+
+        llDeleteImage.setVisibility(LinearLayout.GONE);
+
+        Date currentDate = DateHelper.getCurrentDate();
+
+        tfDateDay.setText(Integer.toString(currentDate.day));
+        tfDateMonth.setText(Integer.toString(currentDate.month));
+        tfDateYear.setText(Integer.toString(currentDate.year));
+    }
+
+    private void initListeners() {
+        ExpensesListAdapter expensesListAdapter = (ExpensesListAdapter) rvExpensesListRef.get().getAdapter();
+        assert expensesListAdapter != null;
+
+        btnBack.setOnClickListener(view -> {
+            finish();
+            overridePendingTransition(0, 0);
+        });
+
+        btnDateCalendar.setOnClickListener(view -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    ExpensesNewActivity.this,
+
+                    (DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) -> {
+                        tfDateDay.setText(Integer.toString(selectedDay));
+                        tfDateMonth.setText(Integer.toString(selectedMonth + 1));
+                        tfDateYear.setText(Integer.toString(selectedYear));
+                    },
+
+                    Integer.parseInt(tfDateYear.getText().toString().trim()),
+                    Integer.parseInt(tfDateMonth.getText().toString().trim()) - 1,
+                    Integer.parseInt(tfDateDay.getText().toString().trim())
+            );
+
+            datePickerDialog.show();
+        });
+
+        btnSave.setOnClickListener(view -> {
+            boolean validFields;
+
+            validFields = UIUtils.Validator.validateAmountField(tfAmount, tvAmountPrompt);
+            validFields &= UIUtils.Validator.validateCategoryField(tfCategory, tvCategoryPrompt);
+            validFields &= UIUtils.Validator.validateDateFields(tfDateDay, tfDateMonth, tfDateYear, tvDatePrompt);
+
+            if(!validFields)
+                return;
+
+            ExpensesListItem expense = new ExpensesListItem(
+                    ExpensesCategory.getExpensesCategoryID(tfCategory.getText().toString().trim()),
+                    Float.parseFloat(tfAmount.getText().toString().trim()),
+                    new Date(
+                            Integer.parseInt(tfDateDay.getText().toString().trim()),
+                            Integer.parseInt(tfDateMonth.getText().toString().trim()),
+                            Integer.parseInt(tfDateYear.getText().toString().trim())
+                    ),
+                    tfLocation.getText().toString().trim(),
+                    tfNotes.getText().toString().trim()
+            );
+
+            AtomicBoolean budgetExceeded = new AtomicBoolean(false);
+
+            SessionCache.budgetsItems.forEach(budget -> {
+                int budgetDateEnd = budget.endDate.getUniqueValue();
+                int budgetDateStart = budget.startDate.getUniqueValue();
+                int expenseDate = expense.date.getUniqueValue();
+
+                if(budget.expensesCategoryID == expense.expensesCategoryID
+                        && budgetDateStart <= expenseDate
+                        && budgetDateEnd >= expenseDate) {
+                    budget.currentAmount += expense.amount;
+
+                    if(budget.maxAmount < budget.currentAmount)
+                        budgetExceeded.set(true);
+
+                    SessionCache.budgetsDatabase.updateBudgetRow(
+                            budget.sqlRowID,
+                            BudgetsDatabase.COLUMN_AMOUNT_CURRENT,
+                            budget.currentAmount
+                    );
+                }
+            });
+
+            expense.sqlRowID = SessionCache.expensesDatabase.addExpense(expense);
+
+            SessionCache.expensesItems.add(0, expense);
+
+            for(int i = 0; i < SessionCache.expensesItems.size(); i++)
+                SessionCache.expensesItems.get(i).listIndex = i;
+
+            ExpensesActivity.expensesPopupSortRef.get().applySort();
+
+            if(expenseImageBitmap != null) {
+                try {
+                    File file = new File(SessionCache.galleryDirectory, expense.sqlRowID + ".jpg");
+                    FileOutputStream imageOutput = new FileOutputStream(file);
+
+                    expenseImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, imageOutput);
+                    imageOutput.flush();
+                } catch(IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            if(!budgetExceeded.get()) {
+                finish();
+                overridePendingTransition(0, 0);
+                rvExpensesListRef.get().scrollToPosition(0);
+
+                if(exitListener != null)
+                    exitListener.run();
+            } else {
+                UIUtils.Dialog.showPrompt0(
+                        view,
+                        null,
+                        "Budget Exceeded",
+                        "You have exceeded one of your budget entries!",
+                        "Acknowledge",
+                        btnView -> {
+                            finish();
+                            overridePendingTransition(0, 0);
+                            rvExpensesListRef.get().scrollToPosition(0);
+
+                            if(exitListener != null)
+                                exitListener.run();
+                        }
+                );
+            }
+        });
+
+        llAddImage.setOnClickListener(view -> {
+            UIUtils.Dialog.showPrompt2(
+                    view,
+                    null,
+                    (expenseImageBitmap == null ? "Add" : "Edit") + " Expense Image",
+                    "Choose where you want to retrieve your image from.",
+                    "Use Camera",
+                    "Camera Roll",
+                    "Cancel",
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.btn_background)).getDefaultColor(),
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.btn_background)).getDefaultColor(),
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.btn_background_neutral)).getDefaultColor(),
+                    null, // TODO: Add camera function here
+                    (btn1View) -> {
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        intent.setType("image/*");
+
+                        imagePickerLauncher.launch(intent);
+                    },
+                    null
+            );
+        });
+
+        llDeleteImage.setOnClickListener(view -> {
+            UIUtils.Dialog.showPrompt1(
+                    view,
+                    null,
+                    "Delete Expense Image",
+                    "Are you sure you want to delete this image?\nThis action cannot be undone.",
+                    "Cancel",
+                    "Delete",
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.btn_background_neutral)).getDefaultColor(),
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.btn_background_danger)).getDefaultColor(),
+                    null,
+                    (btn1View) -> {
+                        imgThumbnail.setImageTintList(ColorStateList.valueOf(SessionCache.Color.icoGrayed));
+                        Glide.with(imgThumbnail.getContext()).clear(imgThumbnail);
+                        imgThumbnail.setImageResource(R.drawable.ic_image_missing);
+
+                        expenseImageBitmap = null;
+                        tvAddImage.setText("Add");
+                        llDeleteImage.setVisibility(LinearLayout.GONE);
+                    }
+            );
+        });
+
+        imgThumbnail.setOnClickListener(view -> {
+            if(expenseImageBitmap != null) {
+                UIUtils.Dialog.showPrompt0(
+                        view,
+                        null,
+                        "Image Viewer",
+                        "Image must be saved before viewing in full resolution.",
+                        "Acknowledge",
+                        null
+                );
+            }
+        });
+    }
+
+    private void initRecyclerViews() {
+        Arrays.stream(ExpensesCategory.getListOrder()).forEach(categoryID ->
+            categoryDropdownComposite.items.add(ExpensesCategory.getExpensesCategoryName(categoryID))
+        );
+
+        UIUtils.CompositeInstantiator.categoryDropdown(categoryDropdownComposite, tfCategory);
+    }
+
+    private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if(result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Uri selectedImageUri = result.getData().getData();
+
+                    try {
+                        Bitmap selectedImageBitmap = MediaStore.Images.Media.getBitmap(
+                                this.getContentResolver(),
+                                selectedImageUri
+                        );
+
+                        ExifInterface exifInterface = new ExifInterface(
+                                Objects.requireNonNull(this.getContentResolver().openInputStream(selectedImageUri))
+                        );
+
+                        expenseImageBitmap = Algorithm.rotateBitmap(
+                                selectedImageBitmap,
+                                exifInterface.getAttributeInt(
+                                        ExifInterface.TAG_ORIENTATION,
+                                        ExifInterface.ORIENTATION_NORMAL
+                                )
+                        );
+
+                        imgThumbnail.setImageTintList(ColorStateList.valueOf(0));
+
+                        Glide.with(this)
+                                .load(expenseImageBitmap)
+                                .override(256, 256)
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .skipMemoryCache(true)
+                                .error(R.drawable.ic_image_missing)
+                                .into(imgThumbnail);
+
+                        tvAddImage.setText("Edit");
+                        llDeleteImage.setVisibility(LinearLayout.VISIBLE);
+
+                        GalleryActivity.refreshThumbnails = true;
+                    } catch(IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+    );
+
+}

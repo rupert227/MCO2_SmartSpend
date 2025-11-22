@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/atv_background">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/atv_header_background"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_header_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/ic_arrow_left"
+            android:backgroundTint="#00000000"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_left"
+            app:tint="@color/atv_header_foreground" />
+
+        <TextView
+            android:id="@+id/tv_header_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Test Header"
+            android:textColor="@color/atv_header_foreground"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_header_back"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/btn_background"
+        android:fontFamily="@font/dm_sans_bold"
+        android:text="Button"
+        android:textColor="@color/btn_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_header" />
+
+    <EditText
+        android:id="@+id/tf_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="48dp"
+        android:background="@drawable/bg_tf"
+        android:ellipsize="end"
+        android:fontFamily="@font/dm_sans"
+        android:hint="Enter Input"
+        android:padding="12dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:textColor="@color/tf_text"
+        android:textColorHint="@color/tf_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_button" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcv_card"
+        android:layout_width="200dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="24dp"
+        app:cardBackgroundColor="@color/crd_background"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:contentPadding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tf_input"
+        app:strokeWidth="0dp" />
+
+    <TextView
+        android:id="@+id/tv_label0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/dm_sans_bold"
+        android:text="Test Label"
+        android:textColor="@color/tv_label0"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mcv_card" />
+
+    <TextView
+        android:id="@+id/tv_label1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/dm_sans_bold"
+        android:text="Test Label"
+        android:textColor="@color/tv_label1"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_label0" />
+
+    <TextView
+        android:id="@+id/tv_label2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/dm_sans"
+        android:text="Test Label"
+        android:textColor="@color/tv_label2"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_label1" />
+
+    <LinearLayout
+        android:id="@+id/ll_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/atv_navigation_background"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_navigation_expenses"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:adjustViewBounds="true"
+            android:backgroundTint="#00000000"
+            android:padding="0dp"
+            android:scaleType="fitXY"
+            app:tint="@color/atv_navigation_foreground"
+            app:srcCompat="@drawable/ic_navigationbar_moneybag" />
+
+        <ImageButton
+            android:id="@+id/btn_navigation_budgets"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="48dp"
+            android:adjustViewBounds="true"
+            android:backgroundTint="#00000000"
+            android:padding="0dp"
+            android:scaleType="fitXY"
+            app:tint="@color/atv_navigation_foreground"
+            app:srcCompat="@drawable/ic_navigationbar_meter" />
+
+        <ImageButton
+            android:id="@+id/btn_navigation_gallery"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="48dp"
+            android:adjustViewBounds="true"
+            android:backgroundTint="#00000000"
+            android:padding="0dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_navigationbar_gallery"
+            app:tint="@color/atv_navigation_foreground" />
+
+        <ImageButton
+            android:id="@+id/btn_navigation_analytics"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="48dp"
+            android:adjustViewBounds="true"
+            android:backgroundTint="#00000000"
+            android:padding="0dp"
+            android:scaleType="fitXY"
+            app:tint="@color/atv_navigation_foreground"
+            app:srcCompat="@drawable/ic_navigationbar_barchart" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sys_bars">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_header"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/atv_header_background"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_header_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Gallery"
+            android:textColor="@color/atv_header_foreground"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_gallery"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/atv_background"
+        app:layout_constraintBottom_toTopOf="@+id/ll_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_header">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fadeScrollbars="false"
+            android:padding="2dp"
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/cl_navigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_header" />
+
+        <TextView
+            android:id="@+id/tv_empty_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/dm_sans"
+            android:gravity="center"
+            android:text="No Images Found\nImages from expenses appear here"
+            android:textColor="@color/tv_label2"
+            android:textSize="16dp"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/atv_navigation_background"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_navigation_expenses"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:adjustViewBounds="true"
+            android:backgroundTint="#00000000"
+            android:padding="0dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_navigationbar_moneybag"
+            app:tint="@color/atv_navigation_foreground" />
+
+        <ImageButton
+            android:id="@+id/btn_navigation_budgets"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="48dp"
+            android:adjustViewBounds="true"
+            android:backgroundTint="#00000000"
+            android:padding="0dp"
+            android:scaleType="fitXY"
+            app:tint="@color/atv_navigation_foreground"
+            app:srcCompat="@drawable/ic_navigationbar_meter" />
+
+        <ImageButton
+            android:id="@+id/btn_navigation_gallery"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="48dp"
+            android:adjustViewBounds="true"
+            android:backgroundTint="#00000000"
+            android:padding="0dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_navigationbar_gallery"
+            app:tint="@color/atv_navigation_foreground" />
+
+        <ImageButton
+            android:id="@+id/btn_navigation_analytics"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="48dp"
+            android:adjustViewBounds="true"
+            android:backgroundTint="#00000000"
+            android:padding="0dp"
+            android:scaleType="fitXY"
+            app:tint="@color/atv_navigation_foreground"
+            app:srcCompat="@drawable/ic_navigationbar_barchart" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
