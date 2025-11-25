@@ -450,7 +450,7 @@ public class ExpensesEditActivity extends AppCompatActivity {
                             GalleryActivity.refreshThumbnails = true;
                         }
 
-                        if(tempImageFile.exists()) {
+                        if(tempImageFile != null && tempImageFile.exists()) {
                             tempImageFile.delete();
                             GalleryActivity.refreshThumbnails = true;
                         }
