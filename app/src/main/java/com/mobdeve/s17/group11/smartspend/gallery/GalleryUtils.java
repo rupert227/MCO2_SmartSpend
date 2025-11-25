@@ -110,6 +110,7 @@ public class GalleryUtils {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
             cameraLauncher.launch(intent);

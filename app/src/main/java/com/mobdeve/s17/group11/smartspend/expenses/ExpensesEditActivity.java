@@ -322,7 +322,7 @@ public class ExpensesEditActivity extends AppCompatActivity {
             if(tempImageFile != null && tempImageFile.exists()) {
                 File file = new File(SessionCache.galleryDirectory, SessionCache.TEMP_IMAGE_NAME);
 
-                if(tempImageFile.exists()) {
+                if(tempImageFile != null && tempImageFile.exists()) {
                     file.renameTo(new File(SessionCache.galleryDirectory, expenseEdit.sqlRowID + ".jpg"));
                     GalleryActivity.refreshThumbnails = true;
                 }
