@@ -1,5 +1,8 @@
 package com.mobdeve.s17.group11.smartspend.util;
 
+import android.annotation.SuppressLint;
+
+@SuppressLint("DefaultLocale")
 public class FormatHelper {
 
     public static String floatToPrice(float value) {
@@ -7,7 +10,7 @@ public class FormatHelper {
     }
 
     public static String doubleToPrice(double value) {
-        return String.format("%,.2d", value);
+        return String.format("%,.2f", value);
     }
 
 }

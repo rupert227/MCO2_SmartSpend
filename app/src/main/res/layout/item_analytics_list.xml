@@ -19,12 +19,21 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_weight="0.75"
-        android:orientation="vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/vi_bar"
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bg_rv"
+            android:backgroundTint="#000000" />
 
         <TextView
             android:id="@+id/tv_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:ellipsize="end"
             android:fontFamily="@font/dm_sans_bold"
             android:maxLines="1"
@@ -32,19 +41,6 @@
             android:text="Category"
             android:textColor="@color/tv_label1"
             android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_marginTop="4dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/dm_sans"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:text="Date"
-            android:textColor="@color/tv_label2"
-            android:textSize="14dp" />
 
     </LinearLayout>
 

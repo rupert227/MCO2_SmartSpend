@@ -36,6 +36,9 @@
 
     <color name="pro_text">#FA4454</color>
 
+    <color name="rv_background">#FFFFFF</color>
+    <color name="rv_border">#19000000</color>
+
     <color name="sys_bars">#000000</color>
 
     <color name="tf_background">#FFFFFF</color>
@@ -49,7 +52,4 @@
     <color name="tv_label0">#073269</color>
     <color name="tv_label1">#000000</color>
     <color name="tv_label2">#80000000</color>
-
-    <color name="rv_background">#FFFFFF</color>
-    <color name="rv_border">#19000000</color>
 </resources>

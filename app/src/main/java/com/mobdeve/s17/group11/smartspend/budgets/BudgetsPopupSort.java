@@ -16,14 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mobdeve.s17.group11.smartspend.R;
 import com.mobdeve.s17.group11.smartspend.expenses.ExpensesCategory;
 import com.mobdeve.s17.group11.smartspend.util.Algorithm;
+import com.mobdeve.s17.group11.smartspend.util.PopupSettingsVariables;
 import com.mobdeve.s17.group11.smartspend.util.SessionCache;
-import com.mobdeve.s17.group11.smartspend.util.SortSettingsVariables;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-@SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
+@SuppressLint({"InflateParams", "NotifyDataSetChanged", "SetTextI18n"})
 public class BudgetsPopupSort {
 
     public PopupWindow popupWindow;
@@ -43,7 +43,7 @@ public class BudgetsPopupSort {
     private View view;
 
     private final BudgetsActivity budgetsActivity;
-    private final SortSettingsVariables settings = SessionCache.budgetsSortSettings;
+    private final PopupSettingsVariables.Sort settings = SessionCache.budgetsSortSettings;
 
     public BudgetsPopupSort(BudgetsActivity budgetsActivity) {
         this.budgetsActivity = budgetsActivity;
@@ -54,7 +54,7 @@ public class BudgetsPopupSort {
         initPopups();
     }
 
-    public void applySettings(SortSettingsVariables settings) {
+    public void applySettings(PopupSettingsVariables.Sort settings) {
         float highestAmount = settings.highestAmount;
         float lowestAmount = settings.lowestAmount;
 
@@ -124,7 +124,7 @@ public class BudgetsPopupSort {
                 budgetsActivity.budgetsListAdapter.notifyDataSetChanged();
 
                 budgetsActivity.validateUI();
-                BudgetsActivity.budgetsPopupSortRef.get().budgetsSortRecyclerView.scrollToPosition(0);
+                budgetsSortRecyclerView.scrollToPosition(0);
                 popupWindow.dismiss();
                 return;
             }
@@ -169,7 +169,7 @@ public class BudgetsPopupSort {
             budgetsActivity.budgetsListAdapter.notifyDataSetChanged();
 
             budgetsActivity.validateUI();
-            BudgetsActivity.budgetsPopupSortRef.get().budgetsSortRecyclerView.scrollToPosition(0);
+            budgetsSortRecyclerView.scrollToPosition(0);
             popupWindow.dismiss();
         });
 

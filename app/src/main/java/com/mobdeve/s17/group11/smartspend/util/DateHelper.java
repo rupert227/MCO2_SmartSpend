@@ -36,9 +36,13 @@ public class DateHelper {
     }
 
     public static String numericalDateTransform1(Date date) {
-        int month = date.month >= 0 && date.month < longMonthNames.length ? date.month : 0;
+        int month = date.month >= 0 && date.month < shortMonthNames.length ? date.month : 0;
 
         return shortMonthNames[month] + ". " + date.day + ", " + date.year;
+    }
+
+    public static String numericalDateTransform2(Date date, String delimiter) {
+        return date.month + delimiter + date.day + delimiter + date.year;
     }
 
 }

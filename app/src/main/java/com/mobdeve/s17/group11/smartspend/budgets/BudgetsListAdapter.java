@@ -20,6 +20,7 @@ import com.mobdeve.s17.group11.smartspend.util.SessionCache;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressLint("SetTextI18n")
 public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.budgetsListItemViewHolder> {
 
     public List<BudgetsListItem> items = new ArrayList<>();
@@ -39,7 +40,6 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
         );
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull budgetsListItemViewHolder holder, int position) {
         BudgetsListItem budget = items.get(position);
@@ -50,9 +50,9 @@ public class BudgetsListAdapter extends RecyclerView.Adapter<BudgetsListAdapter.
         holder.tvCategory.setText(ExpensesCategory.getExpensesCategoryName(budget.expensesCategoryID));
 
         holder.tvDate.setText(
-                DateHelper.numericalDateTransform1(budget.startDate)
+                DateHelper.numericalDateTransform2(budget.startDate, "/")
                         + " - "
-                        + DateHelper.numericalDateTransform1(budget.endDate)
+                        + DateHelper.numericalDateTransform2(budget.endDate, "/")
         );
 
         holder.tvMaxAmount.setText(FormatHelper.floatToPrice(budget.maxAmount));

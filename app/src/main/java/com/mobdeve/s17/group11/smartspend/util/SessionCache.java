@@ -19,8 +19,9 @@ public class SessionCache {
     public static final List<BudgetsListItem> budgetsItems = new ArrayList<>();
     public static final List<ExpensesListItem> expensesItems = new ArrayList<>();
 
-    public static final SortSettingsVariables budgetsSortSettings = new SortSettingsVariables();
-    public static final SortSettingsVariables expensesSortSettings = new SortSettingsVariables();
+    public static final PopupSettingsVariables.Analytics analyticsSortSettings = new PopupSettingsVariables.Analytics();
+    public static final PopupSettingsVariables.Sort budgetsSortSettings = new PopupSettingsVariables.Sort();
+    public static final PopupSettingsVariables.Sort expensesSortSettings = new PopupSettingsVariables.Sort();
 
     public static final String TEMP_IMAGE_NAME = "temp_img.jpg";
 

@@ -1,9 +1,5 @@
 package com.mobdeve.s17.group11.smartspend.util;
 
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import androidx.exifinterface.media.ExifInterface;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

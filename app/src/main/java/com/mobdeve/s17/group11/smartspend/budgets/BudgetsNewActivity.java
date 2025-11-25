@@ -34,7 +34,6 @@ public class BudgetsNewActivity extends AppCompatActivity {
     public static WeakReference<RecyclerView> rvBudgetsListRef;
 
     private Button btnSave;
-    private DropdownComposite categoryDropdownComposite = new DropdownComposite();
     private EditText tfAmount;
     private EditText tfCategory;
     private EditText tfDateEndDay, tfDateEndMonth, tfDateEndYear;
@@ -48,6 +47,8 @@ public class BudgetsNewActivity extends AppCompatActivity {
     private TextView tvDateEndPrompt, tvDateStartPrompt;
     private TextView tvDelete;
     private TextView tvHeaderTitle;
+
+    private final DropdownComposite categoryDropdownComposite = new DropdownComposite();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

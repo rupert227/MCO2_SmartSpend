@@ -46,7 +46,6 @@ public class ExpensesNewActivity extends AppCompatActivity {
     public static WeakReference<RecyclerView> rvExpensesListRef;
 
     private Button btnSave;
-    private DropdownComposite categoryDropdownComposite = new DropdownComposite();
     private EditText tfAmount;
     private EditText tfCategory;
     private EditText tfDateDay, tfDateMonth, tfDateYear;
@@ -67,6 +66,8 @@ public class ExpensesNewActivity extends AppCompatActivity {
     private TextView tvDelete;
     private TextView tvHeaderTitle;
     private boolean hasImagePreview = false;
+
+    private final DropdownComposite categoryDropdownComposite = new DropdownComposite();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

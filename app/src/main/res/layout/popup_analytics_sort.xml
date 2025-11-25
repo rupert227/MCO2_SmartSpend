@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_popup"
+    android:elevation="12dp"
+    android:orientation="vertical"
+    android:padding="6dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bg_rv"
+        android:orientation="vertical"
+        android:padding="8dp"
+        tools:layout_editor_absoluteY="29dp">
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/dm_sans_bold"
+            android:text="Date"
+            android:textColor="@color/tv_label0"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_date_clear"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:adjustViewBounds="true"
+            android:backgroundTint="#00000000"
+            android:padding="0dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_date"
+            app:srcCompat="@drawable/ic_rewind"
+            app:tint="@color/atv_navigation_background" />
+
+        <TextView
+            android:id="@+id/tv_date_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/dm_sans"
+            android:text="Start"
+            android:textColor="@color/tv_label1"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+
+        <TextView
+            android:id="@+id/tv_date_start_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/dm_sans"
+            android:text="Start Date Prompt"
+            android:textColor="@color/pro_text"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_date_start"
+            app:layout_constraintStart_toEndOf="@+id/tv_date_start"
+            app:layout_constraintTop_toTopOf="@+id/tv_date_start" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_date_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date_start">
+
+            <EditText
+                android:id="@+id/tf_date_start_month"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tf"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans"
+                android:hint="MM"
+                android:inputType="number"
+                android:padding="12dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/tf_text"
+                android:textColorHint="@color/tf_hint"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tf_date_start_day"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/tf_date_start_day"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tf"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans"
+                android:hint="DD"
+                android:inputType="number"
+                android:padding="12dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/tf_text"
+                android:textColorHint="@color/tf_hint"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tf_date_start_year"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/tf_date_start_month"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/tf_date_start_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tf"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans"
+                android:hint="YYYY"
+                android:inputType="number"
+                android:padding="12dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/tf_text"
+                android:textColorHint="@color/tf_hint"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_date_start_calendar"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/tf_date_start_day"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_date_start_calendar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bg_tf"
+                android:padding="4dp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tf_date_start_year"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_calendar"
+                app:tint="@color/tf_icon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_date_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/dm_sans"
+            android:text="End"
+            android:textColor="@color/tv_label1"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_date_start" />
+
+        <TextView
+            android:id="@+id/tv_date_end_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/dm_sans"
+            android:text="End Date Prompt"
+            android:textColor="@color/pro_text"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_date_end"
+            app:layout_constraintStart_toEndOf="@+id/tv_date_end"
+            app:layout_constraintTop_toTopOf="@+id/tv_date_end" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_date_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date_end">
+
+            <EditText
+                android:id="@+id/tf_date_end_month"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tf"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans"
+                android:hint="MM"
+                android:inputType="number"
+                android:padding="12dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/tf_text"
+                android:textColorHint="@color/tf_hint"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tf_date_end_day"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/tf_date_end_day"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tf"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans"
+                android:hint="DD"
+                android:inputType="number"
+                android:padding="12dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/tf_text"
+                android:textColorHint="@color/tf_hint"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tf_date_end_year"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/tf_date_end_month"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/tf_date_end_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tf"
+                android:ellipsize="end"
+                android:fontFamily="@font/dm_sans"
+                android:hint="YYYY"
+                android:inputType="number"
+                android:padding="12dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/tf_text"
+                android:textColorHint="@color/tf_hint"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_date_end_calendar"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/tf_date_end_day"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_date_end_calendar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bg_tf"
+                android:padding="4dp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tf_date_end_year"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_calendar"
+                app:tint="@color/tf_icon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_apply"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="@color/btn_background"
+        android:fontFamily="@font/dm_sans_bold"
+        android:text="Apply"
+        android:textColor="@color/btn_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_header" />
+
+</LinearLayout>

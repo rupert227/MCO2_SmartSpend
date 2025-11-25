@@ -22,9 +22,9 @@ import java.lang.ref.WeakReference;
 
 public class BudgetsActivity extends AppCompatActivity {
 
-    public static WeakReference<BudgetsPopupSort> budgetsPopupSortRef;
-
     public BudgetsListAdapter budgetsListAdapter;
+
+    public static WeakReference<BudgetsPopupSort> budgetsPopupSortRef;
 
     private BudgetsPopupSort budgetsPopupSort;
     private ImageButton btnAdd;
@@ -55,16 +55,6 @@ public class BudgetsActivity extends AppCompatActivity {
 
         budgetsPopupSort.applySettings(SessionCache.budgetsSortSettings);
         budgetsPopupSort.applySort();
-    }
-
-    public void validateUI() {
-        if(!budgetsListAdapter.items.isEmpty()) {
-            rvBudgetsList.setVisibility(View.VISIBLE);
-            tvPromptEmptyList.setVisibility(View.GONE);
-        } else {
-            rvBudgetsList.setVisibility(View.GONE);
-            tvPromptEmptyList.setVisibility(View.VISIBLE);
-        }
     }
 
     private void initViews() {
@@ -108,8 +98,6 @@ public class BudgetsActivity extends AppCompatActivity {
     private void initRecyclerViews() {
         budgetsListAdapter = new BudgetsListAdapter(this);
 
-        // SessionCache.budgetsItems.addAll(DataGenerator.getBudgetDataList());
-
         for(int i = 0; i < SessionCache.budgetsItems.size(); i++)
             SessionCache.budgetsItems.get(i).listIndex = i;
 
@@ -123,6 +111,16 @@ public class BudgetsActivity extends AppCompatActivity {
 
         BudgetsEditActivity.rvBudgetsListRef = new WeakReference<>(rvBudgetsList);
         BudgetsNewActivity.rvBudgetsListRef = new WeakReference<>(rvBudgetsList);
+    }
+
+    public void validateUI() {
+        if(!budgetsListAdapter.items.isEmpty()) {
+            rvBudgetsList.setVisibility(View.VISIBLE);
+            tvPromptEmptyList.setVisibility(View.GONE);
+        } else {
+            rvBudgetsList.setVisibility(View.GONE);
+            tvPromptEmptyList.setVisibility(View.VISIBLE);
+        }
     }
 
 }

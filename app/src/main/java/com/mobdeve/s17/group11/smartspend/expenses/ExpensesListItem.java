@@ -5,12 +5,12 @@ import com.mobdeve.s17.group11.smartspend.util.Date;
 public class ExpensesListItem {
 
     public Date date;
+    public String location;
+    public String notes;
     public float amount;
     public int expensesCategoryID;
     public int listIndex;
     public long sqlRowID;
-    public String location;
-    public String notes;
 
     public ExpensesListItem() {}
 

@@ -1,5 +1,6 @@
 package com.mobdeve.s17.group11.smartspend.util;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -27,6 +28,7 @@ import com.mobdeve.s17.group11.smartspend.expenses.ExpensesCategory;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+@SuppressLint({"InflateParams", "NotifyDataSetChanged", "SetTextI18n"})
 public class UIUtils {
 
     public static class Action {

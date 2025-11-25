@@ -15,14 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.group11.smartspend.R;
 import com.mobdeve.s17.group11.smartspend.util.Algorithm;
+import com.mobdeve.s17.group11.smartspend.util.PopupSettingsVariables;
 import com.mobdeve.s17.group11.smartspend.util.SessionCache;
-import com.mobdeve.s17.group11.smartspend.util.SortSettingsVariables;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-@SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
+@SuppressLint({"InflateParams", "NotifyDataSetChanged", "SetTextI18n"})
 public class ExpensesPopupSort {
 
     public PopupWindow popupWindow;
@@ -42,7 +42,7 @@ public class ExpensesPopupSort {
     private View view;
 
     private final ExpensesActivity expensesActivity;
-    private final SortSettingsVariables settings = SessionCache.expensesSortSettings;
+    private final PopupSettingsVariables.Sort settings = SessionCache.expensesSortSettings;
 
     public ExpensesPopupSort(ExpensesActivity expensesActivity) {
         this.expensesActivity = expensesActivity;
@@ -53,7 +53,7 @@ public class ExpensesPopupSort {
         initPopups();
     }
 
-    public void applySettings(SortSettingsVariables settings) {
+    public void applySettings(PopupSettingsVariables.Sort settings) {
         float highestAmount = settings.highestAmount;
         float lowestAmount = settings.lowestAmount;
 
@@ -123,7 +123,7 @@ public class ExpensesPopupSort {
                 expensesActivity.expensesListAdapter.notifyDataSetChanged();
 
                 expensesActivity.validateUI();
-                ExpensesActivity.expensesPopupSortRef.get().expensesSortRecyclerView.scrollToPosition(0);
+                expensesSortRecyclerView.scrollToPosition(0);
                 popupWindow.dismiss();
                 return;
             }
@@ -168,7 +168,7 @@ public class ExpensesPopupSort {
             expensesActivity.expensesListAdapter.notifyDataSetChanged();
 
             expensesActivity.validateUI();
-            ExpensesActivity.expensesPopupSortRef.get().expensesSortRecyclerView.scrollToPosition(0);
+            expensesSortRecyclerView.scrollToPosition(0);
             popupWindow.dismiss();
         });
 

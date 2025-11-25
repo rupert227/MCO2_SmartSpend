@@ -79,6 +79,7 @@ public class GalleryListAdapter extends RecyclerView.Adapter<GalleryListAdapter.
     public static class GalleryListItemViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView imgThumbnail;
+
         public GalleryListItemViewHolder(@NonNull View itemView) {
             super(itemView);
 

@@ -1,5 +1,6 @@
 package com.mobdeve.s17.group11.smartspend.gallery;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -18,24 +19,15 @@ import com.mobdeve.s17.group11.smartspend.util.SessionCache;
 import java.io.File;
 import java.util.Collections;
 
+@SuppressLint("NotifyDataSetChanged")
 public class GalleryActivity extends AppCompatActivity {
-
-    public static boolean refreshThumbnails = false;
 
     public GalleryListAdapter galleryListAdapter;
 
+    public static boolean refreshThumbnails = false;
+
     private RecyclerView rvGalleryList;
     private TextView tvPromptEmptyList;
-
-    public void validateUI() {
-        if(!galleryListAdapter.items.isEmpty()) {
-            rvGalleryList.setVisibility(View.VISIBLE);
-            tvPromptEmptyList.setVisibility(View.GONE);
-        } else {
-            rvGalleryList.setVisibility(View.GONE);
-            tvPromptEmptyList.setVisibility(View.VISIBLE);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +69,7 @@ public class GalleryActivity extends AppCompatActivity {
                         galleryListAdapter.items.add(Integer.parseInt(base));
                 }
 
-                Collections.sort(galleryListAdapter.items, Collections.reverseOrder());
+                galleryListAdapter.items.sort(Collections.reverseOrder());
             }
 
             galleryListAdapter.notifyDataSetChanged();
@@ -100,5 +92,16 @@ public class GalleryActivity extends AppCompatActivity {
 
         refreshThumbnails = true;
     }
+
+    public void validateUI() {
+        if(!galleryListAdapter.items.isEmpty()) {
+            rvGalleryList.setVisibility(View.VISIBLE);
+            tvPromptEmptyList.setVisibility(View.GONE);
+        } else {
+            rvGalleryList.setVisibility(View.GONE);
+            tvPromptEmptyList.setVisibility(View.VISIBLE);
+        }
+    }
+
 
 }

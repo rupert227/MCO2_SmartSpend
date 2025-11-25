@@ -23,7 +23,7 @@ public class AppStart extends Application {
         if(!SessionCache.galleryDirectory.exists())
             SessionCache.galleryDirectory.mkdirs();
 
-        Log.d("MYAPP", "Gallery Directory: " + SessionCache.galleryDirectory.getAbsolutePath());
+        Log.d("SMARTSPEND_LOG", "Gallery Directory: " + SessionCache.galleryDirectory.getAbsolutePath());
 
         SessionCache.budgetsDatabase = new BudgetsDatabase(this);
         SessionCache.expensesDatabase = new ExpensesDatabase(this);
